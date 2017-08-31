@@ -21,8 +21,8 @@ public:
     void stop();
     StationObjectModel m_stationModel;
 public slots:
-    void initializeDataToGraph(QAbstractSeries *series);
-    void updateDataToGraph(QAbstractSeries *series);
+    Q_INVOKABLE void initializeDataToGraph(QAbstractSeries *series);
+    Q_INVOKABLE void updateDataToGraph(QAbstractSeries *series);
 
 private:
     bool initializeStationModel();
