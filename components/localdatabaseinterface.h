@@ -4,6 +4,7 @@
 
 #include <QtSql/QSqlDatabase>
 #include <QtCharts/QAbstractSeries>
+#include <QtCharts/QAbstractAxis>
 #include <QtSql/QSqlQuery>
 #include "stationobjectmodel.h"
 
@@ -21,7 +22,7 @@ public:
     void stop();
     StationObjectModel m_stationModel;
 public slots:
-    Q_INVOKABLE void initializeDataToGraph(QAbstractSeries *series);
+    Q_INVOKABLE void initializeDataToGraph(QAbstractSeries *series, QAbstractAxis *axis,const QString &mRFID);
     Q_INVOKABLE void updateDataToGraph(QAbstractSeries *series);
 
 private:

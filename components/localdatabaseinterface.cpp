@@ -1,5 +1,7 @@
 #include "localdatabaseinterface.h"
 #include <QRegExp>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
 
 QT_CHARTS_USE_NAMESPACE
 #define LocalDatabaseInterfaceDebuggerEnabled 1
@@ -11,6 +13,7 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
     // Register MetaType for other slots from QML
     qRegisterMetaType<QAbstractSeries*>();
     qRegisterMetaType<QAbstractAxis*>();
+
 
     // Configure local data base
     anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Database info: "
@@ -102,9 +105,54 @@ void LocalDatabaseInterface::stop()
 
 }
 
-void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series)
+void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series, QAbstractAxis *axis,const QString &mRFID)
 {
+    QSqlQuery tmpQuery;
 
+    if(tmpQuery.exec("SELECT * FROM (SELECT * FROM "+ mRFID +" ORDER BY Time DESC LIMIT 180) T1 ORDER BY Time ASC"))
+    {
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Succeeded: SELECT * FROM (SELECT * FROM "+ mRFID +" ORDER BY Time DESC LIMIT 500) T1 ORDER BY Time ASC"));
+
+        if(series)
+        {
+            if(axis)
+            {
+                anIf(LocalDatabaseInterfaceDebuggerEnabled,anAck("series exists"));
+                QLineSeries *lineSeries = static_cast<QLineSeries *>(series);
+                QDateTimeAxis *xAxis = static_cast<QDateTimeAxis *>(axis);
+
+                lineSeries->clear();
+
+                if(tmpQuery.first())
+                {
+                    xAxis->setMin(tmpQuery.value("Time").toDateTime());
+
+                }
+
+                QDateTime maxTime;
+
+                while(tmpQuery.next())
+                {
+
+                    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Enter loop to extract data"));
+                    lineSeries->append(tmpQuery.value("Time").toDateTime().toMSecsSinceEpoch(), tmpQuery.value("Pressure").toDouble());
+
+                   maxTime = tmpQuery.value("Time").toDateTime();
+
+
+                }
+
+                xAxis->setMax(maxTime);
+
+            }
+
+        }
+        return;
+    }
+
+    anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed: SELECT * FROM (SELECT * FROM "+ mRFID +" ORDER BY Time DESC LIMIT 500) T1 ORDER BY Time ASC"));
+
+    return;
 }
 
 void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series)
