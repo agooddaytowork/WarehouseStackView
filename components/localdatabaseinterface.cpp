@@ -11,8 +11,8 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
     QObject(parent), m_dbUsername(dbUsername), m_dbPassword(dbPassword), m_dbName(dbName)
 {
     // Register MetaType for other slots from QML
-    qRegisterMetaType<QAbstractSeries*>();
-    qRegisterMetaType<QAbstractAxis*>();
+//    qRegisterMetaType<QAbstractSeries*>();
+//    qRegisterMetaType<QAbstractAxis*>();
 
 
     // Configure local data base
@@ -66,7 +66,8 @@ bool LocalDatabaseInterface::initializeStationModel()
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded: SELECT GlobalID, stationName, top, left_style FROM stations"));
 
-
+        anIf(LocalDatabaseInterfaceDebuggerEnabled,
+             anAck("Adding stations to localDatabaseHash"  ));
         while(tmpQuery.next())
         {
             QString tmpTop = tmpQuery.value("top").toString();
@@ -75,18 +76,43 @@ bool LocalDatabaseInterface::initializeStationModel()
             tmpTop = tmpTop.remove((tmpTop.length()-2),2);
             tmpLeft = tmpLeft.remove((tmpLeft.length()-2),2);
 
+            QByteArray aRFID = tmpQuery.value("RFID").toByteArray();
+            StationObject aStation(tmpQuery.value("id").toInt(),
+                                   tmpQuery.value("stationName").toString(),
+                                  tmpTop.toDouble(),
+                                   tmpLeft.toDouble(),
+                                     aRFID);
 
-//            m_stationModel.addStation(tmpStation);
-               m_stationModel.addStation(StationObject(
-                                             tmpQuery.value("id").toInt(),
-                                              tmpQuery.value("stationName").toString(),
-                                             tmpTop.toDouble(),
-                                              tmpLeft.toDouble(),
-                                                tmpQuery.value("RFID").toByteArray()));
+               QSqlQuery secondQuery;
 
-        anIf(LocalDatabaseInterfaceDebuggerEnabled,
-             anAck("Add a station to localDatabaseHash:"  ));
+               secondQuery.prepare("SELECT*FROM frus WHERE RFID = ? LIMIT 1");
+               secondQuery.bindValue(0, aRFID);
+               if(secondQuery.exec())
+               {
+                   anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
+                    if(secondQuery.next())
+                    {
+                        aStation.setKTPN(secondQuery.value("PN").toByteArray());
+                        aStation.setKTSERIALPN(secondQuery.value("Serial").toByteArray());
+                        aStation.setLPN(secondQuery.value("LPN").toByteArray());
+                        aStation.setGUNOFFPRESSURE(secondQuery.value("MFGPressure").toByteArray());
+                        aStation.setPO(secondQuery.value("PO").toByteArray());
+                        aStation.setSUPPLIERTESTDATE(secondQuery.value("TestDate").toDateTime().toString("MM/dd/yy"));
+                        aStation.setReceivedDate(secondQuery.value("DateInStock").toDateTime().toString("MM/dd/yy"));
+                        aStation.setShippedDate(secondQuery.value("DateShipped").toDateTime().toString("MM/dd/yy"));
+                    }
+               }
+               else
+               {
+                   anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query failed:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
+               }
+
+               m_stationModel.addStation(aStation);
         }
+        anIf(LocalDatabaseInterfaceDebuggerEnabled,
+             anAck("Finished adding stations to localDatabaseHash; returning"  ));
+
+
         return true;
     }
 
@@ -130,20 +156,17 @@ void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series, QAbs
                 }
 
                 QDateTime maxTime;
-
+                anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Enter loop to extract data"));
                 while(tmpQuery.next())
                 {
-
-                    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Enter loop to extract data"));
                     lineSeries->append(tmpQuery.value("Time").toDateTime().toMSecsSinceEpoch(), tmpQuery.value("Pressure").toDouble());
 
                    maxTime = tmpQuery.value("Time").toDateTime();
 
 
                 }
-
+                anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Finished extracting data"));
                 xAxis->setMax(maxTime);
-
             }
 
         }

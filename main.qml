@@ -93,7 +93,17 @@ ApplicationWindow {
                         y:m_top
                         onClicked:
                         {
-                            mainStackView.push(Qt.resolvedUrl("qml/StationPage.qml"),{sRFID: RFID})
+                            mainStackView.push(Qt.resolvedUrl("qml/StationPage.qml"),
+                                               {sGlobalId: GlobalId,
+                                               sRFID: RFID,
+                                               sKTPN: KTPN,
+                                               sKTSERIALPN: KTSERIALPN,
+                                               sLPN: LPN,
+                                               sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
+                                               sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
+                                               sPONumber: PO,
+                                               sDATERECEIVED: ReceviedDate,
+                                               sDATESHIPPED: ShippedDate})
                         }
                     }
                 }

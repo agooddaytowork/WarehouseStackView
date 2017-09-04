@@ -34,9 +34,18 @@ import QtQuick.Controls 2.0
 
 ColumnLayout {
     property string rFID
+    property string KTPN
+    property string KTSERIALPN
+    property string LPN
+    property string SUPPLIERTESTDATE
+    property string MFGGUNOFFPRESSURE
+    property string PONumber
+    property string DATERECEIVED
+    property string DATESHIPPED
+
     spacing: 8
     Layout.fillHeight: true
-    width: 300
+    width: 400
 
     Label{
         width: parent.width
@@ -51,7 +60,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"RFID:" + rFID
+        text:"RFID: " + rFID
         font.pixelSize: 20
     }
 
@@ -60,7 +69,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"KTPN:"
+        text:"KTPN: " +KTPN
         font.pixelSize: 20
     }
     Label{
@@ -68,7 +77,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"KT Serial PN:"
+        text:"KT Serial PN: " +KTSERIALPN
         font.pixelSize: 20
     }
     Label{
@@ -76,7 +85,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"LPN:"
+        text:"LPN: "+ LPN
         font.pixelSize: 20
     }
     Label{
@@ -84,7 +93,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"Supplier Test Date:"
+        text:"Supplier Test Date: " + SUPPLIERTESTDATE
         font.pixelSize: 20
     }
     Label{
@@ -92,7 +101,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"MFG Gun off GV Closed: "
+        text:"MFG Gun off GV Closed: "+ MFGGUNOFFPRESSURE
         font.pixelSize: 20
     }
     Label{
@@ -100,7 +109,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"PO: "
+        text:"PO: " +PONumber
         font.pixelSize: 20
     }
     Label{
@@ -108,7 +117,7 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"Date Received: "
+        text:"Date Received: " + DATERECEIVED
         font.pixelSize: 20
     }
     Label{
@@ -116,11 +125,9 @@ ColumnLayout {
         width: parent.width
         wrapMode: Label.Wrap
         verticalAlignment: Qt.AlignLeft
-        text:"Date Shipped: "
+        text:"Date Shipped: " + DATESHIPPED
         font.pixelSize: 20
     }
-
-
 
 
         Switch{

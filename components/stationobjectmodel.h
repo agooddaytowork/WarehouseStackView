@@ -22,7 +22,16 @@ public:
         stationName,
         top,
         left,
-        RFID
+        RFID,
+        KTPN,
+        KTSERIALPN,
+        LPN,
+        GUNOFFPRESSURE,
+        PO,
+        SUPPLIERTESTDATE,
+        ReceviedDate,
+        ShippedDate
+
     };
 
     StationObjectModel(QObject *parent =0);
