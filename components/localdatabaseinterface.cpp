@@ -46,7 +46,7 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
       }
       else
       {
-            anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Initialization failed!"));
+            anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Initialization failed!"));
       }
 
 
@@ -104,7 +104,7 @@ bool LocalDatabaseInterface::initializeStationModel()
                }
                else
                {
-                   anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query failed:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
+                   anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
                }
 
                m_stationModel.addStation(aStation);
@@ -183,5 +183,18 @@ void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series)
 
 }
 
+void LocalDatabaseInterface::setHVON(const int &globalId, const bool command)
+{
 
+}
+
+void LocalDatabaseInterface::setValveON(const int &globalId, const bool command)
+{
+
+}
+
+void LocalDatabaseInterface::shipStation(const int &globalId)
+{
+
+}
 

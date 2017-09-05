@@ -24,6 +24,9 @@ public:
 public slots:
     Q_INVOKABLE void initializeDataToGraph(QAbstractSeries *series, QAbstractAxis *axis,const QString &mRFID);
     Q_INVOKABLE void updateDataToGraph(QAbstractSeries *series);
+    Q_INVOKABLE void setHVON(const int & globalId, const bool command);
+    Q_INVOKABLE void setValveON(const int & globalId, const bool command);
+    Q_INVOKABLE void shipStation(const int & globalId);
 
 private:
     bool initializeStationModel();

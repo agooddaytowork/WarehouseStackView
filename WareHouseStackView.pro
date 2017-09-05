@@ -1,5 +1,5 @@
 QT += charts qml quick core sql
-
+QTPLUGIN += qtvirtualkeyboardplugin
 
 CONFIG += c++11
 

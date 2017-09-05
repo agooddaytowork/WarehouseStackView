@@ -20,7 +20,7 @@ ApplicationWindow {
         id:theToolBar
         width: parent.width
         height: 50
-//        opacity: mainStackView.depth > 1 ? 1 : 0
+        opacity: mainStackView.depth > 1 ? 1 : 0
         Rectangle {
             color: "#A2A2A2"
             anchors.fill: parent
@@ -50,6 +50,27 @@ ApplicationWindow {
                     anchors.fill: parent
                     anchors.margins: -10
                     onClicked: mainStackView.pop()
+                }
+            }
+
+            Button
+            {
+                id:settingButton
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                text: "Edit"
+                opacity: mainStackView.depth == 2 ? 1 : 0
+                Image {
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "images/navigation_previous_item.png"
+                }
+
+                onClicked:
+                {
+
+                    mainStackView.push(Qt.resolvedUrl("qml/FruManagePage.qml"))
+
                 }
             }
         }

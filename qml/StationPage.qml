@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtCharts 2.1
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
+import QtQuick.VirtualKeyboard 2.1
 
 Item {
     id: stationPage
@@ -39,17 +40,12 @@ Item {
                TouchPoint { id: touch2 }
            ]
 
-    //               onReleased: {
-    //                    testLabel.text = touch1.x
-    //               }
-
            onPressed: {
                initialX = touch1.x
            }
 
            onGestureStarted:
            {
-//             testLabel.text = touch1.x - initialX
 
                axisX1.min = new Date(axisX1.min - (touch1.x - initialX))
                axisX1.max = new Date(axisX1.max - (touch1.x - initialX))
@@ -106,7 +102,9 @@ Item {
         anchors.bottom: parent.bottom
         anchors.topMargin: 50
         anchors.rightMargin: 100
-        width: 300
+        width: 400
+        color: transparent
+        visible: false
 
         ColumnLayout {
         anchors.fill: parent
@@ -122,7 +120,7 @@ Item {
 
             }
             Label{
-                id: rfid
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -131,7 +129,7 @@ Item {
             }
 
             Label{
-                id: ktpn
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -139,7 +137,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: ktserialpn
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -147,7 +145,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: lpn
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -155,7 +153,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: supplierTestDate
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -163,7 +161,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: mfgPressureoff
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -171,7 +169,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: purchaseOrder
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -179,7 +177,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: dateReceive
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -187,7 +185,7 @@ Item {
                 font.pixelSize: 20
             }
             Label{
-                id: dateShipped
+
                 width: parent.width
                 wrapMode: Label.Wrap
                 verticalAlignment: Qt.AlignLeft
@@ -223,8 +221,84 @@ Item {
                     id: shipButton
                     text: "Ship"
                     Layout.fillWidth: true
+
                 }
 
+        }
+
+    }
+
+    Rectangle{
+        id: stationManagePanel
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.topMargin: 50
+        anchors.rightMargin: 100
+        width: 400
+        color: transparent
+        visible: true
+
+        ColumnLayout {
+        anchors.fill: parent
+            spacing: 8
+            Layout.fillHeight: true
+
+            Label{
+                width: parent.width
+                wrapMode: Label.Wrap
+                verticalAlignment: Qt.AlignVCenter
+                text:"E-source Information"
+                font.pixelSize: 30
+            }
+
+            FrusTextField{
+                id: rfid
+                width: parent.width
+                mytext:"RFID: " + sRFID
+
+            }
+
+            FrusTextField{
+                id: ktpn
+                width: parent.width
+                mytext:"KTPN: " + sKTPN
+            }
+            FrusTextField{
+                id: ktserialpn
+                width: parent.width
+                mytext:"KT Serial PN: " + sKTSERIALPN
+            }
+            FrusTextField{
+                id: lpn
+                width: parent.width
+                mytext:"LPN: "+ sLPN
+            }
+            FrusTextField{
+                id: supplierTestDate
+                width: parent.width
+                mytext:"Supplier Test Date: " + sSUPPLIERTESTDATE
+            }
+            FrusTextField{
+                id: mfgPressureoff
+                width: parent.width
+                mytext:"MFG Gun off GV Closed: "+ sMFGGUNOFFPRESSURE
+            }
+            FrusTextField{
+                id: purchaseOrder
+                width: parent.width
+                mytext:"PO: " + sPONumber
+            }
+            FrusTextField{
+                id: dateReceive
+                width: parent.width
+                mytext:"Date Received: " + sDATERECEIVED
+            }
+            FrusTextField{
+                id: dateShipped
+                width: parent.width
+                mytext:"Date Shipped: " + sDATESHIPPED
+            }
 
         }
 

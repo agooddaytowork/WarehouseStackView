@@ -13,5 +13,7 @@
         <file>images/toolbar.png</file>
         <file>qml/ControlPanel.qml</file>
         <file>qml/StationPage.qml</file>
+        <file>qml/FruManagePage.qml</file>
+        <file>qml/FrusTextField.qml</file>
     </qresource>
 </RCC>
