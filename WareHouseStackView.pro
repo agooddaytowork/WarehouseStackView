@@ -1,6 +1,9 @@
 QT += charts qml quick core sql
-QTPLUGIN += qtvirtualkeyboardplugin
 
+static
+{
+QTPLUGIN += qtvirtualkeyboardplugin
+}
 CONFIG += c++11
 
 SOURCES += main.cpp \

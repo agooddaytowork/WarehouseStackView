@@ -103,8 +103,10 @@ Item {
         anchors.topMargin: 50
         anchors.rightMargin: 100
         width: 400
-        color: transparent
+        color: "transparent"
         visible: false
+
+
 
         ColumnLayout {
         anchors.fill: parent
@@ -228,80 +230,190 @@ Item {
 
     }
 
-    Rectangle{
-        id: stationManagePanel
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.topMargin: 50
-        anchors.rightMargin: 100
-        width: 400
-        color: transparent
-        visible: true
 
-        ColumnLayout {
-        anchors.fill: parent
-            spacing: 8
-            Layout.fillHeight: true
 
-            Label{
+        Flickable{
+            id: flickable
+            anchors.fill : parent
+            anchors.topMargin: 60
+            anchors.bottomMargin: keyboardRect.visible ? keyboardRect.height : 100
+            anchors.leftMargin: 1400
+            width: 500
+            visible: true
+            flickableDirection: Flickable.VerticalFlick
+
+
+            ColumnLayout{
+                id: column
                 width: parent.width
-                wrapMode: Label.Wrap
-                verticalAlignment: Qt.AlignVCenter
-                text:"E-source Information"
-                font.pixelSize: 30
+                height: parent.height
+                spacing: 5
+
+
+                Label{
+                    width: parent.width
+                    wrapMode: Label.Wrap
+                    verticalAlignment: Qt.AlignVCenter
+                    text:"E-source Information"
+                    font.pixelSize: 30
+                }
+
+                FrusTextField{
+                    id: rfid
+                    width: parent.width
+                    mytext:"RFID: " + sRFID
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+
+                }
+
+                FrusTextField{
+                    id: ktpn
+                    width: parent.width
+                    mytext:"KTPN: " + sKTPN
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: ktserialpn
+                    width: parent.width
+                    mytext:"KT Serial PN: " + sKTSERIALPN
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: lpn
+                    width: parent.width
+                    mytext:"LPN: "+ sLPN
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: supplierTestDate
+                    width: parent.width
+                    mytext:"Supplier Test Date: " + sSUPPLIERTESTDATE
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: mfgPressureoff
+                    width: parent.width
+                    mytext:"MFG Gun off GV Closed: "+ sMFGGUNOFFPRESSURE
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: purchaseOrder
+                    width: parent.width
+                    mytext:"PO: " + sPONumber
+
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: dateReceive
+                    width: parent.width
+                    mytext:"Date Received: " + sDATERECEIVED
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+                FrusTextField{
+                    id: dateShipped
+                    width: parent.width
+                    mytext:"Date Shipped: " + sDATESHIPPED
+                    onActiveFocusChanged: {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                        }
+
+                    }
+                }
+
+
             }
 
-            FrusTextField{
-                id: rfid
-                width: parent.width
-                mytext:"RFID: " + sRFID
-
-            }
-
-            FrusTextField{
-                id: ktpn
-                width: parent.width
-                mytext:"KTPN: " + sKTPN
-            }
-            FrusTextField{
-                id: ktserialpn
-                width: parent.width
-                mytext:"KT Serial PN: " + sKTSERIALPN
-            }
-            FrusTextField{
-                id: lpn
-                width: parent.width
-                mytext:"LPN: "+ sLPN
-            }
-            FrusTextField{
-                id: supplierTestDate
-                width: parent.width
-                mytext:"Supplier Test Date: " + sSUPPLIERTESTDATE
-            }
-            FrusTextField{
-                id: mfgPressureoff
-                width: parent.width
-                mytext:"MFG Gun off GV Closed: "+ sMFGGUNOFFPRESSURE
-            }
-            FrusTextField{
-                id: purchaseOrder
-                width: parent.width
-                mytext:"PO: " + sPONumber
-            }
-            FrusTextField{
-                id: dateReceive
-                width: parent.width
-                mytext:"Date Received: " + sDATERECEIVED
-            }
-            FrusTextField{
-                id: dateShipped
-                width: parent.width
-                mytext:"Date Shipped: " + sDATESHIPPED
-            }
 
         }
 
-    }
+        Rectangle {
+                id: keyboardRect
+                width: parent.width
+                height: parent.height * 0.4
+                anchors.bottom: parent.bottom
+                color: "transparent"
+                visible: false
+            }
 
+        InputPanel {
+                id: inputPanel
+                y: Qt.inputMethod.visible ? (parent.height - inputPanel.height ) : parent.height
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+            }
 }
