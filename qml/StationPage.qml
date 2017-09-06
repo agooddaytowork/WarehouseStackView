@@ -19,6 +19,7 @@ Item {
     property string sDATESHIPPED
 
 
+
     ChartView{
         id: chartView
         anchors.topMargin: 50
@@ -29,28 +30,49 @@ Item {
         theme: ChartView.ChartThemeDark
         antialiasing: true
         property  int initialX
-       MultiPointTouchArea
-       {
-           anchors.fill: parent
-           minimumTouchPoints: 1
-           maximumTouchPoints: 2
-           mouseEnabled: true
-           touchPoints: [
-               TouchPoint { id: touch1 },
-               TouchPoint { id: touch2 }
-           ]
+        property int  initialY
 
-           onPressed: {
-               initialX = touch1.x
-           }
+//       MultiPointTouchArea
+//       {
+//           anchors.fill: parent
+//           minimumTouchPoints: 1
+//           maximumTouchPoints: 2
+//           mouseEnabled: true
+//           touchPoints: [
+//               TouchPoint { id: touch1 },
+//               TouchPoint { id: touch2 }
+//           ]
 
-           onGestureStarted:
-           {
+//           onPressed: {
+//               chartView.initialX = touch1.x
+//               chartView.initialY = touch1.y
+//           }
 
-               axisX1.min = new Date(axisX1.min - (touch1.x - initialX))
-               axisX1.max = new Date(axisX1.max - (touch1.x - initialX))
+//           onGestureStarted:
+//           {
+
+////                 axisX1.min = new Date(axisX1.min - (touch1.x - initialX))
+////                 axisX1.max = new Date(axisX1.max - (touch1.x - initialX))
+//                chartView.scrollLeft(touch1.x - chartView.initialX)
+//                chartView.scrollUp(touch1.y - chartView.initialY)
+
+
+//           }
+//       }
+
+
+       PinchArea{
+           width: parent.width
+           height: parent.height
+
+           onPinchUpdated: {
+//             chartView.zoom(pinch.scale*0.01)
+               chartView.scrollLeft(pinch.center.x - pinch.previousCenter.x)
+               chartView.scrollUp(pinch.center.y - pinch.previousCenter.y)
+
            }
        }
+
 
        LogValueAxis{
            id: axisY1

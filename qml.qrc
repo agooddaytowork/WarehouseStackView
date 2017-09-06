@@ -15,5 +15,9 @@
         <file>qml/StationPage.qml</file>
         <file>qml/FruManagePage.qml</file>
         <file>qml/FrusTextField.qml</file>
+        <file>qml/DepotFloor.qml</file>
+        <file>images/background.jpg</file>
+        <file>qml/LogInPage.qml</file>
+        <file>images/Kla-logo-purplepng.png</file>
     </qresource>
 </RCC>

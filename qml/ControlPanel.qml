@@ -159,5 +159,4 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
-
 }
