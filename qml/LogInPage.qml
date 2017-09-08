@@ -3,9 +3,16 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtCharts 2.1
 import QtQuick.VirtualKeyboard 2.1
-
+import Qt.labs.settings 1.0
 
 Item {
+
+    Settings
+    {
+        id: setting
+        category: "logInPage"
+        property string screenPassword: "159753"
+    }
 
     Rectangle
     {
@@ -38,36 +45,48 @@ Item {
                     border.width: 2
                 }
 
-            }
-
-            Button
-            {
-                id: loginButton
-                width: 250
-                height: 50
-                text: "OK"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top : parent.top
-                anchors.topMargin: 650
-                background: Rectangle{
-                    radius: 10
-                    border.color: "#051c42"
-                    border.width: 2
-                }
-
-                onClicked:
+                onTextChanged:
                 {
-                    if(passwordField.text == "159753")
+                    if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
                     {
                         passwordField.text = ""
                         mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
                     }
                     else
                     {
-
+                        // add some thing here to indicate wrong password
                     }
                 }
             }
+
+            //            Button
+            //            {
+            //                id: loginButton
+            //                width: 250
+            //                height: 50
+            //                text: "OK"
+            //                anchors.horizontalCenter: parent.horizontalCenter
+            //                anchors.top : parent.top
+            //                anchors.topMargin: 650
+            //                background: Rectangle{
+            //                    radius: 10
+            //                    border.color: "#051c42"
+            //                    border.width: 2
+            //                }
+
+            //                onClicked:
+            //                {
+            //                    if(passwordField.text == "159753")
+            //                    {
+            //                        passwordField.text = ""
+            //                        mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+            //                    }
+            //                    else
+            //                    {
+
+            //                    }
+            //                }
+            //            }
 
 
         Rectangle

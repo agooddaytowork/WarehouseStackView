@@ -4,6 +4,8 @@
 #include <QQmlContext>
 #include <QList>
 #include "components/localdatabaseinterface.h"
+#include <QThread>
+
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +20,9 @@ int main(int argc, char *argv[])
     QString extraImportPath(QStringLiteral("%1/../../../%2"));
 #endif
 
+
     LocalDatabaseInterface localDBInterface("root","159753","userspice");
+\
 //    StationObjectModel aModel;
 //    aModel.addStation(StationObject(5,"S1",0,0,"FA1239"));
     QQmlContext *thisContext = engine.rootContext();
