@@ -198,3 +198,8 @@ void LocalDatabaseInterface::shipStation(const int &globalId)
 
 }
 
+
+//void LocalDatabaseInterface::updateStation(const int &globalID, const QByteArray &LPN)
+//{
+
+//}

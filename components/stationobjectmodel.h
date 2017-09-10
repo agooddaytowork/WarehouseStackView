@@ -43,6 +43,7 @@ protected:
     QHash<int, QByteArray> roleNames() const;
 
 private:
+    QHash<int, StationObject> m_stationObjectHash;
     QList<StationObject> m_stationObjectList;
 
 };

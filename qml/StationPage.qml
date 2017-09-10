@@ -416,6 +416,26 @@ Item {
                     }
                 }
 
+                Button
+                {
+                    id: updateDatebutton
+                    text: "Update"
+                    background: Rectangle{
+                        radius: 10
+                        implicitWidth: 300
+                        implicitHeight: 30
+                        border.color: "#333"
+                        border.width: 1
+                    }
+
+                    onClicked: {
+
+
+
+                    }
+
+                }
+
 
             }
 
