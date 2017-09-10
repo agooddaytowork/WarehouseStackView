@@ -67,3 +67,18 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
     roles[ShippedDate] = "ShippedDate";
     return roles;
 }
+
+void StationObjectModel::updateStation(const int &id, const QString &name, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+{
+    StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setKTPN(KTPN);
+    tmpStation.setKTSERIALPN(KTSERIALPN);
+    tmpStation.setLPN(LPN);
+    tmpStation.setGUNOFFPRESSURE(GUNOFFPRESSURE);
+    tmpStation.setPO(PO);
+    tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
+    tmpStation.setReceivedDate(ReceivedDate);
+    tmpStation.setShippedDate(ShippedDate);
+
+    m_stationObjectHash.insert(id, tmpStation);
+}

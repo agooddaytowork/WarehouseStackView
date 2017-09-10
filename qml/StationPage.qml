@@ -8,6 +8,7 @@ Item {
     id: stationPage
 
     property int    sGlobalId
+    property string sStationName
     property string sRFID
     property string sKTPN
     property string sKTSERIALPN
@@ -430,7 +431,7 @@ Item {
 
                     onClicked: {
 
-
+                    LocalDb.updateStation(sGlobalId, sStationName, ktpn.text, ktserialpn.text, lpn.text, mfgPressureoff.text, purchaseOrder.text, supplierTestDate.text, dateReceive.text, dateShipped.text)
 
                     }
 

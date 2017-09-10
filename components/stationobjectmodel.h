@@ -37,6 +37,9 @@ public:
     StationObjectModel(QObject *parent =0);
 
     void addStation(const StationObject &station);
+    void updateStation(const int &id, const QString &name
+                       , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
+                       , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 protected:

@@ -27,7 +27,9 @@ public slots:
     Q_INVOKABLE void setHVON(const int & globalId, const bool command);
     Q_INVOKABLE void setValveON(const int & globalId, const bool command);
     Q_INVOKABLE void shipStation(const int & globalId);
-//    Q_INVOKABLE void updateStation(const int &globalID, const QByteArray &LPN);
+    Q_INVOKABLE void updateStation(const int &id, const QString &name
+                                   , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
+                                   , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
 
 private:
     bool initializeStationModel();

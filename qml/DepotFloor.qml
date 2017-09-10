@@ -38,8 +38,10 @@ Item {
                        {
                            mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
                                               {sGlobalId: GlobalId,
+
                                               sRFID: RFID,
                                               sKTPN: KTPN,
+                                              sStationName: stationName,
                                               sKTSERIALPN: KTSERIALPN,
                                               sLPN: LPN,
                                               sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
