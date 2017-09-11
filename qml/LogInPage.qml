@@ -50,7 +50,9 @@ Item {
                     if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
                     {
                         passwordField.text = ""
+                        inputPanel.y = parent.height
                         mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+
                     }
                     else
                     {

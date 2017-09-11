@@ -36,7 +36,27 @@ Item {
                            x:m_left
                            y:m_top
                            text: stationName
+                           onClicked:
+                           {
 
+                               mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
+                                                  {sGlobalId: GlobalId,
+                                                  sRFID: RFID,
+                                                  sKTPN: KTPN,
+                                                  sStationName: stationName,
+                                                  sKTSERIALPN: KTSERIALPN,
+                                                  sLPN: LPN,
+                                                  sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
+                                                  sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
+                                                  sPONumber: PO,
+                                                  sDATERECEIVED: ReceviedDate,
+                                                  sDATESHIPPED: ShippedDate})
+                           }
+
+                           onDoubleClicked:
+                           {
+
+                           }
 
                         MouseArea
                         {
@@ -48,6 +68,7 @@ Item {
                             drag.maximumY: warehouseMap.height - 80
                             drag.minimumX: 100
                             drag.maximumX: warehouseMap.width - 140
+                            visible: true
                             onClicked:
                             {
                                 mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
