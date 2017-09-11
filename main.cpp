@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
 
 
     LocalDatabaseInterface localDBInterface("root","159753","userspice");
-\
-//    StationObjectModel aModel;
-//    aModel.addStation(StationObject(5,"S1",0,0,"FA1239"));
+
+    StationObjectModel aModel;
+    aModel.addStation(StationObject(5,"S1",0,0,"FA1239"));
     QQmlContext *thisContext = engine.rootContext();
-    thisContext->setContextProperty("myStationModel", &localDBInterface.m_stationModel);
-//    thisContext->setContextProperty("myStationModel", &aModel);
+//    thisContext->setContextProperty("myStationModel", &localDBInterface.m_stationModel);
+    thisContext->setContextProperty("myStationModel", &aModel);
     thisContext->setContextProperty("LocalDb", &localDBInterface);
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

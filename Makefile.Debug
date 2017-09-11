@@ -618,7 +618,9 @@ debug/main.o: main.cpp C:/Qt/5.9.1/mingw53_32/include/QtWidgets/QApplication \
 		C:/Qt/5.9.1/mingw53_32/include/QtCore/QAbstractListModel \
 		C:/Qt/5.9.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
 		components/stationobject.h \
-		C:/Qt/5.9.1/mingw53_32/include/QtCore/QDateTime
+		C:/Qt/5.9.1/mingw53_32/include/QtCore/QDateTime \
+		C:/Qt/5.9.1/mingw53_32/include/QtCore/QThread \
+		C:/Qt/5.9.1/mingw53_32/include/QtCore/qthread.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o main.cpp
 
 debug/localdatabaseinterface.o: components/localdatabaseinterface.cpp components/localdatabaseinterface.h \

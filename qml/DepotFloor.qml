@@ -26,31 +26,41 @@ Item {
 
                    model: myStationModel
 
-                   Button
+                   Flickable
                    {
                        id: individualStation
                        height: 60
                        width: 60
-                       text: stationName
                        x:m_left
                        y:m_top
-                       onClicked:
-                       {
-                           mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
-                                              {sGlobalId: GlobalId,
 
-                                              sRFID: RFID,
-                                              sKTPN: KTPN,
-                                              sStationName: stationName,
-                                              sKTSERIALPN: KTSERIALPN,
-                                              sLPN: LPN,
-                                              sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
-                                              sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
-                                              sPONumber: PO,
-                                              sDATERECEIVED: ReceviedDate,
-                                              sDATESHIPPED: ShippedDate})
+                       Button
+                       {
+
+                           height: 60
+                           width: 60
+                           text: stationName
+                           onClicked:
+                           {
+                               mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
+                                                  {sGlobalId: GlobalId,
+                                                  sRFID: RFID,
+                                                  sKTPN: KTPN,
+                                                  sStationName: stationName,
+                                                  sKTSERIALPN: KTSERIALPN,
+                                                  sLPN: LPN,
+                                                  sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
+                                                  sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
+                                                  sPONumber: PO,
+                                                  sDATERECEIVED: ReceviedDate,
+                                                  sDATESHIPPED: ShippedDate})
+                           }
                        }
+
+
                    }
+
+
                }
            }
 

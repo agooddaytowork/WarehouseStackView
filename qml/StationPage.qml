@@ -257,20 +257,24 @@ Item {
 
         Flickable{
             id: flickable
-            anchors.fill : parent
-            anchors.topMargin: 60
+
+            anchors.fill: parent
+            anchors.topMargin: 50
             anchors.bottomMargin: keyboardRect.visible ? keyboardRect.height : 100
             anchors.leftMargin: 1400
-            width: 500
             visible: true
             flickableDirection: Flickable.VerticalFlick
 
+            Rectangle{
+                anchors.fill: parent
+                color: "grey"
+            }
 
             ColumnLayout{
                 id: column
                 width: parent.width
                 height: parent.height
-                spacing: 5
+                spacing: 10
 
 
                 Label{
@@ -283,27 +287,29 @@ Item {
 
                 FrusTextField{
                     id: rfid
-                    width: parent.width
-                    mytext:"RFID: " + sRFID
 
-                    onActiveFocusChanged: {
+                    labelText: "RFID: "
+                    myText: sRFID
+
+                    onTextfieldchanged:
+                {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
                             var posWithinFlickable = mapToItem(column, 0, height / 2);
                             flickable.contentY = posWithinFlickable.y - flickable.height / 2;
                         }
-
-                    }
+                }
 
                 }
 
                 FrusTextField{
                     id: ktpn
-                    width: parent.width
-                    mytext:"KTPN: " + sKTPN
 
-                    onActiveFocusChanged: {
+                    labelText: "KT PN: "
+                    myText: sKTPN
+
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -315,10 +321,11 @@ Item {
                 }
                 FrusTextField{
                     id: ktserialpn
-                    width: parent.width
-                    mytext:"KT Serial PN: " + sKTSERIALPN
 
-                    onActiveFocusChanged: {
+                    labelText: "KT Serial PN: "
+                    myText: sKTSERIALPN
+
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -330,10 +337,11 @@ Item {
                 }
                 FrusTextField{
                     id: lpn
-                    width: parent.width
-                    mytext:"LPN: "+ sLPN
 
-                    onActiveFocusChanged: {
+                    labelText: "LPN: "
+                    myText: sLPN
+
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -345,10 +353,11 @@ Item {
                 }
                 FrusTextField{
                     id: supplierTestDate
-                    width: parent.width
-                    mytext:"Supplier Test Date: " + sSUPPLIERTESTDATE
 
-                    onActiveFocusChanged: {
+                    labelText: "Supplier Test Date: "
+                    myText: sSUPPLIERTESTDATE
+
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -360,10 +369,11 @@ Item {
                 }
                 FrusTextField{
                     id: mfgPressureoff
-                    width: parent.width
-                    mytext:"MFG Gun off GV Closed: "+ sMFGGUNOFFPRESSURE
 
-                    onActiveFocusChanged: {
+                    labelText:"MFG Gun off GV Closed: "
+                    myText: sMFGGUNOFFPRESSURE
+
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -375,10 +385,11 @@ Item {
                 }
                 FrusTextField{
                     id: purchaseOrder
-                    width: parent.width
-                    mytext:"PO: " + sPONumber
 
-                    onActiveFocusChanged: {
+                    labelText: "PO: "
+                    myText:sPONumber
+
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -390,9 +401,10 @@ Item {
                 }
                 FrusTextField{
                     id: dateReceive
-                    width: parent.width
-                    mytext:"Date Received: " + sDATERECEIVED
-                    onActiveFocusChanged: {
+
+                    labelText: "Date Received: "
+                    myText:sDATERECEIVED
+                    onTextfieldchanged: {
                         if(activeFocus)
                         {
                             keyboardRect.visible = activeFocus
@@ -404,12 +416,16 @@ Item {
                 }
                 FrusTextField{
                     id: dateShipped
-                    width: parent.width
-                    mytext:"Date Shipped: " + sDATESHIPPED
-                    onActiveFocusChanged: {
+
+                    labelText: "Date Shipped: "
+                    myText: sDATESHIPPED
+
+                    onTextfieldchanged: {
+
                         if(activeFocus)
                         {
-                            keyboardRect.visible = activeFocus
+
+                            keyboardRect.visible = activeFocus;
                             var posWithinFlickable = mapToItem(column, 0, height / 2);
                             flickable.contentY = posWithinFlickable.y - flickable.height / 2;
                         }
@@ -431,7 +447,7 @@ Item {
 
                     onClicked: {
 
-                    LocalDb.updateStation(sGlobalId, sStationName, ktpn.text, ktserialpn.text, lpn.text, mfgPressureoff.text, purchaseOrder.text, supplierTestDate.text, dateReceive.text, dateShipped.text)
+                    LocalDb.updateStation(sGlobalId, sStationName, ktpn.myText, ktserialpn.myText, lpn.myText, mfgPressureoff.myText, purchaseOrder.myText, supplierTestDate.myText, dateReceive.myText, dateShipped.myText)
 
                     }
 
