@@ -26,39 +26,45 @@ Item {
 
                    model: myStationModel
 
-                   Flickable
-                   {
-                       id: individualStation
-                       height: 60
-                       width: 60
-                       x:m_left
-                       y:m_top
+
 
                        Button
                        {
-
+                           id: individualStation
                            height: 60
                            width: 60
+                           x:m_left
+                           y:m_top
                            text: stationName
-                           onClicked:
-                           {
-                               mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
-                                                  {sGlobalId: GlobalId,
-                                                  sRFID: RFID,
-                                                  sKTPN: KTPN,
-                                                  sStationName: stationName,
-                                                  sKTSERIALPN: KTSERIALPN,
-                                                  sLPN: LPN,
-                                                  sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
-                                                  sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
-                                                  sPONumber: PO,
-                                                  sDATERECEIVED: ReceviedDate,
-                                                  sDATESHIPPED: ShippedDate})
-                           }
+
+
+                        MouseArea
+                        {
+                            id: mouse
+                            anchors.fill: parent
+                            drag.target: individualStation
+                            drag.axis: Drag.XAndYAxis
+                            drag.minimumY: 0
+                            drag.maximumY: warehouseMap.height - 80
+                            drag.minimumX: 100
+                            drag.maximumX: warehouseMap.width - 140
+                            onClicked:
+                            {
+                                mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
+                                                   {sGlobalId: GlobalId,
+                                                   sRFID: RFID,
+                                                   sKTPN: KTPN,
+                                                   sStationName: stationName,
+                                                   sKTSERIALPN: KTSERIALPN,
+                                                   sLPN: LPN,
+                                                   sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
+                                                   sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
+                                                   sPONumber: PO,
+                                                   sDATERECEIVED: ReceviedDate,
+                                                   sDATESHIPPED: ShippedDate})
+                            }
+                        }
                        }
-
-
-                   }
 
 
                }
