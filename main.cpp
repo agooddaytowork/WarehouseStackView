@@ -21,13 +21,13 @@ int main(int argc, char *argv[])
 #endif
 
 
-    LocalDatabaseInterface localDBInterface("root","159753","userspice");
+    LocalDatabaseInterface localDBInterface("root","klaremote","userspice");
 
     StationObjectModel aModel;
     aModel.addStation(StationObject(5,"S1",0,0,"FA1239"));
     aModel.addStation(StationObject(6,"S2",100,0,"FA1212321"));
     QQmlContext *thisContext = engine.rootContext();
-//    thisContext->setContextProperty("myStationModel", &localDBInterface.m_stationModel);
+//  thisContext->setContextProperty("myStationModel", &localDBInterface.m_stationModel);
     thisContext->setContextProperty("myStationModel", &aModel);
     thisContext->setContextProperty("LocalDb", &localDBInterface);
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));

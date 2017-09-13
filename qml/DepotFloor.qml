@@ -59,6 +59,7 @@ Item {
                        y:m_top
                        color: "black"
                        property bool currentStation: false
+
                        MouseArea
                        {
                            id: mouse
@@ -71,6 +72,7 @@ Item {
                            drag.maximumX: warehouseMap.width - 100
                            visible: depotEditEnable
                            z: 2 // higher z
+
 
                            onMouseXChanged:
                            {
@@ -104,26 +106,26 @@ Item {
                                            {
                                                 if(wy >= -hx)
                                                 {
-//                                                    console.log("collision bottom")
+                                                    console.log("collision bottom")
 
                                                     myDragcell.y = warehouseMap.itemAt(i).y + myDragcell.height
-                                                    // edge detection to snap :D
-                                                    if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 5)
-                                                    {
-                                                        myDragcell.x = warehouseMap.itemAt(i).x
-                                                    }
-
-
+                                                    myDragcell.x = warehouseMap.itemAt(i).x
+//                                                    // edge detection to snap :D
+//                                                    if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 10)
+//                                                    {
+//                                                        myDragcell.x = warehouseMap.itemAt(i).x
+//                                                    }
 
                                                 }
                                                 else
                                                 {
-//                                                     console.log("collision left")
+                                                     console.log("collision left")
                                                     myDragcell.x = warehouseMap.itemAt(i).x - myDragcell.width
-                                                    if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 5)
-                                                    {
-                                                        myDragcell.y = warehouseMap.itemAt(i).y
-                                                    }
+                                                    myDragcell.y = warehouseMap.itemAt(i).y
+//                                                    if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 10)
+//                                                    {
+//                                                        myDragcell.y = warehouseMap.itemAt(i).y
+//                                                    }
 
                                                 }
                                            }
@@ -131,32 +133,32 @@ Item {
                                            {
                                                if(wy >= -hx)
                                                {
-//                                                    console.log("collision right")
+                                                    console.log("collision right")
                                                    myDragcell.x = warehouseMap.itemAt(i).x + myDragcell.width
-                                                   if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 5)
-                                                   {
-                                                       myDragcell.y = warehouseMap.itemAt(i).y
-                                                   }
+                                                   myDragcell.y = warehouseMap.itemAt(i).y
+//                                                   if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 10)
+//                                                   {
+//                                                       myDragcell.y = warehouseMap.itemAt(i).y
+//                                                   }
 
 
                                                }
                                                else
                                                {
-//                                                   console.log("collision top")
+                                                   console.log("collision top")
 
                                                    myDragcell.y = warehouseMap.itemAt(i).y - myDragcell.height
-                                                   if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 5)
-                                                   {
-                                                       myDragcell.x = warehouseMap.itemAt(i).x
-                                                   }
+                                                   myDragcell.x = warehouseMap.itemAt(i).x
+//                                                   if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 10)
+//                                                   {
+//                                                       myDragcell.x = warehouseMap.itemAt(i).x
+//                                                   }
 
                                                }
                                            }
                                        }
 
                                    }
-
-
 
                                }
                                myDragcell.currentStation = false
