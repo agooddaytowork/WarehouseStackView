@@ -17,7 +17,7 @@ ApplicationWindow {
         height: 50
         opacity: mainStackView.depth > 1 ? 1 : 0
         Rectangle {
-            color: "#A2A2A2"
+            color: "#0884C4"
             anchors.fill: parent
         }
 
@@ -29,7 +29,7 @@ ApplicationWindow {
                 width: opacity ? 60 : 0
                 anchors.left: parent.left
                 anchors.leftMargin: 20
-                opacity: mainStackView.depth > 1 ? 1 : 0
+                opacity: mainStackView.depth > 2 ? 1 : 0
                 anchors.verticalCenter: parent.verticalCenter
                 antialiasing: true
                 height: 60
@@ -39,6 +39,7 @@ ApplicationWindow {
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
                     source: "images/navigation_previous_item.png"
+                    scale: 0.6
                 }
                 MouseArea {
                     id: backmouse
@@ -48,26 +49,26 @@ ApplicationWindow {
                 }
             }
 
-            Button
-            {
-                id:settingButton
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.rightMargin: 20
-                text: "Edit"
-                opacity: mainStackView.depth == 2 ? 1 : 0
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "images/navigation_previous_item.png"
-                }
+//            Button
+//            {
+//                id:settingButton
+//                anchors.top: parent.top
+//                anchors.right: parent.right
+//                anchors.rightMargin: 20
+//                text: "Edit"
+//                opacity: mainStackView.depth == 2 ? 1 : 0
+//                Image {
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    source: "images/navigation_previous_item.png"
+//                }
 
-                onClicked:
-                {
+//                onClicked:
+//                {
 
-                    mainStackView.push(Qt.resolvedUrl("qml/FruManagePage.qml"))
+//                    mainStackView.push(Qt.resolvedUrl("qml/FruManagePage.qml"))
 
-                }
-            }
+//                }
+//            }
         }
     }
 

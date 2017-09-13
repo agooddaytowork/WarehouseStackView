@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
 
     StationObjectModel aModel;
     aModel.addStation(StationObject(5,"S1",0,0,"FA1239"));
+    aModel.addStation(StationObject(6,"S2",100,0,"FA1212321"));
     QQmlContext *thisContext = engine.rootContext();
 //    thisContext->setContextProperty("myStationModel", &localDBInterface.m_stationModel);
     thisContext->setContextProperty("myStationModel", &aModel);

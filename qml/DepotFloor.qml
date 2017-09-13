@@ -7,6 +7,7 @@ import QtQuick.Dialogs 1.1
 Item {
            id: mainPage
 
+           property bool  depotEditEnable: true
            Rectangle
            {
                width: 300
@@ -45,53 +46,130 @@ Item {
                    id: warehouseMap
 
                    width: 1200
-                   height: 1000
+                   height: 800
 
                    model: myStationModel
 
-
-
                    Rectangle
                    {
+                       id: myDragcell
                        width: 100
                        height: 100
                        x:m_left
                        y:m_top
-                       color: "transparent"
-
+                       color: "black"
+                       property bool currentStation: false
                        MouseArea
                        {
                            id: mouse
                            anchors.fill: parent
-                           drag.target: individualStation
+                           drag.target: myDragcell
                            drag.axis: Drag.XAndYAxis
                            drag.minimumY: 0
-                           drag.maximumY: warehouseMap.height - 80
-                           drag.minimumX: 100
-                           drag.maximumX: warehouseMap.width - 140
-                           visible: false
-                           onClicked:
+                           drag.maximumY: warehouseMap.height - 100
+                           drag.minimumX: 0
+                           drag.maximumX: warehouseMap.width - 100
+                           visible: depotEditEnable
+                           z: 2 // higher z
+
+                           onMouseXChanged:
                            {
-                               mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
-                                                  {sGlobalId: GlobalId,
-                                                  sRFID: RFID,
-                                                  sKTPN: KTPN,
-                                                  sStationName: stationName,
-                                                  sKTSERIALPN: KTSERIALPN,
-                                                  sLPN: LPN,
-                                                  sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
-                                                  sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
-                                                  sPONumber: PO,
-                                                  sDATERECEIVED: ReceviedDate,
-                                                  sDATESHIPPED: ShippedDate})
+                               myDragcell.currentStation = true
+//                               console.log("myDragcell x: " + myDragcell.x )
+//                               console.log("myDragcell y: " + myDragcell.y)
+                                // do some stuffs for collision and direction detections here
+
+                               // get a for loop here to loop on the item in the Repeater
+
+                               for(var i = 0; i < warehouseMap.count ; i ++)
+                               {
+                                   // need to construct the Rectangle first
+
+                                   // width = myDragcell.width  w = 0.5 * (A.width() + B.width());
+                                   // heigt = myDragcell.height h = 0.5 * (A.height() + B.height());
+                                   if( ! (warehouseMap.itemAt(i).currentStation) )
+                                   {
+                                       var dx = (myDragcell.x - warehouseMap.itemAt(i).x) + myDragcell.width*0.5
+                                       var dy = (myDragcell.y - warehouseMap.itemAt(i).y) + myDragcell.height*0.5
+//                                        console.log("dx: " + dx + " dy: " + dy)
+
+                                       if(Math.abs(dx) <= myDragcell.width && Math.abs(dy) <= myDragcell.height)
+                                       {
+//                                            console.log("collision")
+
+                                           var wy = myDragcell.width * dy
+                                           var hx = myDragcell.height * dx
+
+                                           if (wy >= hx)
+                                           {
+                                                if(wy >= -hx)
+                                                {
+//                                                    console.log("collision bottom")
+
+                                                    myDragcell.y = warehouseMap.itemAt(i).y + myDragcell.height
+                                                    // edge detection to snap :D
+                                                    if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 5)
+                                                    {
+                                                        myDragcell.x = warehouseMap.itemAt(i).x
+                                                    }
+
+
+
+                                                }
+                                                else
+                                                {
+//                                                     console.log("collision left")
+                                                    myDragcell.x = warehouseMap.itemAt(i).x - myDragcell.width
+                                                    if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 5)
+                                                    {
+                                                        myDragcell.y = warehouseMap.itemAt(i).y
+                                                    }
+
+                                                }
+                                           }
+                                           else
+                                           {
+                                               if(wy >= -hx)
+                                               {
+//                                                    console.log("collision right")
+                                                   myDragcell.x = warehouseMap.itemAt(i).x + myDragcell.width
+                                                   if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 5)
+                                                   {
+                                                       myDragcell.y = warehouseMap.itemAt(i).y
+                                                   }
+
+
+                                               }
+                                               else
+                                               {
+//                                                   console.log("collision top")
+
+                                                   myDragcell.y = warehouseMap.itemAt(i).y - myDragcell.height
+                                                   if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 5)
+                                                   {
+                                                       myDragcell.x = warehouseMap.itemAt(i).x
+                                                   }
+
+                                               }
+                                           }
+                                       }
+
+                                   }
+
+
+
+                               }
+                               myDragcell.currentStation = false
+
                            }
                        }
                        Label{
                            width: 70
                            height: 20
+                           z:1
                            anchors.top: parent.top
                            anchors.left: parent.left
-                           text: "Type"
+                           text: egunType
                            font.pixelSize: 12
                            font.bold: true
                            color: "black"
@@ -110,7 +188,7 @@ Item {
                            height: 65
                            width: 70
                            text: stationName
-
+                           z:1
                            contentItem: Text
                            {
                                    text: individualStation.text
@@ -158,6 +236,7 @@ Item {
                                                   {sGlobalId: GlobalId,
                                                   sRFID: RFID,
                                                   sKTPN: KTPN,
+                                                  sEgunType: egunType,
                                                   sStationName: stationName,
                                                   sKTSERIALPN: KTSERIALPN,
                                                   sLPN: LPN,

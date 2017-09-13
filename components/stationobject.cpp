@@ -11,8 +11,8 @@ StationObject::StationObject(const int &id, const QString &name, const double &t
 {
 }
 
-StationObject::StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
-    :m_id(id), m_stationName(name), m_top(top), m_left(left), m_RFID(RFID), m_KTPN(KTPN), m_KTSERIALPN(KTSERIALPN), m_LPN(LPN), m_GUNOFFPRESSURE(GUNOFFPRESSURE), m_PONumber(PO), m_SUPPLIERTESTDATE(SUPPLIERTESTDATE), m_ReceivedDate(ReceivedDate), m_ShippedDate(ShippedDate)
+StationObject::StationObject(const int &id, const QString &name, const double &top, const double &left,const QByteArray &egunType, const QByteArray &RFID, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+    :m_id(id), m_stationName(name), m_top(top), m_left(left), m_RFID(RFID), m_KTPN(KTPN), m_KTSERIALPN(KTSERIALPN), m_LPN(LPN), m_GUNOFFPRESSURE(GUNOFFPRESSURE), m_PONumber(PO), m_SUPPLIERTESTDATE(SUPPLIERTESTDATE), m_ReceivedDate(ReceivedDate), m_ShippedDate(ShippedDate), m_egunType(egunType)
 {
 
 }
@@ -180,3 +180,14 @@ void StationObject::setShippedDate(const QString &date)
 {
     m_ShippedDate = date;
 }
+
+QByteArray StationObject::egunType() const
+{
+    return m_egunType;
+}
+
+void StationObject::setEgunType(const QByteArray &egunType)
+{
+    m_egunType = egunType;
+}
+

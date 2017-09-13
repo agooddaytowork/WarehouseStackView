@@ -20,7 +20,7 @@ public:
      StationObject();
 
      explicit StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID);
-     explicit StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID
+     explicit StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID, const QByteArray &egunType
                             , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
                             , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
 
@@ -36,6 +36,8 @@ public:
     double left() const;
     void setLeft(const double &left);
 
+    QByteArray egunType() const;
+    void setEgunType(const QByteArray &egunType);
     QByteArray RFID() const;
     void setRFID(const QByteArray &RFID);
 
@@ -70,6 +72,7 @@ private:
 
     double m_top;
     double m_left;
+    QByteArray m_egunType;
     QByteArray m_RFID;
     QByteArray m_KTPN;
     QByteArray m_KTSERIALPN;

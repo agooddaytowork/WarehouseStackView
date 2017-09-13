@@ -45,6 +45,7 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
     else if (role == SUPPLIERTESTDATE) return station.SUPPLIERTESTDATE();
     else if (role == ReceviedDate) return station.ReceivedDate();
     else if (role == ShippedDate) return station.ShippedDate();
+    else if (role == egunType)  return station.egunType();
 
     return QVariant();
 }
@@ -65,12 +66,15 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
     roles[SUPPLIERTESTDATE] = "SUPPLIERTESTDATE";
     roles[ReceviedDate] = "ReceviedDate";
     roles[ShippedDate] = "ShippedDate";
+    roles[egunType] = "egunType";
     return roles;
 }
 
-void StationObjectModel::updateStation(const int &id, const QString &name, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+void StationObjectModel::updateStation(const int &id, const QString &name,const QByteArray &egunType, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
     StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setStationName(name);
+    tmpStation.setEgunType(egunType);
     tmpStation.setKTPN(KTPN);
     tmpStation.setKTSERIALPN(KTSERIALPN);
     tmpStation.setLPN(LPN);
@@ -79,6 +83,5 @@ void StationObjectModel::updateStation(const int &id, const QString &name, const
     tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
     tmpStation.setReceivedDate(ReceivedDate);
     tmpStation.setShippedDate(ShippedDate);
-
     m_stationObjectHash.insert(id, tmpStation);
 }

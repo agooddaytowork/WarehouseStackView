@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_LocalDatabaseInterface_t {
-    QByteArrayData data[25];
-    char stringdata0[264];
+    QByteArrayData data[26];
+    char stringdata0[273];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,23 +48,24 @@ QT_MOC_LITERAL(13, 150, 11), // "shipStation"
 QT_MOC_LITERAL(14, 162, 13), // "updateStation"
 QT_MOC_LITERAL(15, 176, 2), // "id"
 QT_MOC_LITERAL(16, 179, 4), // "name"
-QT_MOC_LITERAL(17, 184, 4), // "KTPN"
-QT_MOC_LITERAL(18, 189, 10), // "KTSERIALPN"
-QT_MOC_LITERAL(19, 200, 3), // "LPN"
-QT_MOC_LITERAL(20, 204, 14), // "GUNOFFPRESSURE"
-QT_MOC_LITERAL(21, 219, 2), // "PO"
-QT_MOC_LITERAL(22, 222, 16), // "SUPPLIERTESTDATE"
-QT_MOC_LITERAL(23, 239, 12), // "ReceivedDate"
-QT_MOC_LITERAL(24, 252, 11) // "ShippedDate"
+QT_MOC_LITERAL(17, 184, 8), // "egunType"
+QT_MOC_LITERAL(18, 193, 4), // "KTPN"
+QT_MOC_LITERAL(19, 198, 10), // "KTSERIALPN"
+QT_MOC_LITERAL(20, 209, 3), // "LPN"
+QT_MOC_LITERAL(21, 213, 14), // "GUNOFFPRESSURE"
+QT_MOC_LITERAL(22, 228, 2), // "PO"
+QT_MOC_LITERAL(23, 231, 16), // "SUPPLIERTESTDATE"
+QT_MOC_LITERAL(24, 248, 12), // "ReceivedDate"
+QT_MOC_LITERAL(25, 261, 11) // "ShippedDate"
 
     },
     "LocalDatabaseInterface\0initializeDataToGraph\0"
     "\0QAbstractSeries*\0series\0QAbstractAxis*\0"
     "axis\0mRFID\0updateDataToGraph\0setHVON\0"
     "globalId\0command\0setValveON\0shipStation\0"
-    "updateStation\0id\0name\0KTPN\0KTSERIALPN\0"
-    "LPN\0GUNOFFPRESSURE\0PO\0SUPPLIERTESTDATE\0"
-    "ReceivedDate\0ShippedDate"
+    "updateStation\0id\0name\0egunType\0KTPN\0"
+    "KTSERIALPN\0LPN\0GUNOFFPRESSURE\0PO\0"
+    "SUPPLIERTESTDATE\0ReceivedDate\0ShippedDate"
 };
 #undef QT_MOC_LITERAL
 
@@ -87,7 +88,7 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
        9,    2,   54,    2, 0x0a /* Public */,
       12,    2,   59,    2, 0x0a /* Public */,
       13,    1,   64,    2, 0x0a /* Public */,
-      14,   10,   67,    2, 0x0a /* Public */,
+      14,   11,   67,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, QMetaType::QString,    4,    6,    7,
@@ -95,7 +96,7 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Bool,   10,   11,
     QMetaType::Void, QMetaType::Int, QMetaType::Bool,   10,   11,
     QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QString, QMetaType::QString, QMetaType::QString,   15,   16,   17,   18,   19,   20,   21,   22,   23,   24,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QString, QMetaType::QString, QMetaType::QString,   15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25,
 
        0        // eod
 };
@@ -111,7 +112,7 @@ void LocalDatabaseInterface::qt_static_metacall(QObject *_o, QMetaObject::Call _
         case 2: _t->setHVON((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
         case 3: _t->setValveON((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
         case 4: _t->shipStation((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 5: _t->updateStation((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QByteArray(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4])),(*reinterpret_cast< const QByteArray(*)>(_a[5])),(*reinterpret_cast< const QByteArray(*)>(_a[6])),(*reinterpret_cast< const QByteArray(*)>(_a[7])),(*reinterpret_cast< const QString(*)>(_a[8])),(*reinterpret_cast< const QString(*)>(_a[9])),(*reinterpret_cast< const QString(*)>(_a[10]))); break;
+        case 5: _t->updateStation((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QByteArray(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4])),(*reinterpret_cast< const QByteArray(*)>(_a[5])),(*reinterpret_cast< const QByteArray(*)>(_a[6])),(*reinterpret_cast< const QByteArray(*)>(_a[7])),(*reinterpret_cast< const QByteArray(*)>(_a[8])),(*reinterpret_cast< const QString(*)>(_a[9])),(*reinterpret_cast< const QString(*)>(_a[10])),(*reinterpret_cast< const QString(*)>(_a[11]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {

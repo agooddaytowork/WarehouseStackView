@@ -200,7 +200,7 @@ void LocalDatabaseInterface::shipStation(const int &globalId)
 
 
 
-void LocalDatabaseInterface::updateStation(const int &id, const QString &name, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+void LocalDatabaseInterface::updateStation(const int &id, const QString &name,const QByteArray &egunType, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
-  m_stationModel.updateStation(id, name,KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
+  m_stationModel.updateStation(id, name, egunType,KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
 }
