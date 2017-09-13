@@ -11,11 +11,6 @@ ApplicationWindow {
     height: 1080
     title: qsTr("Station Page")
 
-//    Rectangle {
-//        color: "#212126"
-//        anchors.fill: parent
-//    }
-
     ToolBar{
         id:theToolBar
         width: parent.width
@@ -85,11 +80,6 @@ ApplicationWindow {
         {
             id: mainPage
         }
-
-//        initialItem: DepotFloor{
-//            id: mainPage
-//        }
-
 
     }
 }
