@@ -74,6 +74,9 @@ public:
     bool ValveON() const;
     void setValveON(const bool &command);
 
+    bool ProtectON() const;
+    void setProtectON(const bool &command);
+
 private:
     int m_id;
     QString m_stationName;
@@ -93,6 +96,7 @@ private:
     QString  m_ShippedDate;
     bool m_HVON;
     bool m_ValveON;
+    bool m_ProtectON;
 
 };
 

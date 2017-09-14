@@ -48,7 +48,8 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
     else if (role == egunType)  return station.egunType();
     else if (role == stationState) return station.stationState();
     else if (role == HVON) return station.HVON();
-    else if (rolve == ValveON) return station.ValveON();
+    else if (role == ValveON) return station.ValveON();
+    else if (role == ProtectON ) return station.ProtectON();
 
     return QVariant();
 }
@@ -73,6 +74,8 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
     roles[stationState] = "stationState";
     roles[HVON] = "HVON";
     roles[ValveON] = "ValveON";
+    roles[ProtectON] = "ProtectOn";
+
     return roles;
 }
 
@@ -102,7 +105,7 @@ void StationObjectModel::updateStationState(const int &id,  const QByteArray &st
 }
 
 
-void StationObjectModel::updatestationHVON(const int &id, const bool &command)
+void StationObjectModel::updateStationHVON(const int &id, const bool &command)
 {
     StationObject tmpStation = m_stationObjectHash.value(id);
     tmpStation.setHVON(command);
@@ -118,4 +121,11 @@ void StationObjectModel::updateStationValveON(const int &id, const bool &command
     m_stationObjectHash.insert(id, tmpStation);
 }
 
+void StationObjectModel::updateStationProtectON(const int &id, const bool &command)
+{
+    StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setProtectON(command);
+
+    m_stationObjectHash.insert(id, tmpStation);
+}
 

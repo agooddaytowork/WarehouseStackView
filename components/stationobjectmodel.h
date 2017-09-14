@@ -34,7 +34,8 @@ public:
         ShippedDate,
         stationState,
         HVON,
-        ValveON
+        ValveON,
+        ProtectON
 
     };
 
@@ -46,8 +47,10 @@ public:
                        , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
 
     void updateStationState(const int &id, const QByteArray &state);
-    void updatestationHVON(const int &id, const bool &command);
+    void updateStationHVON(const int &id, const bool &command);
     void updateStationValveON(const int &id, const bool &command);
+    void updateStationProtectON(const int &id, const bool &command);
+
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;

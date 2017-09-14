@@ -19,6 +19,9 @@ Item {
     property string sPONumber
     property string sDATERECEIVED
     property string sDATESHIPPED
+    property bool   sHVON
+    property bool sProtectON
+    property bool sValveON
 
 
 
@@ -34,41 +37,12 @@ Item {
         property  int initialX
         property int  initialY
 
-//       MultiPointTouchArea
-//       {
-//           anchors.fill: parent
-//           minimumTouchPoints: 1
-//           maximumTouchPoints: 2
-//           mouseEnabled: true
-//           touchPoints: [
-//               TouchPoint { id: touch1 },
-//               TouchPoint { id: touch2 }
-//           ]
-
-//           onPressed: {
-//               chartView.initialX = touch1.x
-//               chartView.initialY = touch1.y
-//           }
-
-//           onGestureStarted:
-//           {
-
-////                 axisX1.min = new Date(axisX1.min - (touch1.x - initialX))
-////                 axisX1.max = new Date(axisX1.max - (touch1.x - initialX))
-//                chartView.scrollLeft(touch1.x - chartView.initialX)
-//                chartView.scrollUp(touch1.y - chartView.initialY)
-
-
-//           }
-//       }
-
 
        PinchArea{
            width: parent.width
            height: parent.height
 
            onPinchUpdated: {
-//             chartView.zoom(pinch.scale*0.01)
                chartView.scrollLeft(pinch.center.x - pinch.previousCenter.x)
                chartView.scrollUp(pinch.center.y - pinch.previousCenter.y)
 
@@ -223,13 +197,13 @@ Item {
                 Switch{
                     id: hvONSwitch
                     text:"HV ON"
-                    checked: false
+                    checked: sHVON
 
                 }
                 Switch{
                     id: protectOnSwitch
                     text:"Protect ON"
-                    checked: false
+                    checked: sProtectON
 
                 }
 
@@ -238,7 +212,7 @@ Item {
                 {
                     id: valveONSwitch
                     text: "Valve ON"
-                    checked: false
+                    checked: sValveON
 
                 }
 
@@ -253,7 +227,6 @@ Item {
         }
 
     }
-
 
 
         Flickable{

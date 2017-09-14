@@ -24,6 +24,7 @@ Item {
             anchors.fill: parent
             fillMode: Image.Stretch
         }
+
     }
 
     Rectangle
@@ -274,13 +275,13 @@ Item {
                                                sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
                                                sPONumber: PO,
                                                sDATERECEIVED: ReceviedDate,
-                                               sDATESHIPPED: ShippedDate})
+                                               sDATESHIPPED: ShippedDate,
+                                               sHVON: HVON,
+                                               sProtectON: ProtectOn,
+                                               sValveON:ValveON })
+
                     }
 
-                    onDoubleClicked:
-                    {
-
-                    }
                 }
             }
         }
@@ -356,5 +357,6 @@ Item {
         }
 
     }
+
 
 }

@@ -229,3 +229,13 @@ void StationObject::setValveON(const bool &command)
 {
     m_ValveON = command;
 }
+
+bool StationObject::ProtectON() const
+{
+    return m_ProtectON;
+}
+
+void StationObject::setProtectON(const bool &command)
+{
+    m_ProtectON = command;
+}

@@ -30,8 +30,6 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
 
     // initialize LocaldatabaseHash
 
-
-
     if(localDb.open())
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled,
@@ -48,7 +46,6 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
       {
             anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Initialization failed!"));
       }
-
 
     }
     else
@@ -138,7 +135,6 @@ void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series, QAbs
     if(tmpQuery.exec("SELECT * FROM (SELECT * FROM "+ mRFID +" ORDER BY Time DESC LIMIT 180) T1 ORDER BY Time ASC"))
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Succeeded: SELECT * FROM (SELECT * FROM "+ mRFID +" ORDER BY Time DESC LIMIT 500) T1 ORDER BY Time ASC"));
-
         if(series)
         {
             if(axis)
@@ -162,8 +158,6 @@ void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series, QAbs
                     lineSeries->append(tmpQuery.value("Time").toDateTime().toMSecsSinceEpoch(), tmpQuery.value("Pressure").toDouble());
 
                    maxTime = tmpQuery.value("Time").toDateTime();
-
-
                 }
                 anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Finished extracting data"));
                 xAxis->setMax(maxTime);
@@ -183,14 +177,19 @@ void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series)
 
 }
 
-void LocalDatabaseInterface::setHVON(const int &globalId, const bool command)
+void LocalDatabaseInterface::setHVON(const int &globalId, const bool &command)
 {
-
+    m_stationModel.updateStationHVON(globalId,command);
 }
 
-void LocalDatabaseInterface::setValveON(const int &globalId, const bool command)
+void LocalDatabaseInterface::setValveON(const int &globalId, const bool &command)
 {
+    m_stationModel.updateStationValveON(globalId, command);
+}
 
+void LocalDatabaseInterface::setProtectON(const int &globalId, const bool &command)
+{
+    m_stationModel.updateStationProtectON(globalId, command);
 }
 
 void LocalDatabaseInterface::shipStation(const int &globalId)
@@ -198,9 +197,8 @@ void LocalDatabaseInterface::shipStation(const int &globalId)
 
 }
 
-
-
 void LocalDatabaseInterface::updateStation(const int &id, const QString &name,const QByteArray &egunType, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
   m_stationModel.updateStation(id, name, egunType,KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
+
 }
