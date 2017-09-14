@@ -65,6 +65,14 @@ public:
     QString ShippedDate() const;
     void setShippedDate(const QString &date);
 
+    QByteArray stationState() const;
+    void setStationState(const QByteArray &state);
+
+    bool HVON() const;
+    void setHVON(const bool &command);
+
+    bool ValveON() const;
+    void setValveON(const bool &command);
 
 private:
     int m_id;
@@ -79,9 +87,12 @@ private:
     QByteArray m_LPN;
     QByteArray m_GUNOFFPRESSURE;
     QByteArray m_PONumber;
+    QByteArray m_StationState;
     QString  m_SUPPLIERTESTDATE;
     QString  m_ReceivedDate;
     QString  m_ShippedDate;
+    bool m_HVON;
+    bool m_ValveON;
 
 };
 

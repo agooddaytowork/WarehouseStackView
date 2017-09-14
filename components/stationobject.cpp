@@ -191,3 +191,41 @@ void StationObject::setEgunType(const QByteArray &egunType)
     m_egunType = egunType;
 }
 
+QByteArray StationObject::stationState() const
+{
+    return m_StationState;
+}
+
+void StationObject::setStationState(const QByteArray &state)
+{
+    if( state == "EgunNotFound" || state == "EgunGood" || state == "EgunWarning" || state =="EgunAlert")
+    {
+        m_StationState = state;
+    }
+    else
+    {
+        m_StationState = "EgunNotFound";
+    }
+
+}
+
+
+bool StationObject::HVON() const
+{
+    return m_HVON;
+}
+
+void StationObject::setHVON(const bool &command)
+{
+    m_HVON = command;
+}
+
+bool StationObject::ValveON() const
+{
+    return m_ValveON;
+}
+
+void StationObject::setValveON(const bool &command)
+{
+    m_ValveON = command;
+}

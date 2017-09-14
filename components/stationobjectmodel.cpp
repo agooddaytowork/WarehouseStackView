@@ -46,6 +46,9 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
     else if (role == ReceviedDate) return station.ReceivedDate();
     else if (role == ShippedDate) return station.ShippedDate();
     else if (role == egunType)  return station.egunType();
+    else if (role == stationState) return station.stationState();
+    else if (role == HVON) return station.HVON();
+    else if (rolve == ValveON) return station.ValveON();
 
     return QVariant();
 }
@@ -67,6 +70,9 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
     roles[ReceviedDate] = "ReceviedDate";
     roles[ShippedDate] = "ShippedDate";
     roles[egunType] = "egunType";
+    roles[stationState] = "stationState";
+    roles[HVON] = "HVON";
+    roles[ValveON] = "ValveON";
     return roles;
 }
 
@@ -83,5 +89,33 @@ void StationObjectModel::updateStation(const int &id, const QString &name,const 
     tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
     tmpStation.setReceivedDate(ReceivedDate);
     tmpStation.setShippedDate(ShippedDate);
+
     m_stationObjectHash.insert(id, tmpStation);
 }
+
+void StationObjectModel::updateStationState(const int &id,  const QByteArray &state)
+{
+    StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setStationState(state);
+
+    m_stationObjectHash.insert(id, tmpStation);
+}
+
+
+void StationObjectModel::updatestationHVON(const int &id, const bool &command)
+{
+    StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setHVON(command);
+
+    m_stationObjectHash.insert(id, tmpStation);
+}
+
+void StationObjectModel::updateStationValveON(const int &id, const bool &command)
+{
+    StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setValveON(command);
+
+    m_stationObjectHash.insert(id, tmpStation);
+}
+
+
