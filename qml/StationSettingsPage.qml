@@ -6,17 +6,17 @@ Item {
     id: stationSettingsPage
 
     property int    sGlobalId
-//    property string sStationName
-//    property string sEgunType
-//    property double sthresholdDownP
-//    property double sthresholdUpP
-//    property double sthresholdDownI
-//    property double sthresholdUpI
-//    property int sPumpType
-//    property int sPumpAddr
-//    property int sPumpCh
-//    property int sSDCSAddr
-//    property int sSDCSCh
+    //    property string sStationName
+    //    property string sEgunType
+    //    property double sthresholdDownP
+    //    property double sthresholdUpP
+    //    property double sthresholdDownI
+    //    property double sthresholdUpI
+    //    property int sPumpType
+    //    property int sPumpAddr
+    //    property int sPumpCh
+    //    property int sSDCSAddr
+    //    property int sSDCSCh
 
     Rectangle
     {
@@ -69,6 +69,7 @@ Item {
         {
             id: stationSettingsFlickable
             anchors.fill: parent
+            anchors.leftMargin: 20
             flickableDirection:  Flickable.VerticalFlick
             clip: true
 
@@ -77,7 +78,7 @@ Item {
                 id: column
                 width: parent.width
                 height: parent.height
-                spacing: 5
+                spacing: 1
 
                 Label{
                     width: parent.width
@@ -130,11 +131,188 @@ Item {
                     }
                 }
 
+                Row
+                {
+                    Label
+                    {
+                        text: "Ion Pump Controller Type: "
+                        font.pixelSize: 20
+                    }
 
+                    ComboBox{
+                        id: pumpTypeComboBox
+                        currentIndex: 0
+                        font.pixelSize: 20
+                        width: 300
+                        model: ListModel
+                        {
+                            ListElement{text:"UHV4"; }
+                            ListElement{text:"UHV2"}
+                        }
+                    }
+                }
+
+                Row
+                {
+                    Label
+                    {
+                        text: "Ion Pump Address: "
+                        font.pixelSize: 20
+                    }
+
+                    SpinBox
+                    {
+                        id: pumpAddressSpinBox
+                        value: 0
+                        from: 0
+                        to: 32
+                        stepSize: 1
+                    }
+                }
+
+                Row
+                {
+                    Label
+                    {
+                        text: "Ion Pump Channel: "
+                        font.pixelSize: 20
+                    }
+
+                    SpinBox
+                    {
+                        id: pumpChannelSpinBox
+                        value: 1
+                        from: 1
+                        to: 4
+                        stepSize: 1
+
+                    }
+                }
+
+                Row
+                {
+                    Label
+                    {
+                        text: "SDCS Address: "
+                        font.pixelSize: 20
+                    }
+
+                    SpinBox
+                    {
+                        id: sDCSAddressSpinBox
+                        value: 0
+                        from: 0
+                        to: 20
+                        stepSize: 1
+                    }
+                }
+
+                Row
+                {
+                    Label
+                    {
+                        text: "SDCS Channel: "
+                        font.pixelSize: 20
+                    }
+
+                    SpinBox
+                    {
+                        id: sDCSChannelSpinBox
+                        value: 1
+                        from: 1
+                        to: 6
+                        stepSize: 1
+                    }
+                }
+
+                FrusTextField{
+                    id: thesholdDownP
+                    width: parent.width
+                    labelText: "Pressure Threshold Lower Point : "
+
+
+
+                    onTextfieldchanged:
+                    {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            stationSettingsFlickable.contentY = posWithinFlickable.y - stationSettingsFlickable.height / 2;
+                        }
+                    }
+                }
+
+                FrusTextField{
+                    id: thesholdUpP
+                    width: parent.width
+                    labelText: "Pressure Threshold Upper Point : "
+
+
+
+                    onTextfieldchanged:
+                    {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            stationSettingsFlickable.contentY = posWithinFlickable.y - stationSettingsFlickable.height / 2;
+                        }
+                    }
+                }
+
+                FrusTextField{
+                    id: thesholdDownI
+                    width: parent.width
+                    labelText: "Current Threshold Lower Point : "
+
+
+
+                    onTextfieldchanged:
+                    {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            stationSettingsFlickable.contentY = posWithinFlickable.y - stationSettingsFlickable.height / 2;
+                        }
+                    }
+                }
+
+                FrusTextField{
+                    id: thesholdUpI
+                    width: parent.width
+                    labelText: "Current Threshold Upper Point : "
+
+
+
+                    onTextfieldchanged:
+                    {
+                        if(activeFocus)
+                        {
+                            keyboardRect.visible = activeFocus
+                            var posWithinFlickable = mapToItem(column, 0, height / 2);
+                            stationSettingsFlickable.contentY = posWithinFlickable.y - stationSettingsFlickable.height / 2;
+                        }
+                    }
+                }
+
+                Button
+                {
+
+                    text: "Update"
+                    font.pixelSize: 20
+                    background: Rectangle{
+                        implicitHeight: 100
+                        implicitWidth: 400
+                        radius: 10
+                        border.width: 1
+                        border.color: "black"
+
+                    }
+                }
 
             }
-
-
         }
     }
 
