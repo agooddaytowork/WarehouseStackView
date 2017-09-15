@@ -261,7 +261,7 @@ Item {
 
                 FrusTextField{
                     id: rfid
-
+                    width: parent.width
                     labelText: "RFID: "
                     myText: sRFID
 
@@ -421,7 +421,7 @@ Item {
 
                     onClicked: {
 
-                    LocalDb.updateStation(sGlobalId, sStationName, sEgunType, ktpn.myText, ktserialpn.myText, lpn.myText, mfgPressureoff.myText, purchaseOrder.myText, supplierTestDate.myText, dateReceive.myText, dateShipped.myText)
+                    LocalDb.updateStationFruInfo(sGlobalId, ktpn.myText, ktserialpn.myText, lpn.myText, mfgPressureoff.myText, purchaseOrder.myText, supplierTestDate.myText, dateReceive.myText, dateShipped.myText)
 
                     }
 
@@ -444,9 +444,10 @@ Item {
 
         InputPanel {
                 id: inputPanel
-                y: Qt.inputMethod.visible ? (parent.height - inputPanel.height ) : parent.height
+                y: Qt.inputMethod.visible ? (parent.height - inputPanel.height + 100 ) : parent.height
                 anchors.left: parent.left
                 anchors.right: parent.right
+                scale: 0.7
 
             }
 }

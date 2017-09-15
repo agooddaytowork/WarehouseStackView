@@ -113,6 +113,7 @@ release/qrc_qml.cpp: qml.qrc \
 		qtquickcontrols2.conf \
 		main.qml \
 		qml/FrusTextField.qml \
+		qml/StationSettingsPage.qml \
 		qml/StationPage.qml \
 		qml/ControlPanel.qml \
 		qml/DepotFloor.qml \
@@ -121,9 +122,14 @@ release/qrc_qml.cpp: qml.qrc \
 		images/tabs_standard.png \
 		images/tab_selected.png \
 		images/toolbar.png \
+		images/home.png \
+		images/menu.png \
 		images/button_default.png \
 		images/button_pressed.png \
+		images/lock.png \
+		images/setting.png \
 		images/navigation_next_item.png \
+		images/back.png \
 		images/textinput.png \
 		images/Kla-logo-purplepng.png \
 		images/background.jpg \

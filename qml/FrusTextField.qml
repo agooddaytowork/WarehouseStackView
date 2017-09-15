@@ -11,8 +11,7 @@ RowLayout
     property string myText
     property string labelText
 
-
-
+    Layout.fillWidth: true
             spacing: 2
             Label
             {
@@ -27,7 +26,8 @@ RowLayout
                 font.pixelSize: 20
                 color: "black"
                 text: myText
-                width: 250
+                Layout.fillWidth: true
+                Layout.rightMargin: 30
                 height: 40
                 background: Rectangle{
                     radius: 10
@@ -38,16 +38,13 @@ RowLayout
 
                 onTextChanged:
                 {
-                    myText = text
+                    myText = thisTextfield.text
                 }
 
                 onActiveFocusChanged:
                 {
                     textfieldchanged(activeFocus)
                 }
-
             }
-
-
 }
 

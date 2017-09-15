@@ -19,5 +19,11 @@
         <file>images/background.jpg</file>
         <file>qml/LogInPage.qml</file>
         <file>images/Kla-logo-purplepng.png</file>
+        <file>qml/StationSettingsPage.qml</file>
+        <file>images/back.png</file>
+        <file>images/lock.png</file>
+        <file>images/setting.png</file>
+        <file>images/home.png</file>
+        <file>images/menu.png</file>
     </qresource>
 </RCC>

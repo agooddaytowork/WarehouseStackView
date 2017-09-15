@@ -7,6 +7,7 @@ import Qt.labs.settings 1.0
 
 Item {
 
+    id: loginPage
     Settings
     {
         id: setting
@@ -24,6 +25,8 @@ Item {
             source: "../images/background.jpg"
             fillMode: Image.Stretch
         }
+
+
 
 
             TextField
@@ -45,13 +48,25 @@ Item {
                     border.width: 2
                 }
 
+
+
                 onTextChanged:
                 {
                     if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
                     {
                         passwordField.text = ""
-                        inputPanel.y = parent.height
-                        mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+                        passwordField.focus = false
+                        if(mainStackView.depth <=1)
+                        {
+                            mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+                        }
+                        else
+                        {
+                            mainStackView.pop()
+                        }
+
+
+
 
                     }
                     else
