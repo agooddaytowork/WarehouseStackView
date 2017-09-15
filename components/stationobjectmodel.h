@@ -35,14 +35,23 @@ public:
         stationState,
         HVON,
         ValveON,
-        ProtectON
+        ProtectON,
+        thresholdDownP,
+        thresholdUpP,
+        thresholdDownI,
+        thresholdUpI,
+        pumpType,
+        pumpAddr,
+        pumpCh,
+        SDCSAddr,
+        SDCSCh
 
     };
 
     StationObjectModel(QObject *parent =0);
 
     void addStation(const StationObject &station);
-    void updateStation(const int &id, const QString &name, const QByteArray &egunType
+    void updateStationFruInfo(const int &id
                        , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
                        , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
 
@@ -50,6 +59,10 @@ public:
     void updateStationHVON(const int &id, const bool &command);
     void updateStationValveON(const int &id, const bool &command);
     void updateStationProtectON(const int &id, const bool &command);
+
+    void updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP
+                               ,const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh
+                               ,const int &SDCSAddr, const int &SDCSCh);
 
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;

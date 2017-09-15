@@ -50,6 +50,15 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
     else if (role == HVON) return station.HVON();
     else if (role == ValveON) return station.ValveON();
     else if (role == ProtectON ) return station.ProtectON();
+    else if (role == thresholdDownP) return station.thresholdDownP();
+    else if (role == thresholdUpP) return station.thresholdUpP();
+    else if (role == thresholdDownI) return station.thresholdDownI();
+    else if (role == thresholdUpI) return station.thresholdUpI();
+    else if (role == pumpType) return station.pumpType();
+    else if (role == pumpAddr) return station.pumpAddr();
+    else if (role == pumpCh)    return station.pumpCh();
+    else if (role == SDCSAddr) return station.SDCSAddr();
+    else if (role == SDCSCh)    return station.SDCSCh();
 
     return QVariant();
 }
@@ -75,15 +84,22 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
     roles[HVON] = "HVON";
     roles[ValveON] = "ValveON";
     roles[ProtectON] = "ProtectOn";
+    roles[thresholdDownP] = "thresholdDownP";
+    roles[thresholdUpP] = "thresholdUpP";
+    roles[thresholdDownI]= "thresholdDownI";
+    roles[thresholdUpI] = "thresholdUpI";
+    roles[pumpType] = "pumpType";
+    roles[pumpAddr] = "pumpAddr";
+    roles[pumpCh] = "pumpCh";
+    roles[SDCSAddr] ="SDCSAddr";
+    roles[SDCSCh] = "SDCSCh";
 
     return roles;
 }
 
-void StationObjectModel::updateStation(const int &id, const QString &name,const QByteArray &egunType, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+void StationObjectModel::updateStationFruInfo(const int &id, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
     StationObject tmpStation = m_stationObjectHash.value(id);
-    tmpStation.setStationName(name);
-    tmpStation.setEgunType(egunType);
     tmpStation.setKTPN(KTPN);
     tmpStation.setKTSERIALPN(KTSERIALPN);
     tmpStation.setLPN(LPN);
@@ -92,7 +108,6 @@ void StationObjectModel::updateStation(const int &id, const QString &name,const 
     tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
     tmpStation.setReceivedDate(ReceivedDate);
     tmpStation.setShippedDate(ShippedDate);
-
     m_stationObjectHash.insert(id, tmpStation);
 }
 
@@ -129,3 +144,20 @@ void StationObjectModel::updateStationProtectON(const int &id, const bool &comma
     m_stationObjectHash.insert(id, tmpStation);
 }
 
+void StationObjectModel::updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
+{
+    StationObject tmpStation = m_stationObjectHash.value(id);
+    tmpStation.setStationName(name);
+    tmpStation.setEgunType(eguntype);
+    tmpStation.setThresholdDownP(thresholdDownP);
+    tmpStation.setThresHoldUpP(thresholdUpP);
+    tmpStation.setThresholdDownI(thresholdDownI);
+    tmpStation.setThresholdUpI(thresholdUpI);
+    tmpStation.setPumpType(pumpType);
+    tmpStation.setPumpAddr(pumpAddr);
+    tmpStation.setPumpCh(pumpCh);
+    tmpStation.setSDCSAddr(SDCSAddr);
+    tmpStation.setSDCSCh(SDCSCh);
+
+    m_stationObjectHash.insert(id, tmpStation);
+}

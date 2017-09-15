@@ -17,7 +17,14 @@ class StationObject
 
 
 public:
-     StationObject();
+
+
+//    enum pumpType{
+//        UHV2,
+//        UHV4
+//    };
+
+    StationObject();
 
      explicit StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID);
      explicit StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID, const QByteArray &egunType
@@ -77,6 +84,34 @@ public:
     bool ProtectON() const;
     void setProtectON(const bool &command);
 
+    double thresholdDownP() const;
+    void setThresholdDownP(const double &value);
+
+    double thresholdUpP() const;
+    void setThresHoldUpP(const double &value);
+
+    double thresholdDownI() const;
+    void setThresholdDownI(const double &value);
+
+    double thresholdUpI() const;
+    void setThresholdUpI(const double &value);
+
+    int pumpType() const;
+    void setPumpType(const int &type);
+
+    int pumpAddr() const;
+    void setPumpAddr(const int & addr);
+
+    int pumpCh() const;
+    void setPumpCh(const int &ch);
+
+
+    int SDCSAddr() const;
+    void setSDCSAddr(const int & addr);
+
+    int SDCSCh() const;
+    void setSDCSCh(const int & ch);
+
 private:
     int m_id;
     QString m_stationName;
@@ -94,9 +129,22 @@ private:
     QString  m_SUPPLIERTESTDATE;
     QString  m_ReceivedDate;
     QString  m_ShippedDate;
+
     bool m_HVON;
     bool m_ValveON;
     bool m_ProtectON;
+
+    double m_thresholdDownP;
+    double m_thresholdUpP;
+    double m_thresholdDownI;
+    double m_thresholdUpI;
+
+    int m_pumpType;
+    int m_pumpAddr;
+    int m_pumpCh;
+
+    int m_SDCSAddr;
+    int m_SDCSCh;
 
 };
 

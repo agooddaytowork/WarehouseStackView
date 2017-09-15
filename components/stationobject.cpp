@@ -239,3 +239,101 @@ void StationObject::setProtectON(const bool &command)
 {
     m_ProtectON = command;
 }
+
+double StationObject::thresholdDownI() const
+{
+    return m_thresholdDownI;
+}
+
+void StationObject::setThresholdDownI(const double &value)
+{
+    m_thresholdDownI = value;
+}
+
+double StationObject::thresholdDownP() const
+{
+    return m_thresholdDownP;
+}
+
+void StationObject::setThresholdDownP(const double &value)
+{
+    m_thresholdDownP = value;
+}
+
+double StationObject::thresholdUpI() const
+{
+    return m_thresholdUpI;
+}
+
+void StationObject::setThresholdUpI(const double &value)
+{
+    m_thresholdUpI = value;
+}
+
+double StationObject::thresholdUpP() const
+{
+    return m_thresholdUpP;
+}
+
+void StationObject::setThresHoldUpP(const double &value)
+{
+    m_thresholdUpP = value;
+}
+
+int StationObject::pumpType() const
+{
+    return m_pumpType;
+}
+
+void StationObject::setPumpType(const int &type)
+{
+   m_pumpType = type;
+
+}
+
+int StationObject::pumpAddr() const
+{
+    return m_pumpAddr;
+}
+
+void StationObject::setPumpAddr(const int &addr)
+{
+    m_pumpAddr = addr;
+}
+
+int StationObject::pumpCh() const
+{
+    return m_pumpCh;
+}
+
+void StationObject::setPumpCh(const int &ch)
+{
+    m_pumpCh = ch;
+}
+
+int StationObject::SDCSAddr() const
+{
+    return m_SDCSAddr;
+}
+
+void StationObject::setSDCSAddr(const int &addr)
+{
+    m_SDCSAddr = addr;
+}
+
+int StationObject::SDCSCh() const
+{
+    return m_SDCSCh;
+}
+
+void StationObject::setSDCSCh(const int &ch)
+{
+    m_SDCSCh = ch;
+}
+
+
+
+
+
+
+

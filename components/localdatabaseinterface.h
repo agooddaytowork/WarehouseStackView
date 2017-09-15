@@ -28,12 +28,18 @@ public slots:
     Q_INVOKABLE void setValveON(const int & globalId, const bool &command);
     Q_INVOKABLE void setProtectON(const int &globalId, const bool &command);
     Q_INVOKABLE void shipStation(const int & globalId);
-    Q_INVOKABLE void updateStation(const int &id, const QString &name
-                                   , const QByteArray &egunType, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
-                                   , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
+    Q_INVOKABLE void updateStationFruInfo(const int &id
+                                          , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
+                                          , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
+
+    Q_INVOKABLE  void updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP
+                                            ,const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh
+                                            ,const int &SDCSAddr, const int &SDCSCh);
+
+
+    bool initializeStationModel();
 
 private:
-    bool initializeStationModel();
     QString m_dbUsername;
     QString m_dbPassword;
     QString m_dbName;

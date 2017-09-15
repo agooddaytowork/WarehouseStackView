@@ -197,8 +197,13 @@ void LocalDatabaseInterface::shipStation(const int &globalId)
 
 }
 
-void LocalDatabaseInterface::updateStation(const int &id, const QString &name,const QByteArray &egunType, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+void LocalDatabaseInterface::updateStationFruInfo(const int &id,const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
-  m_stationModel.updateStation(id, name, egunType,KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
+  m_stationModel.updateStationFruInfo(id, KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
 
+}
+
+void LocalDatabaseInterface::updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
+{
+    m_stationModel.updateStationSettings(id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
 }
