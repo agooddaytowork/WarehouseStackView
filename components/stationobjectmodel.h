@@ -67,6 +67,7 @@ public:
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    StationObject getStation(const int &id);
 protected:
     QHash<int, QByteArray> roleNames() const;
 

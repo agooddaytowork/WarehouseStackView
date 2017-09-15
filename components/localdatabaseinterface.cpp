@@ -207,3 +207,27 @@ void LocalDatabaseInterface::updateStationSettings(const int &id, const QString 
 {
     m_stationModel.updateStationSettings(id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
 }
+
+void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
+{
+    StationObject tmpStation(m_stationModel.getStation(id));
+
+    QSqlQuery tmpQuery;
+
+    tmpQuery.prepare("UPDATE stations (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI, top, left_style) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) WHERE id = " + id);
+    tmpQuery.addBindValue(tmpStation.stationName());
+    tmpQuery.addBindValue(tmpStation.pumpType());
+    tmpQuery.addBindValue(tmpStation.pumpAddr());
+    tmpQuery.addBindValue(tmpStation.pumpCh());
+    tmpQuery.addBindValue(tmpStation.SDCSAddr());
+    tmpQuery.addBindValue(tmpStation.SDCSCh());
+    tmpQuery.addBindValue(tmpStation.thresholdDownP());
+    tmpQuery.addBindValue(tmpStation.thresholdUpP());
+    tmpQuery.addBindValue(tmpStation.thresholdDownI());
+    tmpQuery.addBindValue(tmpStation.thresholdUpI());
+    tmpQuery.addBindValue(tmpStation.top());
+    tmpQuery.addBindValue(tmpStation.left());
+
+
+
+}

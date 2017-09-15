@@ -39,6 +39,9 @@ public slots:
 
     bool initializeStationModel();
 
+    void updateStationSettingToDatabaseSlot(const int &id);
+signals:
+    void updateStationSettingToDatabaseSignal(const int &id);
 private:
     QString m_dbUsername;
     QString m_dbPassword;

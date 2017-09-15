@@ -161,3 +161,8 @@ void StationObjectModel::updateStationSettings(const int &id, const QString &nam
 
     m_stationObjectHash.insert(id, tmpStation);
 }
+
+StationObject StationObjectModel::getStation(const int &id)
+{
+    return m_stationObjectHash.value(id);
+}

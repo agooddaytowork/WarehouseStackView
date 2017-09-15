@@ -102,26 +102,33 @@ ApplicationWindow {
                 }
             }
 
-//            Button
-//            {
-//                id:settingButton
-//                anchors.top: parent.top
-//                anchors.right: parent.right
-//                anchors.rightMargin: 20
-//                text: "Edit"
-//                opacity: mainStackView.depth == 2 ? 1 : 0
-//                Image {
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    source: "images/navigation_previous_item.png"
-//                }
+            //            Rectangle
+            //            {
+            //                id: homeButton
+            //                width: 50
+            //                height: 50
+            //                radius: 10
+            //                anchors.right: parent.right
+            //                anchors.rightMargin:90
+            //                opacity: mainStackView.depth >2? 1:0
+            //                color: homemouse.pressed ? "#222" : "transparent"
+            //                Image {
+            //                    id: homeButtonIcon
+            //                    source: "images/home.png"
 
-//                onClicked:
-//                {
+            //                }
+            //                MouseArea
+            //                {   id: homemouse
+            //                    anchors.fill: parent
+            //                    onClicked:
+            //                    {
+            //                        mainStackView.clear()
+            //                        mainStackView.push(Qt.resolvedUrl("qml/DepotFloor.qml"))
+            //                    }
+            //                }
+            //            }
 
-//                    mainStackView.push(Qt.resolvedUrl("qml/FruManagePage.qml"))
 
-//                }
-//            }
         }
     }
 
