@@ -219,10 +219,9 @@ void LocalDatabaseInterface::updateStationFruInfo(const int &id,const QByteArray
 
 void LocalDatabaseInterface::updateStationSettings(const int &index,const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
 {
-    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Gate"));
+
     m_stationModel.updateStationSettings(index, id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
     updateStationSettingToDatabaseSlot(id);
-    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Exit"));
 }
 
 void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
@@ -234,8 +233,8 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
     QSqlQuery tmpQuery;
 
     tmpQueryString+= "UPDATE stations SET "
-                     "stationName = " + tmpStation.stationName()
-                      + ",pumpType = " + tmpStation.pumpType()
+                     "stationName = ?"
+                       ",pumpType = " + QString::number(tmpStation.pumpType())
                       + ",pumpAddr = " + QString::number(tmpStation.pumpAddr())
                       + ",pumpCH = " + QString::number(tmpStation.pumpCh())
                       + ",sdcsAddr =" + QString::number(tmpStation.SDCSAddr())
@@ -243,10 +242,12 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
                       + ",thresholdDownP = " + QString::number(tmpStation.thresholdDownP())
                       + ",thresholdUpP = " +QString::number(tmpStation.thresholdUpP())
                       + ",thresholdDownI = " + QString::number(tmpStation.thresholdDownI())
-                      + ",threshouldUpI = "  + QString::number(tmpStation.thresholdUpI())
+                      + ",thresholdUpI = "  + QString::number(tmpStation.thresholdUpI())
                       + " WHERE id = " + QString::number(id);
 
-    if(tmpQuery.exec(tmpQueryString))
+    tmpQuery.prepare(tmpQueryString);
+    tmpQuery.addBindValue(tmpStation.stationName());
+    if(tmpQuery.exec())
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Succeed:" + tmpQueryString ));
     }
@@ -261,20 +262,20 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
 void LocalDatabaseInterface::updateStationPositions(const int &id)
 {
     StationObject tmpStation(m_stationModel.getStation(id));
-
-    QString tmpQueryString;
     QSqlQuery tmpQuery;
 
-    tmpQueryString.append("UPDATE stations SET top =" + QString::number(tmpStation.top()) +", left_style = "
-                          + QString::number(tmpStation.left()) + " WHERE id = " + QString::number(id));
+        tmpQuery.prepare("UPDATE stations SET top = ?, left_style = ? WHERE id = ?");
+        tmpQuery.addBindValue(tmpStation.top());
+        tmpQuery.addBindValue(tmpStation.left());
+        tmpQuery.addBindValue(id);
 
 
-    if(tmpQuery.exec(tmpQueryString))
+    if(tmpQuery.exec())
     {
-         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeed: " << tmpQueryString));
+         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeed: " << "UPDATE stations SET top = ?, left_style = ? WHERE id = ?"));
     }
     else
     {
-        anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Querry failed: " << tmpQueryString));
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Querry failed: " << "UPDATE stations SET top = ?, left_style = ? WHERE id = ?"));
     }
 }

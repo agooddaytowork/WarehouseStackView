@@ -193,8 +193,8 @@ Item {
                         width: 300
                         model: ListModel
                         {
-                            ListElement{text:"UHV4"; }
-                            ListElement{text:"UHV2"}
+                            ListElement{text:"UHV2"; }
+                            ListElement{text:"UHV4"}
                         }
                     }
                 }
