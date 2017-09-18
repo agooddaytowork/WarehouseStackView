@@ -51,14 +51,14 @@ public:
     StationObjectModel(QObject *parent =0);
 
     void addStation(const StationObject &station);
-    void updateStationFruInfo(const int &id
+    void updateStationFruInfo(const int &index
                        , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
                        , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
 
-    void updateStationState(const int &id, const QByteArray &state);
-    void updateStationHVON(const int &id, const bool &command);
-    void updateStationValveON(const int &id, const bool &command);
-    void updateStationProtectON(const int &id, const bool &command);
+    void updateStationState(const int &index, const QByteArray &state);
+    void updateStationHVON(const int &index, const bool &command);
+    void updateStationValveON(const int &index, const bool &command);
+    void updateStationProtectON(const int &index, const bool &command);
 
     void updateStationSettings(const int &index, const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownPvalue, const double &thresholdUpPvalue
                                , const double &thresholdDownIvalue, const double &thresholdUpIvalue, const int &pumpTypevalue, const int &pumpAddrvalue, const int &pumpChvalue

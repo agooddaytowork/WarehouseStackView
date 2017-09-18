@@ -17,17 +17,17 @@ void StationObjectModel::addStation(const StationObject &station)
 int StationObjectModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-//    return m_stationObjectList.count();
+    //    return m_stationObjectList.count();
     return m_stationObjectMap.count();
 }
 
 QVariant StationObjectModel::data(const QModelIndex &index, int role) const
 {
-//    if(index.row() < 0 || index.row() >= m_stationObjectList.count())
+    //    if(index.row() < 0 || index.row() >= m_stationObjectList.count())
     if(index.row() < 0 || index.row() >= m_stationObjectMap.count())
         return QVariant();
 
-//     StationObject station = m_stationObjectList[index.row()];
+    //     StationObject station = m_stationObjectList[index.row()];
 
     StationObject station = m_stationObjectMap.values()[index.row()];
     if(role == GlobalId) return station.stationId();
@@ -65,42 +65,42 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
 bool StationObjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     //    if(index.row() < 0 || index.row() >= m_stationObjectList.count())
-        if(index.row() < 0 || index.row() >= m_stationObjectMap.count())
-            return false;
+    if(index.row() < 0 || index.row() >= m_stationObjectMap.count())
+        return false;
 
-        StationObject station = m_stationObjectMap.values()[index.row()];
+    StationObject station = m_stationObjectMap.values()[index.row()];
 
-        if (role == stationName)  station.setStationName(value.toString());
-        else if (role == top)  station.setTop(value.toDouble());
-        else if (role == left)  station.setLeft(value.toDouble());
-        else if (role == RFID)  station.setRFID(value.toByteArray());
-        else if (role == KTPN)  station.setKTPN(value.toByteArray());
-        else if (role == KTSERIALPN)  station.setKTSERIALPN(value.toByteArray());
-        else if (role == LPN)  station.setLPN(value.toByteArray());
-        else if (role == GUNOFFPRESSURE)  station.setGUNOFFPRESSURE(value.toByteArray());
-        else if (role == PO)  station.setPO(value.toByteArray());
-        else if (role == SUPPLIERTESTDATE)  station.setSUPPLIERTESTDATE(value.toString());
-        else if (role == ReceviedDate)  station.setReceivedDate(value.toString());
-        else if (role == ShippedDate)  station.setShippedDate(value.toString());
-        else if (role == egunType)   station.setEgunType(value.toByteArray());
-        else if (role == stationState)  station.setStationState(value.toByteArray());
-        else if (role == HVON)  station.setHVON(value.toBool());
-        else if (role == ValveON)  station.setValveON(value.toBool());
-        else if (role == ProtectON )  station.setProtectON(value.toBool());
-        else if (role == thresholdDownP)  station.setThresholdDownP(value.toDouble());
-        else if (role == thresholdUpP)  station.setThresHoldUpP(value.toDouble());
-        else if (role == thresholdDownI)  station.setThresholdDownI(value.toDouble());
-        else if (role == thresholdUpI)  station.setThresholdUpI(value.toDouble());
-        else if (role == pumpType)  station.setPumpType(value.toInt());
-        else if (role == pumpAddr)  station.setPumpAddr(value.toInt());
-        else if (role == pumpCh)     station.setPumpCh(value.toInt());
-        else if (role == SDCSAddr)  station.setSDCSAddr(value.toInt());
-        else if (role == SDCSCh)     station.setSDCSCh(value.toInt());
+    if (role == stationName)  station.setStationName(value.toString());
+    else if (role == top)  station.setTop(value.toDouble());
+    else if (role == left)  station.setLeft(value.toDouble());
+    else if (role == RFID)  station.setRFID(value.toByteArray());
+    else if (role == KTPN)  station.setKTPN(value.toByteArray());
+    else if (role == KTSERIALPN)  station.setKTSERIALPN(value.toByteArray());
+    else if (role == LPN)  station.setLPN(value.toByteArray());
+    else if (role == GUNOFFPRESSURE)  station.setGUNOFFPRESSURE(value.toByteArray());
+    else if (role == PO)  station.setPO(value.toByteArray());
+    else if (role == SUPPLIERTESTDATE)  station.setSUPPLIERTESTDATE(value.toString());
+    else if (role == ReceviedDate)  station.setReceivedDate(value.toString());
+    else if (role == ShippedDate)  station.setShippedDate(value.toString());
+    else if (role == egunType)   station.setEgunType(value.toByteArray());
+    else if (role == stationState)  station.setStationState(value.toByteArray());
+    else if (role == HVON)  station.setHVON(value.toBool());
+    else if (role == ValveON)  station.setValveON(value.toBool());
+    else if (role == ProtectON )  station.setProtectON(value.toBool());
+    else if (role == thresholdDownP)  station.setThresholdDownP(value.toDouble());
+    else if (role == thresholdUpP)  station.setThresHoldUpP(value.toDouble());
+    else if (role == thresholdDownI)  station.setThresholdDownI(value.toDouble());
+    else if (role == thresholdUpI)  station.setThresholdUpI(value.toDouble());
+    else if (role == pumpType)  station.setPumpType(value.toInt());
+    else if (role == pumpAddr)  station.setPumpAddr(value.toInt());
+    else if (role == pumpCh)     station.setPumpCh(value.toInt());
+    else if (role == SDCSAddr)  station.setSDCSAddr(value.toInt());
+    else if (role == SDCSCh)     station.setSDCSCh(value.toInt());
 
-        m_stationObjectMap.insert(station.stationId(), station);
+    m_stationObjectMap.insert(station.stationId(), station);
 
-        dataChanged(index, index, QVector<int>() <<role);
-        return true;
+    dataChanged(index, index, QVector<int>() <<role);
+    return true;
 }
 
 QHash<int, QByteArray> StationObjectModel::roleNames() const
@@ -137,30 +137,34 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
     return roles;
 }
 
-void StationObjectModel::updateStationFruInfo(const int &id, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
+void StationObjectModel::updateStationFruInfo(const int &index, const QByteArray &KTPNValue, const QByteArray &KTSERIALPNValue, const QByteArray &LPNValue, const QByteArray &GUNOFFPRESSUREValue, const QByteArray &POValue, const QString &SUPPLIERTESTDATEValue, const QString &ReceivedDateValue, const QString &ShippedDateValue)
 {
-    StationObject tmpStation = m_stationObjectMap.value(id);
-    tmpStation.setKTPN(KTPN);
-    tmpStation.setKTSERIALPN(KTSERIALPN);
-    tmpStation.setLPN(LPN);
-    tmpStation.setGUNOFFPRESSURE(GUNOFFPRESSURE);
-    tmpStation.setPO(PO);
-    tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
-    tmpStation.setReceivedDate(ReceivedDate);
-    tmpStation.setShippedDate(ShippedDate);
-    m_stationObjectMap.insert(id, tmpStation);
+//    StationObject tmpStation = m_stationObjectMap.value(id);
+//    tmpStation.setKTPN(KTPN);
+//    tmpStation.setKTSERIALPN(KTSERIALPN);
+//    tmpStation.setLPN(LPN);
+//    tmpStation.setGUNOFFPRESSURE(GUNOFFPRESSURE);
+//    tmpStation.setPO(PO);
+//    tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
+//    tmpStation.setReceivedDate(ReceivedDate);
+//    tmpStation.setShippedDate(ShippedDate);
+//    m_stationObjectMap.insert(id, tmpStation);
+
+     QModelIndex anIndex = this ->index(index);
+     setData(anIndex, KTPNValue, KTPN);
+     setData(anIndex, KTSERIALPNValue, KTSERIALPN);
 }
 
-void StationObjectModel::updateStationState(const int &id,  const QByteArray &state)
+void StationObjectModel::updateStationState(const int &index,  const QByteArray &state)
 {
-    StationObject tmpStation = m_stationObjectMap.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(index);
     tmpStation.setStationState(state);
 
-    m_stationObjectMap.insert(id, tmpStation);
+    m_stationObjectMap.insert(index, tmpStation);
 }
 
 
-void StationObjectModel::updateStationHVON(const int &id, const bool &command)
+void StationObjectModel::updateStationHVON(const int &index, const bool &command)
 {
     StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setHVON(command);
@@ -168,15 +172,15 @@ void StationObjectModel::updateStationHVON(const int &id, const bool &command)
     m_stationObjectMap.insert(id, tmpStation);
 }
 
-void StationObjectModel::updateStationValveON(const int &id, const bool &command)
+void StationObjectModel::updateStationValveON(const int &index, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectMap.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(index);
     tmpStation.setValveON(command);
 
-    m_stationObjectMap.insert(id, tmpStation);
+    m_stationObjectMap.insert(index, tmpStation);
 }
 
-void StationObjectModel::updateStationProtectON(const int &id, const bool &command)
+void StationObjectModel::updateStationProtectON(const int &index, const bool &command)
 {
     StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setProtectON(command);
@@ -186,20 +190,6 @@ void StationObjectModel::updateStationProtectON(const int &id, const bool &comma
 
 void StationObjectModel::updateStationSettings(const int &index, const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownPvalue, const double &thresholdUpPvalue, const double &thresholdDownIvalue, const double &thresholdUpIvalue, const int &pumpTypevalue, const int &pumpAddrvalue, const int &pumpChvalue, const int &SDCSAddrValue, const int &SDCSChValue)
 {
-//    StationObject tmpStation = m_stationObjectMap.value(id);
-//    tmpStation.setStationName(name);
-//    tmpStation.setEgunType(eguntype);
-//    tmpStation.setThresholdDownP(thresholdDownP);
-//    tmpStation.setThresHoldUpP(thresholdUpP);
-//    tmpStation.setThresholdDownI(thresholdDownI);
-//    tmpStation.setThresholdUpI(thresholdUpI);
-//    tmpStation.setPumpType(pumpType);
-//    tmpStation.setPumpAddr(pumpAddr);
-//    tmpStation.setPumpCh(pumpCh);
-//    tmpStation.setSDCSAddr(SDCSAddr);
-//    tmpStation.setSDCSCh(SDCSCh);
-
-//    m_stationObjectMap.insert(id, tmpStation);
 
     QModelIndex anIndex = this ->index(index);
 
@@ -214,13 +204,9 @@ void StationObjectModel::updateStationSettings(const int &index, const int &id, 
     setData(anIndex, pumpAddrvalue, pumpAddr);
     setData(anIndex, SDCSAddrValue, SDCSAddr);
     setData(anIndex, SDCSChValue, SDCSCh);
-;
-
-
-
-
 
 }
+
 
 StationObject StationObjectModel::getStation(const int &id)
 {
