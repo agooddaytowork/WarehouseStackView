@@ -75,7 +75,8 @@ protected:
     QHash<int, QByteArray> roleNames() const;
 
 private:
-    QHash<int, StationObject> m_stationObjectHash;
+   // QHash<int, StationObject> m_stationObjectMap;
+      QMap<int, StationObject> m_stationObjectMap;
     QHash<int, QModelIndex> m_stationModelIndexHash;
 //    QList<StationObject> m_stationObjectList;
 

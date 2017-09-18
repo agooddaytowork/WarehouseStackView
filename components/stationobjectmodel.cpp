@@ -8,12 +8,9 @@ StationObjectModel::StationObjectModel(QObject *parent): QAbstractListModel(pare
 
 void StationObjectModel::addStation(const StationObject &station)
 {
-    QModelIndex anIndex = createIndex(rowCount(),0);
 
-    beginInsertRows(anIndex, rowCount(), rowCount());
-    m_stationModelIndexHash.insert(station.stationId(), anIndex);
-    m_stationObjectHash.insert(station.stationId(), station);
-
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    m_stationObjectMap.insert(station.stationId(), station);
     endInsertRows();
 }
 
@@ -21,18 +18,18 @@ int StationObjectModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
 //    return m_stationObjectList.count();
-    return m_stationObjectHash.count();
+    return m_stationObjectMap.count();
 }
 
 QVariant StationObjectModel::data(const QModelIndex &index, int role) const
 {
 //    if(index.row() < 0 || index.row() >= m_stationObjectList.count())
-    if(index.row() < 0 || index.row() >= m_stationObjectHash.count())
+    if(index.row() < 0 || index.row() >= m_stationObjectMap.count())
         return QVariant();
 
 //     StationObject station = m_stationObjectList[index.row()];
 
-    StationObject station = m_stationObjectHash.values()[index.row()];
+    StationObject station = m_stationObjectMap.values()[index.row()];
     if(role == GlobalId) return station.stationId();
     else if (role == stationName) return station.stationName();
     else if (role == top) return station.top();
@@ -68,10 +65,10 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
 bool StationObjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     //    if(index.row() < 0 || index.row() >= m_stationObjectList.count())
-        if(index.row() < 0 || index.row() >= m_stationObjectHash.count())
+        if(index.row() < 0 || index.row() >= m_stationObjectMap.count())
             return false;
 
-        StationObject station = m_stationObjectHash.values()[index.row()];
+        StationObject station = m_stationObjectMap.values()[index.row()];
 
         if (role == stationName)  station.setStationName(value.toString());
         else if (role == top)  station.setTop(value.toDouble());
@@ -100,7 +97,7 @@ bool StationObjectModel::setData(const QModelIndex &index, const QVariant &value
         else if (role == SDCSAddr)  station.setSDCSAddr(value.toInt());
         else if (role == SDCSCh)     station.setSDCSCh(value.toInt());
 
-        m_stationObjectHash.insert(station.stationId(), station);
+        m_stationObjectMap.insert(station.stationId(), station);
 
         dataChanged(index, index, QVector<int>() <<role);
         return true;
@@ -142,7 +139,7 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
 
 void StationObjectModel::updateStationFruInfo(const int &id, const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
-    StationObject tmpStation = m_stationObjectHash.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setKTPN(KTPN);
     tmpStation.setKTSERIALPN(KTSERIALPN);
     tmpStation.setLPN(LPN);
@@ -151,45 +148,45 @@ void StationObjectModel::updateStationFruInfo(const int &id, const QByteArray &K
     tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
     tmpStation.setReceivedDate(ReceivedDate);
     tmpStation.setShippedDate(ShippedDate);
-    m_stationObjectHash.insert(id, tmpStation);
+    m_stationObjectMap.insert(id, tmpStation);
 }
 
 void StationObjectModel::updateStationState(const int &id,  const QByteArray &state)
 {
-    StationObject tmpStation = m_stationObjectHash.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setStationState(state);
 
-    m_stationObjectHash.insert(id, tmpStation);
+    m_stationObjectMap.insert(id, tmpStation);
 }
 
 
 void StationObjectModel::updateStationHVON(const int &id, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectHash.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setHVON(command);
 
-    m_stationObjectHash.insert(id, tmpStation);
+    m_stationObjectMap.insert(id, tmpStation);
 }
 
 void StationObjectModel::updateStationValveON(const int &id, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectHash.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setValveON(command);
 
-    m_stationObjectHash.insert(id, tmpStation);
+    m_stationObjectMap.insert(id, tmpStation);
 }
 
 void StationObjectModel::updateStationProtectON(const int &id, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectHash.value(id);
+    StationObject tmpStation = m_stationObjectMap.value(id);
     tmpStation.setProtectON(command);
 
-    m_stationObjectHash.insert(id, tmpStation);
+    m_stationObjectMap.insert(id, tmpStation);
 }
 
 void StationObjectModel::updateStationSettings(const int &index, const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownPvalue, const double &thresholdUpPvalue, const double &thresholdDownIvalue, const double &thresholdUpIvalue, const int &pumpTypevalue, const int &pumpAddrvalue, const int &pumpChvalue, const int &SDCSAddrValue, const int &SDCSChValue)
 {
-//    StationObject tmpStation = m_stationObjectHash.value(id);
+//    StationObject tmpStation = m_stationObjectMap.value(id);
 //    tmpStation.setStationName(name);
 //    tmpStation.setEgunType(eguntype);
 //    tmpStation.setThresholdDownP(thresholdDownP);
@@ -202,7 +199,7 @@ void StationObjectModel::updateStationSettings(const int &index, const int &id, 
 //    tmpStation.setSDCSAddr(SDCSAddr);
 //    tmpStation.setSDCSCh(SDCSCh);
 
-//    m_stationObjectHash.insert(id, tmpStation);
+//    m_stationObjectMap.insert(id, tmpStation);
 
     QModelIndex anIndex = this ->index(index);
 
@@ -227,5 +224,5 @@ void StationObjectModel::updateStationSettings(const int &index, const int &id, 
 
 StationObject StationObjectModel::getStation(const int &id)
 {
-    return m_stationObjectHash.value(id);
+    return m_stationObjectMap.value(id);
 }
