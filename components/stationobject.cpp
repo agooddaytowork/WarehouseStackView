@@ -41,7 +41,6 @@ void StationObject::setStationName(const QString &name)
     if(name != m_stationName)
     {
         m_stationName = name;
-
     }
 }
 

@@ -39,6 +39,7 @@ Item {
             anchors.fill: parent
             clip: true
 
+
             delegate: ItemDelegate
             {
                 width: parent.width
@@ -50,9 +51,9 @@ Item {
                     stationList.currentIndex = index
                     sGlobalId = GlobalId
                     stationname.myText = stationName
-                    egunTypeCombobox.editText = egunType
 
-                    pumpTypeComboBox.currentIndex = pumpType - 1
+                    egunTypeCombobox.myText = egunType
+                    pumpTypeComboBox.currentIndex = pumpType
                     pumpAddressSpinBox.value = pumpAddr
                     pumpChannelSpinBox.value = pumpCh
 
@@ -63,12 +64,13 @@ Item {
                     thesholdUpIText.myText = thresholdUpI
                     thesholdUpPText.myText = thresholdUpP
 
-
-
-
                 }
+
             }
+
+
             ScrollIndicator.vertical: ScrollIndicator{}
+
         }
     }
     Rectangle
@@ -129,10 +131,12 @@ Item {
                     }
 
                     ComboBox{
+                        property  string myText: ""
                         id: egunTypeCombobox
                         currentIndex: 0
                         font.pixelSize: 20
                         width: 300
+
                         model: ListModel
                         {
                             ListElement{text:"CIP";}
@@ -141,6 +145,35 @@ Item {
                             ListElement{text:"ES800 HV1"}
                             ListElement{text:"ES800 HV2"}
                             ListElement{text:"LOGAN"}
+                        }
+
+                        onMyTextChanged:
+                        {
+                            if (myText === "CIP")
+                            {
+                                currentIndex =0;
+                            }
+                            if(myText ==="AMRAY")
+                            {
+                                currentIndex = 1;
+                            }
+                            if(myText ==="FEI")
+                            {
+                                currentIndex = 2;
+                            }
+                            if(myText ==="ES800 HV1")
+                            {
+                                currentIndex = 3;
+                            }
+                            if(myText ==="ES800 HV2")
+                            {
+                                currentIndex = 4;
+                            }
+                            if(myText ==="LOGAN")
+                            {
+                                currentIndex = 5;
+                            }
+
                         }
                     }
                 }
@@ -326,13 +359,15 @@ Item {
                         border.color: "black"
                     }
 
-                    onClicked:
+                    onPressed:
                     {
-
-                        LocalDb.updateStationSettings(GlobalId, stationname.myText, egunTypeCombobox.currentText, parseFloat(thesholdDownPText.myText)
+                        console.log("Enter update")
+                        LocalDb.updateStationSettings(sGlobalId, stationname.myText, egunTypeCombobox.currentText, parseFloat(thesholdDownPText.myText)
                                                       , parseFloat(thesholdUpPText.myText), parseFloat(thesholdDownIText.myText), parseFloat(thesholdUpIText.myText)
                                                       , pumpTypeComboBox.currentIndex, pumpAddressSpinBox.value, pumpChannelSpinBox.value
                                                       , sDCSAddressSpinBox.value, sDCSChannelSpinBox.value)
+                        console.log("out of update")
+                        stationList.model = myStationModel
                     }
                 }
 
@@ -355,6 +390,9 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         scale: 0.7
+
     }
+
+
 
 }

@@ -8,11 +8,12 @@ StationObjectModel::StationObjectModel(QObject *parent): QAbstractListModel(pare
 
 void StationObjectModel::addStation(const StationObject &station)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-//    StationObject tmpStation = new StationObject(station);
+    QModelIndex anIndex = createIndex(rowCount(),0);
 
-//    m_stationObjectList.append(*tmpStation);
+    beginInsertRows(anIndex, rowCount(), rowCount());
+    m_stationModelIndexHash.insert(station.stationId(), anIndex);
     m_stationObjectHash.insert(station.stationId(), station);
+
     endInsertRows();
 }
 
@@ -61,6 +62,46 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
     else if (role == SDCSCh)    return station.SDCSCh();
 
     return QVariant();
+}
+
+bool StationObjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    //    if(index.row() < 0 || index.row() >= m_stationObjectList.count())
+        if(index.row() < 0 || index.row() >= m_stationObjectHash.count())
+            return false;
+
+        StationObject station = m_stationObjectHash.values()[index.row()];
+        if(role == GlobalId)  station.stationId();
+        else if (role == stationName)  station.setStationName(value.toString());
+        else if (role == top)  station.setTop(value.toDouble());
+        else if (role == left)  station.setLeft(value.toDouble());
+        else if (role == RFID)  station.setRFID(value.toByteArray());
+        else if (role == KTPN)  station.setKTPN(value.toByteArray());
+        else if (role == KTSERIALPN)  station.setKTSERIALPN(value.toByteArray());
+        else if (role == LPN)  station.setLPN(value.toByteArray());
+        else if (role == GUNOFFPRESSURE)  station.setGUNOFFPRESSURE(value.toByteArray());
+        else if (role == PO)  station.setPO(value.toByteArray());
+        else if (role == SUPPLIERTESTDATE)  station.setSUPPLIERTESTDATE(value.toString());
+        else if (role == ReceviedDate)  station.setReceivedDate(value.toString());
+        else if (role == ShippedDate)  station.setShippedDate(value.toString());
+        else if (role == egunType)   station.setEgunType(value.toByteArray());
+        else if (role == stationState)  station.setStationState(value.toByteArray());
+        else if (role == HVON)  station.setHVON(value.toBool());
+        else if (role == ValveON)  station.setValveON(value.toBool());
+        else if (role == ProtectON )  station.setProtectON(value.toBool());
+        else if (role == thresholdDownP)  station.setThresholdDownP(value.toDouble());
+        else if (role == thresholdUpP)  station.setThresHoldUpP(value.toDouble());
+        else if (role == thresholdDownI)  station.setThresholdDownI(value.toDouble());
+        else if (role == thresholdUpI)  station.setThresholdUpI(value.toDouble());
+        else if (role == pumpType)  station.setPumpType(value.toInt());
+        else if (role == pumpAddr)  station.setPumpAddr(value.toInt());
+        else if (role == pumpCh)     station.setPumpCh(value.toInt());
+        else if (role == SDCSAddr)  station.setSDCSAddr(value.toInt());
+        else if (role == SDCSCh)     station.setSDCSCh(value.toInt());
+
+
+        dataChanged(index, index,QVector<int>() <<role);
+        return true;
 }
 
 QHash<int, QByteArray> StationObjectModel::roleNames() const
@@ -160,6 +201,12 @@ void StationObjectModel::updateStationSettings(const int &id, const QString &nam
     tmpStation.setSDCSCh(SDCSCh);
 
     m_stationObjectHash.insert(id, tmpStation);
+    emit dataChanged(m_stationModelIndexHash.value(id),m_stationModelIndexHash.value(id));
+
+
+
+
+
 }
 
 StationObject StationObjectModel::getStation(const int &id)

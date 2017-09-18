@@ -26,13 +26,13 @@ ApplicationWindow {
             anchors.fill: parent
             Rectangle {
                 id: backButton
-                width: opacity ? 60 : 0
+                width: opacity ? 50 : 0
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 opacity: mainStackView.depth > 2 ? 1 : 0
                 anchors.verticalCenter: parent.verticalCenter
                 antialiasing: true
-                height: 60
+                height: 50
                 radius: 4
                 color: backmouse.pressed ? "#222" : "transparent"
                 Behavior on opacity { NumberAnimation{} }

@@ -73,7 +73,8 @@ bool LocalDatabaseInterface::initializeStationModel()
             tmpTop = tmpTop.remove((tmpTop.length()-2),2);
             tmpLeft = tmpLeft.remove((tmpLeft.length()-2),2);
 
-            QByteArray aRFID = tmpQuery.value("RFID").toByteArray();
+            QByteArray aRFID;
+            aRFID.append(tmpQuery.value("RFID").toString().toLower());
             StationObject aStation(tmpQuery.value("id").toInt(),
                                    tmpQuery.value("stationName").toString(),
                                    tmpTop.toDouble(),
@@ -218,15 +219,20 @@ void LocalDatabaseInterface::updateStationFruInfo(const int &id,const QByteArray
 
 void LocalDatabaseInterface::updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
 {
+    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Gate"));
     m_stationModel.updateStationSettings(id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
     updateStationSettingToDatabaseSlot(id);
+    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Exit"));
 }
 
 void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
 {
+    anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Gate"));
     StationObject tmpStation(m_stationModel.getStation(id));
 
     QSqlQuery tmpQuery;
+
+    QString querycommand;
 
     if(tmpQuery.prepare("UPDATE stations SET (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI) VALUES (?,?,?,?,?,?,?,?,?,?) WHERE id = " + id))
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Prepare Succeed: UPDATE stations SET (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI"));;
@@ -246,7 +252,7 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Succeed: UPDATE stations SET (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI"));
     }
 
-
+     anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Exit"));
 }
 
 
