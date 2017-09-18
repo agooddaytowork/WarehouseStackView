@@ -139,53 +139,46 @@ QHash<int, QByteArray> StationObjectModel::roleNames() const
 
 void StationObjectModel::updateStationFruInfo(const int &index, const QByteArray &KTPNValue, const QByteArray &KTSERIALPNValue, const QByteArray &LPNValue, const QByteArray &GUNOFFPRESSUREValue, const QByteArray &POValue, const QString &SUPPLIERTESTDATEValue, const QString &ReceivedDateValue, const QString &ShippedDateValue)
 {
-//    StationObject tmpStation = m_stationObjectMap.value(id);
-//    tmpStation.setKTPN(KTPN);
-//    tmpStation.setKTSERIALPN(KTSERIALPN);
-//    tmpStation.setLPN(LPN);
-//    tmpStation.setGUNOFFPRESSURE(GUNOFFPRESSURE);
-//    tmpStation.setPO(PO);
-//    tmpStation.setSUPPLIERTESTDATE(SUPPLIERTESTDATE);
-//    tmpStation.setReceivedDate(ReceivedDate);
-//    tmpStation.setShippedDate(ShippedDate);
-//    m_stationObjectMap.insert(id, tmpStation);
-
      QModelIndex anIndex = this ->index(index);
      setData(anIndex, KTPNValue, KTPN);
      setData(anIndex, KTSERIALPNValue, KTSERIALPN);
+     setData(anIndex, LPNValue, LPN);
+     setData(anIndex, GUNOFFPRESSUREValue, GUNOFFPRESSURE);
+     setData(anIndex, POValue, PO);
+     setData(anIndex, SUPPLIERTESTDATEValue, SUPPLIERTESTDATE);
+     setData(anIndex, ReceivedDateValue, ReceviedDate);
+     setData(anIndex, ShippedDateValue, ShippedDate);
+
 }
 
-void StationObjectModel::updateStationState(const int &index,  const QByteArray &state)
+void StationObjectModel::updateStationState(const int &index,  const QByteArray &stateValue)
 {
-    StationObject tmpStation = m_stationObjectMap.value(index);
-    tmpStation.setStationState(state);
 
-    m_stationObjectMap.insert(index, tmpStation);
+    QModelIndex anIndex = this ->index(index);
+
+    setData(anIndex, stateValue, stationState);
 }
 
 
 void StationObjectModel::updateStationHVON(const int &index, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectMap.value(id);
-    tmpStation.setHVON(command);
+    QModelIndex anIndex = this ->index(index);
 
-    m_stationObjectMap.insert(id, tmpStation);
+    setData(anIndex, command, HVON);
 }
 
 void StationObjectModel::updateStationValveON(const int &index, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectMap.value(index);
-    tmpStation.setValveON(command);
+    QModelIndex anIndex = this ->index(index);
 
-    m_stationObjectMap.insert(index, tmpStation);
+    setData(anIndex, command, ValveON);
 }
 
 void StationObjectModel::updateStationProtectON(const int &index, const bool &command)
 {
-    StationObject tmpStation = m_stationObjectMap.value(id);
-    tmpStation.setProtectON(command);
+    QModelIndex anIndex = this ->index(index);
 
-    m_stationObjectMap.insert(id, tmpStation);
+    setData(anIndex, command, ProtectON);
 }
 
 void StationObjectModel::updateStationSettings(const int &index, const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownPvalue, const double &thresholdUpPvalue, const double &thresholdDownIvalue, const double &thresholdUpIvalue, const int &pumpTypevalue, const int &pumpAddrvalue, const int &pumpChvalue, const int &SDCSAddrValue, const int &SDCSChValue)

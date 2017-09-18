@@ -55,7 +55,7 @@ public:
                        , const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO
                        , const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate);
 
-    void updateStationState(const int &index, const QByteArray &state);
+    void updateStationState(const int &index, const QByteArray &stateValue);
     void updateStationHVON(const int &index, const bool &command);
     void updateStationValveON(const int &index, const bool &command);
     void updateStationProtectON(const int &index, const bool &command);
