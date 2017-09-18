@@ -11,8 +11,8 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
     QObject(parent), m_dbUsername(dbUsername), m_dbPassword(dbPassword), m_dbName(dbName)
 {
     // Register MetaType for other slots from QML
-//    qRegisterMetaType<QAbstractSeries*>();
-//    qRegisterMetaType<QAbstractAxis*>();
+    //    qRegisterMetaType<QAbstractSeries*>();
+    //    qRegisterMetaType<QAbstractAxis*>();
 
 
     // Configure local data base
@@ -33,25 +33,25 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
     if(localDb.open())
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled,
-            anAck ("Connected to database");
-            anTrk ("Initializing LocalDatabaseStationHash"););
+             anAck ("Connected to database");
+                anTrk ("Initializing LocalDatabaseStationHash"););
 
 
-      if(initializeStationModel())
-      {
+        if(initializeStationModel())
+        {
             anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Initialization succeed!"));
 
-      }
-      else
-      {
+        }
+        else
+        {
             anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Initialization failed!"));
-      }
+        }
 
     }
     else
-     {
-       anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Could not connect to database!"));
-     }
+    {
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Could not connect to database!"));
+    }
 
 }
 
@@ -59,9 +59,9 @@ bool LocalDatabaseInterface::initializeStationModel()
 {
     QSqlQuery tmpQuery;
 
-    if(tmpQuery.exec("SELECT id, stationName, top, left_style, RFID FROM stations "))
+    if(tmpQuery.exec("SELECT * FROM stations "))
     {
-        anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded: SELECT GlobalID, stationName, top, left_style FROM stations"));
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded: SELECT * FROM stations"));
 
         anIf(LocalDatabaseInterfaceDebuggerEnabled,
              anAck("Adding stations to localDatabaseHash"  ));
@@ -76,35 +76,48 @@ bool LocalDatabaseInterface::initializeStationModel()
             QByteArray aRFID = tmpQuery.value("RFID").toByteArray();
             StationObject aStation(tmpQuery.value("id").toInt(),
                                    tmpQuery.value("stationName").toString(),
-                                  tmpTop.toDouble(),
+                                   tmpTop.toDouble(),
                                    tmpLeft.toDouble(),
-                                     aRFID);
+                                   aRFID);
 
-               QSqlQuery secondQuery;
+            aStation.setEgunType(tmpQuery.value("egunType").toByteArray());
+            aStation.setPumpType(tmpQuery.value("pumpType").toInt());
+            aStation.setPumpAddr(tmpQuery.value("pumpAddr").toInt());
+            aStation.setPumpCh(tmpQuery.value("pumpCH").toInt());
 
-               secondQuery.prepare("SELECT*FROM frus WHERE RFID = ? LIMIT 1");
-               secondQuery.bindValue(0, aRFID);
-               if(secondQuery.exec())
-               {
-                   anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
-                    if(secondQuery.next())
-                    {
-                        aStation.setKTPN(secondQuery.value("PN").toByteArray());
-                        aStation.setKTSERIALPN(secondQuery.value("Serial").toByteArray());
-                        aStation.setLPN(secondQuery.value("LPN").toByteArray());
-                        aStation.setGUNOFFPRESSURE(secondQuery.value("MFGPressure").toByteArray());
-                        aStation.setPO(secondQuery.value("PO").toByteArray());
-                        aStation.setSUPPLIERTESTDATE(secondQuery.value("TestDate").toDateTime().toString("MM/dd/yy"));
-                        aStation.setReceivedDate(secondQuery.value("DateInStock").toDateTime().toString("MM/dd/yy"));
-                        aStation.setShippedDate(secondQuery.value("DateShipped").toDateTime().toString("MM/dd/yy"));
-                    }
-               }
-               else
-               {
-                   anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
-               }
+            aStation.setSDCSAddr(tmpQuery.value("sdcsAddr").toInt());
+            aStation.setSDCSCh(tmpQuery.value("sdcsCH").toInt());
 
-               m_stationModel.addStation(aStation);
+            aStation.setThresholdDownP(tmpQuery.value("thresholdDownP").toDouble());
+            aStation.setThresHoldUpP(tmpQuery.value("thresholdUpP").toDouble());
+            aStation.setThresholdDownI(tmpQuery.value("thresholdDownI").toDouble());
+            aStation.setThresholdUpI(tmpQuery.value("thresholdUpI").toDouble());
+
+            QSqlQuery secondQuery;
+
+            secondQuery.prepare("SELECT*FROM frus WHERE RFID = ? LIMIT 1");
+            secondQuery.bindValue(0, aRFID);
+            if(secondQuery.exec())
+            {
+                anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
+                if(secondQuery.next())
+                {
+                    aStation.setKTPN(secondQuery.value("PN").toByteArray());
+                    aStation.setKTSERIALPN(secondQuery.value("Serial").toByteArray());
+                    aStation.setLPN(secondQuery.value("LPN").toByteArray());
+                    aStation.setGUNOFFPRESSURE(secondQuery.value("MFGPressure").toByteArray());
+                    aStation.setPO(secondQuery.value("PO").toByteArray());
+                    aStation.setSUPPLIERTESTDATE(secondQuery.value("TestDate").toDateTime().toString("MM/dd/yy"));
+                    aStation.setReceivedDate(secondQuery.value("DateInStock").toDateTime().toString("MM/dd/yy"));
+                    aStation.setShippedDate(secondQuery.value("DateShipped").toDateTime().toString("MM/dd/yy"));
+                }
+            }
+            else
+            {
+                anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed:SELECT * FROM frus WHERE RFID = " + aRFID +" LIMIT 1"));
+            }
+
+            m_stationModel.addStation(aStation);
         }
         anIf(LocalDatabaseInterfaceDebuggerEnabled,
              anAck("Finished adding stations to localDatabaseHash; returning"  ));
@@ -157,7 +170,7 @@ void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series, QAbs
                 {
                     lineSeries->append(tmpQuery.value("Time").toDateTime().toMSecsSinceEpoch(), tmpQuery.value("Pressure").toDouble());
 
-                   maxTime = tmpQuery.value("Time").toDateTime();
+                    maxTime = tmpQuery.value("Time").toDateTime();
                 }
                 anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Finished extracting data"));
                 xAxis->setMax(maxTime);
@@ -199,13 +212,14 @@ void LocalDatabaseInterface::shipStation(const int &globalId)
 
 void LocalDatabaseInterface::updateStationFruInfo(const int &id,const QByteArray &KTPN, const QByteArray &KTSERIALPN, const QByteArray &LPN, const QByteArray &GUNOFFPRESSURE, const QByteArray &PO, const QString &SUPPLIERTESTDATE, const QString &ReceivedDate, const QString &ShippedDate)
 {
-  m_stationModel.updateStationFruInfo(id, KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
+    m_stationModel.updateStationFruInfo(id, KTPN, KTSERIALPN,LPN,GUNOFFPRESSURE,PO,SUPPLIERTESTDATE,ReceivedDate,ShippedDate);
 
 }
 
 void LocalDatabaseInterface::updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
 {
     m_stationModel.updateStationSettings(id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
+    updateStationSettingToDatabaseSlot(id);
 }
 
 void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
@@ -214,7 +228,8 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
 
     QSqlQuery tmpQuery;
 
-    tmpQuery.prepare("UPDATE stations (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI, top, left_style) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) WHERE id = " + id);
+    if(tmpQuery.prepare("UPDATE stations SET (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI) VALUES (?,?,?,?,?,?,?,?,?,?) WHERE id = " + id))
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Prepare Succeed: UPDATE stations SET (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI"));;
     tmpQuery.addBindValue(tmpStation.stationName());
     tmpQuery.addBindValue(tmpStation.pumpType());
     tmpQuery.addBindValue(tmpStation.pumpAddr());
@@ -225,9 +240,31 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
     tmpQuery.addBindValue(tmpStation.thresholdUpP());
     tmpQuery.addBindValue(tmpStation.thresholdDownI());
     tmpQuery.addBindValue(tmpStation.thresholdUpI());
-    tmpQuery.addBindValue(tmpStation.top());
-    tmpQuery.addBindValue(tmpStation.left());
+
+    if(tmpQuery.exec())
+    {
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query Succeed: UPDATE stations SET (staionName, pumpType, pumpAddr, pumpCH, sdcsAddr, sdcsCH, thresholdDownP, thresholdUpP, thresholdDownI, threshouldUpI"));
+    }
 
 
+}
 
+
+void LocalDatabaseInterface::updateStationPositions(const int &id)
+{
+    StationObject tmpStation(m_stationModel.getStation(id));
+
+    QSqlQuery tmpQuery;
+
+    if(tmpQuery.prepare("UPDATE stations SET (top, left_style) VALUES (?,?) where id = " + id))
+    {
+         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Prepare succeed: UPDATE stations SET (top, left_style) VALUES (?,?) where id = " + id));
+    }
+    tmpQuery.addBindValue(QString::number(tmpStation.top()) + "px");
+    tmpQuery.addBindValue(QString::number(tmpStation.left())+ "px");
+
+    if(tmpQuery.exec())
+    {
+         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeed: UPDATE stations SET (top, left_style) VALUES (?,?) where id = " + id));
+    }
 }

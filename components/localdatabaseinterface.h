@@ -37,6 +37,7 @@ public slots:
                                             ,const int &SDCSAddr, const int &SDCSCh);
 
 
+    Q_INVOKABLE void updateStationPositions(const int &id);
     bool initializeStationModel();
 
     void updateStationSettingToDatabaseSlot(const int &id);

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_LocalDatabaseInterface_t {
-    QByteArrayData data[40];
-    char stringdata0[507];
+    QByteArrayData data[41];
+    char stringdata0[530];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -69,8 +69,9 @@ QT_MOC_LITERAL(34, 417, 8), // "pumpAddr"
 QT_MOC_LITERAL(35, 426, 6), // "pumpCh"
 QT_MOC_LITERAL(36, 433, 8), // "SDCSAddr"
 QT_MOC_LITERAL(37, 442, 6), // "SDCSCh"
-QT_MOC_LITERAL(38, 449, 22), // "initializeStationModel"
-QT_MOC_LITERAL(39, 472, 34) // "updateStationSettingToDatabas..."
+QT_MOC_LITERAL(38, 449, 22), // "updateStationPositions"
+QT_MOC_LITERAL(39, 472, 22), // "initializeStationModel"
+QT_MOC_LITERAL(40, 495, 34) // "updateStationSettingToDatabas..."
 
     },
     "LocalDatabaseInterface\0"
@@ -85,7 +86,8 @@ QT_MOC_LITERAL(39, 472, 34) // "updateStationSettingToDatabas..."
     "updateStationSettings\0name\0eguntype\0"
     "thresholdDownP\0thresholdUpP\0thresholdDownI\0"
     "thresholdUpI\0pumpType\0pumpAddr\0pumpCh\0"
-    "SDCSAddr\0SDCSCh\0initializeStationModel\0"
+    "SDCSAddr\0SDCSCh\0updateStationPositions\0"
+    "initializeStationModel\0"
     "updateStationSettingToDatabaseSlot"
 };
 #undef QT_MOC_LITERAL
@@ -96,7 +98,7 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -104,19 +106,20 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   69,    2, 0x06 /* Public */,
+       1,    1,   74,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    3,   72,    2, 0x0a /* Public */,
-      10,    1,   79,    2, 0x0a /* Public */,
-      11,    2,   82,    2, 0x0a /* Public */,
-      14,    2,   87,    2, 0x0a /* Public */,
-      15,    2,   92,    2, 0x0a /* Public */,
-      16,    1,   97,    2, 0x0a /* Public */,
-      17,    9,  100,    2, 0x0a /* Public */,
-      26,   12,  119,    2, 0x0a /* Public */,
-      38,    0,  144,    2, 0x0a /* Public */,
-      39,    1,  145,    2, 0x0a /* Public */,
+       4,    3,   77,    2, 0x0a /* Public */,
+      10,    1,   84,    2, 0x0a /* Public */,
+      11,    2,   87,    2, 0x0a /* Public */,
+      14,    2,   92,    2, 0x0a /* Public */,
+      15,    2,   97,    2, 0x0a /* Public */,
+      16,    1,  102,    2, 0x0a /* Public */,
+      17,    9,  105,    2, 0x0a /* Public */,
+      26,   12,  124,    2, 0x0a /* Public */,
+      38,    1,  149,    2, 0x0a /* Public */,
+      39,    0,  152,    2, 0x0a /* Public */,
+      40,    1,  153,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -130,6 +133,7 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
     QMetaType::Void, QMetaType::Int,   12,
     QMetaType::Void, QMetaType::Int, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QByteArray, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,   18,   19,   20,   21,   22,   23,   24,   25,
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QByteArray, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,    3,   27,   28,   29,   30,   31,   32,   33,   34,   35,   36,   37,
+    QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Bool,
     QMetaType::Void, QMetaType::Int,    3,
 
@@ -151,9 +155,10 @@ void LocalDatabaseInterface::qt_static_metacall(QObject *_o, QMetaObject::Call _
         case 6: _t->shipStation((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 7: _t->updateStationFruInfo((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QByteArray(*)>(_a[2])),(*reinterpret_cast< const QByteArray(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4])),(*reinterpret_cast< const QByteArray(*)>(_a[5])),(*reinterpret_cast< const QByteArray(*)>(_a[6])),(*reinterpret_cast< const QString(*)>(_a[7])),(*reinterpret_cast< const QString(*)>(_a[8])),(*reinterpret_cast< const QString(*)>(_a[9]))); break;
         case 8: _t->updateStationSettings((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QByteArray(*)>(_a[3])),(*reinterpret_cast< const double(*)>(_a[4])),(*reinterpret_cast< const double(*)>(_a[5])),(*reinterpret_cast< const double(*)>(_a[6])),(*reinterpret_cast< const double(*)>(_a[7])),(*reinterpret_cast< const int(*)>(_a[8])),(*reinterpret_cast< const int(*)>(_a[9])),(*reinterpret_cast< const int(*)>(_a[10])),(*reinterpret_cast< const int(*)>(_a[11])),(*reinterpret_cast< const int(*)>(_a[12]))); break;
-        case 9: { bool _r = _t->initializeStationModel();
+        case 9: _t->updateStationPositions((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 10: { bool _r = _t->initializeStationModel();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 10: _t->updateStationSettingToDatabaseSlot((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 11: _t->updateStationSettingToDatabaseSlot((*reinterpret_cast< const int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -214,13 +219,13 @@ int LocalDatabaseInterface::qt_metacall(QMetaObject::Call _c, int _id, void **_a
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

@@ -50,6 +50,22 @@ Item {
                     stationList.currentIndex = index
                     sGlobalId = GlobalId
                     stationname.myText = stationName
+                    egunTypeCombobox.editText = egunType
+
+                    pumpTypeComboBox.currentIndex = pumpType - 1
+                    pumpAddressSpinBox.value = pumpAddr
+                    pumpChannelSpinBox.value = pumpCh
+
+                    sDCSAddressSpinBox.value = SDCSAddr
+                    sDCSChannelSpinBox.value = SDCSCh
+                    thesholdDownPText.myText = thresholdDownP
+                    thesholdDownIText.myText = thresholdDownI
+                    thesholdUpIText.myText = thresholdUpI
+                    thesholdUpPText.myText = thresholdUpP
+
+
+
+
                 }
             }
             ScrollIndicator.vertical: ScrollIndicator{}
@@ -93,8 +109,6 @@ Item {
                     width: parent.width
                     labelText: "Station Name: "
 
-
-
                     onTextfieldchanged:
                     {
                         if(activeFocus)
@@ -121,7 +135,7 @@ Item {
                         width: 300
                         model: ListModel
                         {
-                            ListElement{text:"CIP"; }
+                            ListElement{text:"CIP";}
                             ListElement{text:"AMRAY"}
                             ListElement{text:"FEI"}
                             ListElement{text:"ES800 HV1"}
@@ -226,7 +240,7 @@ Item {
                 }
 
                 FrusTextField{
-                    id: thesholdDownP
+                    id: thesholdDownPText
                     width: parent.width
                     labelText: "Pressure Threshold Lower Point : "
 
@@ -244,7 +258,7 @@ Item {
                 }
 
                 FrusTextField{
-                    id: thesholdUpP
+                    id: thesholdUpPText
                     width: parent.width
                     labelText: "Pressure Threshold Upper Point : "
 
@@ -262,7 +276,7 @@ Item {
                 }
 
                 FrusTextField{
-                    id: thesholdDownI
+                    id: thesholdDownIText
                     width: parent.width
                     labelText: "Current Threshold Lower Point : "
 
@@ -280,7 +294,7 @@ Item {
                 }
 
                 FrusTextField{
-                    id: thesholdUpI
+                    id: thesholdUpIText
                     width: parent.width
                     labelText: "Current Threshold Upper Point : "
 
@@ -299,23 +313,32 @@ Item {
 
                 Button
                 {
-
+                    id: updateButton
                     text: "Update"
                     font.pixelSize: 20
+
                     background: Rectangle{
                         implicitHeight: 100
                         implicitWidth: 400
                         radius: 10
+                        color: updateButton.pressed ? "#222" : "transparent"
                         border.width: 1
                         border.color: "black"
+                    }
 
+                    onClicked:
+                    {
+
+                        LocalDb.updateStationSettings(GlobalId, stationname.myText, egunTypeCombobox.currentText, parseFloat(thesholdDownPText.myText)
+                                                      , parseFloat(thesholdUpPText.myText), parseFloat(thesholdDownIText.myText), parseFloat(thesholdUpIText.myText)
+                                                      , pumpTypeComboBox.currentIndex, pumpAddressSpinBox.value, pumpChannelSpinBox.value
+                                                      , sDCSAddressSpinBox.value, sDCSChannelSpinBox.value)
                     }
                 }
 
             }
         }
     }
-
 
     Rectangle {
         id: keyboardRect
@@ -333,7 +356,5 @@ Item {
         anchors.right: parent.right
         scale: 0.7
     }
-
-
 
 }

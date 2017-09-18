@@ -29,81 +29,81 @@ Item {
 
 
 
-            TextField
+        TextField
+        {
+            id: passwordField
+            width: 250
+            height: 50
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            echoMode: TextInput.Password
+            horizontalAlignment: TextInput.AlignHCenter
+            inputMethodHints:  Qt.ImhDigitsOnly
+            text: ""
+            background: Rectangle
             {
-                id: passwordField
-                width: 250
-                height: 50
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                echoMode: TextInput.Password
-                horizontalAlignment: TextInput.AlignHCenter
-                inputMethodHints:  Qt.ImhDigitsOnly
-                text: ""
-                background: Rectangle
+
+                radius: 10
+                border.color: "#051c42"
+                border.width: 2
+            }
+
+
+
+            onTextChanged:
+            {
+                if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
                 {
-
-                    radius: 10
-                    border.color: "#051c42"
-                    border.width: 2
-                }
-
-
-
-                onTextChanged:
-                {
-                    if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
+                    passwordField.text = ""
+                    passwordField.focus = false
+                    if(mainStackView.depth <=1)
                     {
-                        passwordField.text = ""
-                        passwordField.focus = false
-                        if(mainStackView.depth <=1)
-                        {
-                            mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
-                        }
-                        else
-                        {
-                            mainStackView.pop()
-                        }
-
-
-
-
+                        mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
                     }
                     else
                     {
-                        // add some thing here to indicate wrong password
+                        mainStackView.pop()
                     }
+
+
+
+
+                }
+                else
+                {
+                    // add some thing here to indicate wrong password
                 }
             }
+        }
 
-            //            Button
-            //            {
-            //                id: loginButton
-            //                width: 250
-            //                height: 50
-            //                text: "OK"
-            //                anchors.horizontalCenter: parent.horizontalCenter
-            //                anchors.top : parent.top
-            //                anchors.topMargin: 650
-            //                background: Rectangle{
-            //                    radius: 10
-            //                    border.color: "#051c42"
-            //                    border.width: 2
-            //                }
+        //            Button
+        //            {
+        //                id: loginButton
+        //                width: 250
+        //                height: 50
+        //                text: "OK"
+        //                anchors.horizontalCenter: parent.horizontalCenter
+        //                anchors.top : parent.top
+        //                anchors.topMargin: 650
+        //                background: Rectangle{
+        //                    radius: 10
+        //                    border.color: "#051c42"
+        //                    border.width: 2
+        //                }
 
-            //                onClicked:
-            //                {
-            //                    if(passwordField.text == "159753")
-            //                    {
-            //                        passwordField.text = ""
-            //                        mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
-            //                    }
-            //                    else
-            //                    {
+        //                onClicked:
+        //                {
+        //                    if(passwordField.text == "159753")
+        //                    {
+        //                        passwordField.text = ""
+        //                        mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+        //                    }
+        //                    else
+        //                    {
 
-            //                    }
-            //                }
-            //            }
+        //                    }
+        //                }
+        //            }
 
 
         Rectangle
@@ -126,13 +126,13 @@ Item {
 
     }
     InputPanel {
-            id: inputPanel
-            y: Qt.inputMethod.visible ? (parent.height - inputPanel.height +100 ) : parent.height
-            anchors.left: parent.left
-            anchors.right: parent.right
-            scale: 0.7
+        id: inputPanel
+        y: Qt.inputMethod.visible ? (parent.height - inputPanel.height +100 ) : parent.height
+        anchors.left: parent.left
+        anchors.right: parent.right
+        scale: 0.7
 
-        }
+    }
 
 
 }
