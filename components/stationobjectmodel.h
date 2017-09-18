@@ -60,9 +60,9 @@ public:
     void updateStationValveON(const int &id, const bool &command);
     void updateStationProtectON(const int &id, const bool &command);
 
-    void updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP
-                               ,const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh
-                               ,const int &SDCSAddr, const int &SDCSCh);
+    void updateStationSettings(const int &index, const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownPvalue, const double &thresholdUpPvalue
+                               , const double &thresholdDownIvalue, const double &thresholdUpIvalue, const int &pumpTypevalue, const int &pumpAddrvalue, const int &pumpChvalue
+                               , const int &SDCSAddrValue, const int &SDCSChValue);
 
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;

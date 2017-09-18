@@ -361,8 +361,10 @@ Item {
 
                     onPressed:
                     {
+
                         console.log("Enter update")
-                        LocalDb.updateStationSettings(sGlobalId, stationname.myText, egunTypeCombobox.currentText, parseFloat(thesholdDownPText.myText)
+
+                        LocalDb.updateStationSettings( stationList.currentIndex,sGlobalId, stationname.myText, egunTypeCombobox.currentText, parseFloat(thesholdDownPText.myText)
                                                       , parseFloat(thesholdUpPText.myText), parseFloat(thesholdDownIText.myText), parseFloat(thesholdUpIText.myText)
                                                       , pumpTypeComboBox.currentIndex, pumpAddressSpinBox.value, pumpChannelSpinBox.value
                                                       , sDCSAddressSpinBox.value, sDCSChannelSpinBox.value)

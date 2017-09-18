@@ -217,11 +217,11 @@ void LocalDatabaseInterface::updateStationFruInfo(const int &id,const QByteArray
 
 }
 
-void LocalDatabaseInterface::updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
+void LocalDatabaseInterface::updateStationSettings(const int &index,const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
 {
     anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Gate"));
-    m_stationModel.updateStationSettings(id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
-    updateStationSettingToDatabaseSlot(id);
+    m_stationModel.updateStationSettings(index, id, name, eguntype, thresholdDownP, thresholdUpP, thresholdDownI, thresholdUpI, pumpType, pumpAddr, pumpCh, SDCSAddr, SDCSCh);
+    //updateStationSettingToDatabaseSlot(id);
     anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Exit"));
 }
 

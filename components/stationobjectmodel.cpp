@@ -61,6 +61,7 @@ QVariant StationObjectModel::data(const QModelIndex &index, int role) const
     else if (role == SDCSAddr) return station.SDCSAddr();
     else if (role == SDCSCh)    return station.SDCSCh();
 
+
     return QVariant();
 }
 
@@ -71,8 +72,8 @@ bool StationObjectModel::setData(const QModelIndex &index, const QVariant &value
             return false;
 
         StationObject station = m_stationObjectHash.values()[index.row()];
-        if(role == GlobalId)  station.stationId();
-        else if (role == stationName)  station.setStationName(value.toString());
+
+        if (role == stationName)  station.setStationName(value.toString());
         else if (role == top)  station.setTop(value.toDouble());
         else if (role == left)  station.setLeft(value.toDouble());
         else if (role == RFID)  station.setRFID(value.toByteArray());
@@ -99,8 +100,9 @@ bool StationObjectModel::setData(const QModelIndex &index, const QVariant &value
         else if (role == SDCSAddr)  station.setSDCSAddr(value.toInt());
         else if (role == SDCSCh)     station.setSDCSCh(value.toInt());
 
+        m_stationObjectHash.insert(station.stationId(), station);
 
-        dataChanged(index, index,QVector<int>() <<role);
+        dataChanged(index, index, QVector<int>() <<role);
         return true;
 }
 
@@ -185,23 +187,37 @@ void StationObjectModel::updateStationProtectON(const int &id, const bool &comma
     m_stationObjectHash.insert(id, tmpStation);
 }
 
-void StationObjectModel::updateStationSettings(const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownP, const double &thresholdUpP, const double &thresholdDownI, const double &thresholdUpI, const int &pumpType, const int &pumpAddr, const int &pumpCh, const int &SDCSAddr, const int &SDCSCh)
+void StationObjectModel::updateStationSettings(const int &index, const int &id, const QString &name, const QByteArray &eguntype, const double &thresholdDownPvalue, const double &thresholdUpPvalue, const double &thresholdDownIvalue, const double &thresholdUpIvalue, const int &pumpTypevalue, const int &pumpAddrvalue, const int &pumpChvalue, const int &SDCSAddrValue, const int &SDCSChValue)
 {
-    StationObject tmpStation = m_stationObjectHash.value(id);
-    tmpStation.setStationName(name);
-    tmpStation.setEgunType(eguntype);
-    tmpStation.setThresholdDownP(thresholdDownP);
-    tmpStation.setThresHoldUpP(thresholdUpP);
-    tmpStation.setThresholdDownI(thresholdDownI);
-    tmpStation.setThresholdUpI(thresholdUpI);
-    tmpStation.setPumpType(pumpType);
-    tmpStation.setPumpAddr(pumpAddr);
-    tmpStation.setPumpCh(pumpCh);
-    tmpStation.setSDCSAddr(SDCSAddr);
-    tmpStation.setSDCSCh(SDCSCh);
+//    StationObject tmpStation = m_stationObjectHash.value(id);
+//    tmpStation.setStationName(name);
+//    tmpStation.setEgunType(eguntype);
+//    tmpStation.setThresholdDownP(thresholdDownP);
+//    tmpStation.setThresHoldUpP(thresholdUpP);
+//    tmpStation.setThresholdDownI(thresholdDownI);
+//    tmpStation.setThresholdUpI(thresholdUpI);
+//    tmpStation.setPumpType(pumpType);
+//    tmpStation.setPumpAddr(pumpAddr);
+//    tmpStation.setPumpCh(pumpCh);
+//    tmpStation.setSDCSAddr(SDCSAddr);
+//    tmpStation.setSDCSCh(SDCSCh);
 
-    m_stationObjectHash.insert(id, tmpStation);
-    emit dataChanged(m_stationModelIndexHash.value(id),m_stationModelIndexHash.value(id));
+//    m_stationObjectHash.insert(id, tmpStation);
+
+    QModelIndex anIndex = this ->index(index);
+
+    setData(anIndex,name, stationName);
+    setData(anIndex,eguntype, egunType);
+    setData(anIndex,thresholdDownPvalue, thresholdDownP);
+    setData(anIndex, thresholdUpPvalue, thresholdUpP);
+    setData(anIndex, thresholdDownIvalue, thresholdDownI);
+    setData(anIndex, thresholdUpIvalue, thresholdUpI);
+    setData(anIndex, pumpTypevalue, pumpType);
+    setData(anIndex, pumpChvalue, pumpCh);
+    setData(anIndex, pumpAddrvalue, pumpAddr);
+    setData(anIndex, SDCSAddrValue, SDCSAddr);
+    setData(anIndex, SDCSChValue, SDCSCh);
+;
 
 
 
