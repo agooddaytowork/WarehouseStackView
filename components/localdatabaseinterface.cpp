@@ -37,15 +37,12 @@ LocalDatabaseInterface::LocalDatabaseInterface(const QString &dbUsername, const 
                 anTrk ("Initializing LocalDatabaseStationHash"););
 
 
-        if(initializeStationModel())
-        {
-            anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Initialization succeed!"));
+        if(initializeStationModel()){anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Stations Initialization succeed!"));}
+        else anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Stations Initialization failed!"));
 
-        }
-        else
-        {
-            anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Initialization failed!"));
-        }
+        if(initializeGaugeModel()){anIf(LocalDatabaseInterfaceDebuggerEnabled, anTrk("Gauges Initialization succeed!"));}
+        else anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Gauges Initialization failed!"));
+
 
     }
     else
@@ -64,7 +61,7 @@ bool LocalDatabaseInterface::initializeStationModel()
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded: SELECT * FROM stations"));
 
         anIf(LocalDatabaseInterfaceDebuggerEnabled,
-             anAck("Adding stations to localDatabaseHash"  ));
+             anAck("Adding stations to localDatabaseMap"  ));
         while(tmpQuery.next())
         {
             QString tmpTop = tmpQuery.value("top").toString();
@@ -121,7 +118,7 @@ bool LocalDatabaseInterface::initializeStationModel()
             m_stationModel.addStation(aStation);
         }
         anIf(LocalDatabaseInterfaceDebuggerEnabled,
-             anAck("Finished adding stations to localDatabaseHash; returning"  ));
+             anAck("Finished adding stations to localDatabase Map; returning ..."  ));
 
 
         return true;
@@ -130,6 +127,38 @@ bool LocalDatabaseInterface::initializeStationModel()
     anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed: SELECT GlobalID, stationName, top, left_style FROM stations"));
 
     return false;
+}
+
+bool LocalDatabaseInterface::initializeGaugeModel()
+{
+    QSqlQuery tmpQuery;
+
+    if(tmpQuery.exec("SELECT * FROM gauges"))
+    {
+         anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeeded: " + tmpQuery.executedQuery()));
+         anIf(LocalDatabaseInterfaceDebuggerEnabled,
+              anAck("Adding gauges to localDatabaseMap"  ));
+         while (tmpQuery.next())
+         {
+             QString tmpTop = tmpQuery.value("top").toString();
+             QString tmpLeft = tmpQuery.value("left_style").toString();
+
+             tmpTop = tmpTop.remove((tmpTop.length()-2),2);
+             tmpLeft = tmpLeft.remove((tmpLeft.length()-2),2);
+
+             GaugeObject aGauge(tmpQuery.value("id").toInt(), tmpTop.toDouble(), tmpLeft.toDouble(), tmpQuery.value("sdcsAddr").toInt()
+                                ,tmpQuery.value("thresholdDownP").toDouble(), tmpQuery.value("thresholdUpP").toDouble());
+             m_gaugeModel.addGauge(aGauge);
+         }
+
+         anIf(LocalDatabaseInterfaceDebuggerEnabled,
+                      anAck("Finished adding stations to localDatabase Map; returning ..."  ));
+         return true;
+    }
+    anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed: SELECT * FROM gauges"));
+
+    return false;
+
 }
 
 void LocalDatabaseInterface::start()

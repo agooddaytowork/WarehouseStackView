@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_LocalDatabaseInterface_t {
-    QByteArrayData data[48];
-    char stringdata0[610];
+    QByteArrayData data[49];
+    char stringdata0[631];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -75,10 +75,11 @@ QT_MOC_LITERAL(40, 473, 8), // "SDCSAddr"
 QT_MOC_LITERAL(41, 482, 6), // "SDCSCh"
 QT_MOC_LITERAL(42, 489, 22), // "updateStationPositions"
 QT_MOC_LITERAL(43, 512, 22), // "initializeStationModel"
-QT_MOC_LITERAL(44, 535, 34), // "updateStationSettingToDatabas..."
-QT_MOC_LITERAL(45, 570, 17), // "checkStationState"
-QT_MOC_LITERAL(46, 588, 13), // "StationObject"
-QT_MOC_LITERAL(47, 602, 7) // "station"
+QT_MOC_LITERAL(44, 535, 20), // "initializeGaugeModel"
+QT_MOC_LITERAL(45, 556, 34), // "updateStationSettingToDatabas..."
+QT_MOC_LITERAL(46, 591, 17), // "checkStationState"
+QT_MOC_LITERAL(47, 609, 13), // "StationObject"
+QT_MOC_LITERAL(48, 623, 7) // "station"
 
     },
     "LocalDatabaseInterface\0"
@@ -96,6 +97,7 @@ QT_MOC_LITERAL(47, 602, 7) // "station"
     "thresholdDownI\0thresholdUpI\0pumpType\0"
     "pumpAddr\0pumpCh\0SDCSAddr\0SDCSCh\0"
     "updateStationPositions\0initializeStationModel\0"
+    "initializeGaugeModel\0"
     "updateStationSettingToDatabaseSlot\0"
     "checkStationState\0StationObject\0station"
 };
@@ -107,7 +109,7 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -115,21 +117,22 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   79,    2, 0x06 /* Public */,
+       1,    1,   84,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    3,   82,    2, 0x0a /* Public */,
-      10,    4,   89,    2, 0x0a /* Public */,
-      14,    2,   98,    2, 0x0a /* Public */,
-      17,    2,  103,    2, 0x0a /* Public */,
-      18,    2,  108,    2, 0x0a /* Public */,
-      19,    1,  113,    2, 0x0a /* Public */,
-      20,    9,  116,    2, 0x0a /* Public */,
-      29,   13,  135,    2, 0x0a /* Public */,
-      42,    1,  162,    2, 0x0a /* Public */,
-      43,    0,  165,    2, 0x0a /* Public */,
-      44,    1,  166,    2, 0x0a /* Public */,
-      45,    1,  169,    2, 0x0a /* Public */,
+       4,    3,   87,    2, 0x0a /* Public */,
+      10,    4,   94,    2, 0x0a /* Public */,
+      14,    2,  103,    2, 0x0a /* Public */,
+      17,    2,  108,    2, 0x0a /* Public */,
+      18,    2,  113,    2, 0x0a /* Public */,
+      19,    1,  118,    2, 0x0a /* Public */,
+      20,    9,  121,    2, 0x0a /* Public */,
+      29,   13,  140,    2, 0x0a /* Public */,
+      42,    1,  167,    2, 0x0a /* Public */,
+      43,    0,  170,    2, 0x0a /* Public */,
+      44,    0,  171,    2, 0x0a /* Public */,
+      45,    1,  172,    2, 0x0a /* Public */,
+      46,    1,  175,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -145,8 +148,9 @@ static const uint qt_meta_data_LocalDatabaseInterface[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QByteArray, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,   30,    3,   31,   32,   33,   34,   35,   36,   37,   38,   39,   40,   41,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Bool,
+    QMetaType::Bool,
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::QByteArray, 0x80000000 | 46,   47,
+    QMetaType::QByteArray, 0x80000000 | 47,   48,
 
        0        // eod
 };
@@ -169,8 +173,10 @@ void LocalDatabaseInterface::qt_static_metacall(QObject *_o, QMetaObject::Call _
         case 9: _t->updateStationPositions((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 10: { bool _r = _t->initializeStationModel();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 11: _t->updateStationSettingToDatabaseSlot((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 12: { QByteArray _r = _t->checkStationState((*reinterpret_cast< const StationObject(*)>(_a[1])));
+        case 11: { bool _r = _t->initializeGaugeModel();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+        case 12: _t->updateStationSettingToDatabaseSlot((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 13: { QByteArray _r = _t->checkStationState((*reinterpret_cast< const StationObject(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QByteArray*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -232,13 +238,13 @@ int LocalDatabaseInterface::qt_metacall(QMetaObject::Call _c, int _id, void **_a
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }

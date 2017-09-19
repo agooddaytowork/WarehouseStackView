@@ -23,8 +23,6 @@ Item {
     property bool sProtectON
     property bool sValveON
 
-
-
     ChartView{
         id: chartView
         anchors.topMargin: 50

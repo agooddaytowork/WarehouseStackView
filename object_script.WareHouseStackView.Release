@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\localdatabaseinterface.o
+./release\stationobject.o
+./release\stationobjectmodel.o
+./release\gaugeobject.o
+./release\gaugeobjectmodel.o
+./release\qrc_qml.o
+./release\moc_localdatabaseinterface.o
+./release\moc_stationobjectmodel.o
+./release\moc_gaugeobjectmodel.o
+);

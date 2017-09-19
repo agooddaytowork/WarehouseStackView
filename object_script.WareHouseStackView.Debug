@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\localdatabaseinterface.o
+./debug\stationobject.o
+./debug\stationobjectmodel.o
+./debug\gaugeobject.o
+./debug\gaugeobjectmodel.o
+./debug\qrc_qml.o
+./debug\moc_localdatabaseinterface.o
+./debug\moc_stationobjectmodel.o
+./debug\moc_gaugeobjectmodel.o
+);

@@ -36,6 +36,10 @@ double GaugeObject::left() const
     return m_left;
 }
 
+void GaugeObject::setLeft(const double &left)
+{
+    m_left = left;
+}
 
 double GaugeObject::thresholdDownP() const
 {
@@ -57,7 +61,7 @@ void GaugeObject::setThresholdUpP(const double &value)
     m_thresholdUpP = value;
 }
 
-int GaugeObject::SDCSAddr()
+int GaugeObject::SDCSAddr() const
 {
     return m_SDCSAddr;
 }

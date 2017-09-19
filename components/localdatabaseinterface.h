@@ -7,7 +7,7 @@
 #include <QtCharts/QAbstractAxis>
 #include <QtSql/QSqlQuery>
 #include "stationobjectmodel.h"
-
+#include "gaugeobjectmodel.h"
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -21,6 +21,8 @@ public:
     void start();
     void stop();
     StationObjectModel m_stationModel;
+    GaugeObjectModel m_gaugeModel;
+
 public slots:
     Q_INVOKABLE void initializeDataToGraph(QAbstractSeries *series, QAbstractAxis *axis,const QString &mRFID);
     Q_INVOKABLE void updateDataToGraph(QAbstractSeries *series, const QDateTime &firstTimePoint, const QDateTime &lastTimePoint, const QByteArray &RFID);
@@ -39,6 +41,7 @@ public slots:
 
     Q_INVOKABLE void updateStationPositions(const int &id);
     bool initializeStationModel();
+    bool initializeGaugeModel();
     void updateStationSettingToDatabaseSlot(const int &id);
     QByteArray checkStationState(const StationObject &station);
 
