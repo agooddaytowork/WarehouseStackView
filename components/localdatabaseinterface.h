@@ -39,8 +39,9 @@ public slots:
 
     Q_INVOKABLE void updateStationPositions(const int &id);
     bool initializeStationModel();
-
     void updateStationSettingToDatabaseSlot(const int &id);
+    QByteArray checkStationState(const StationObject &station);
+
 signals:
     void updateStationSettingToDatabaseSignal(const int &id);
 private:

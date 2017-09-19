@@ -149,8 +149,6 @@ Item {
             onTriggered:
             {
                 LocalDb.initializeDataToGraph(pressureSerie,axisX1, sRFID)
-                chartView.currentMaxX = chartView.toMsecsSinceEpoch(axisX1.max)
-                chartView.currentMinX = chartView.toMsecsSinceEpoch(axisX1.min)
 
             }
         }

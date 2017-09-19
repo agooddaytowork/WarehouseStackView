@@ -62,7 +62,7 @@ Item {
                 property int previousX
                 property int previousY
 
-                state: "EgunGood"
+                state: stationState
 
                 states:[
                     State{
@@ -70,22 +70,34 @@ Item {
 
                         PropertyChanges {
                             target: stationStatus
-                            gradient: egunNotFoundGradient
+                            gradient: individualStation.pressed? stationPressedGradient: egunNotFoundGradient
                         }
                         PropertyChanges {
                             target: individualStationTextContent
                             color: "white"
+
                         }
+                        PropertyChanges {
+                            target: individualStation
+                            disableClick: true
+                        }
+
+
                     },
                     State{
                         name:"EgunGood"
                         PropertyChanges {
                             target: stationStatus
-                            gradient: egunGoodGradient
+                            gradient: individualStation.pressed?  stationPressedGradient : egunGoodGradient
                         }
                         PropertyChanges {
                             target: individualStationTextContent
                             color: "white"
+                        }
+
+                        PropertyChanges {
+                            target: individualStation
+                            disableClick: false
                         }
 
                     },
@@ -93,22 +105,32 @@ Item {
                         name:"EgunWarning"
                         PropertyChanges {
                             target: stationStatus
-                            gradient: egunWarningGradient
+                            gradient: individualStation.pressed?   stationPressedGradient: egunWarningGradient
                         }
                         PropertyChanges {
                             target: individualStationTextContent
                             color: "white"
+                        }
+
+                        PropertyChanges {
+                            target: individualStation
+                            disableClick: false
                         }
                     },
                     State{
                         name:"EgunAlert"
                         PropertyChanges {
                             target: stationStatus
-                            gradient: egunAlertGradient
+                            gradient: individualStation.pressed?  stationPressedGradient :egunAlertGradient
                         }
                         PropertyChanges {
                             target: individualStationTextContent
                             color: "white"
+                        }
+
+                        PropertyChanges {
+                            target: individualStation
+                            disableClick: false
                         }
                     }
 
@@ -237,6 +259,7 @@ Item {
                     width: 70
                     text: stationName
                     z:1
+                    property bool disableClick: false
                     contentItem: Text
                     {
                         id: individualStationTextContent
@@ -250,35 +273,36 @@ Item {
 
                     }
 
-
-
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.topMargin: 20
                     background: Rectangle
-                    {   id:stationStatus
+                    {
+                        id:stationStatus
                         radius:5
                     }
 
                     onClicked:
                     {
-
-                        mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
-                                           {sGlobalId: GlobalId,
-                                               sRFID: RFID,
-                                               sKTPN: KTPN,
-                                               sEgunType: egunType,
-                                               sStationName: stationName,
-                                               sKTSERIALPN: KTSERIALPN,
-                                               sLPN: LPN,
-                                               sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
-                                               sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
-                                               sPONumber: PO,
-                                               sDATERECEIVED: ReceviedDate,
-                                               sDATESHIPPED: ShippedDate,
-                                               sHVON: HVON,
-                                               sProtectON: ProtectOn,
-                                               sValveON:ValveON })
+                        if(!disableClick)
+                        {
+                            mainStackView.push(Qt.resolvedUrl("StationPage.qml"),
+                                               {sGlobalId: GlobalId,
+                                                   sRFID: RFID,
+                                                   sKTPN: KTPN,
+                                                   sEgunType: egunType,
+                                                   sStationName: stationName,
+                                                   sKTSERIALPN: KTSERIALPN,
+                                                   sLPN: LPN,
+                                                   sSUPPLIERTESTDATE: SUPPLIERTESTDATE,
+                                                   sMFGGUNOFFPRESSURE:GUNOFFPRESSURE,
+                                                   sPONumber: PO,
+                                                   sDATERECEIVED: ReceviedDate,
+                                                   sDATESHIPPED: ShippedDate,
+                                                   sHVON: HVON,
+                                                   sProtectON: ProtectOn,
+                                                   sValveON:ValveON })
+                        }
 
                     }
 
@@ -352,6 +376,20 @@ Item {
                 loops: Animation.Infinite
                 ColorAnimation { from: "#f7e874"; to: "#ffe414"; duration: 5000 }
                 ColorAnimation { from: "#ffe414"; to: "#f7e874"; duration: 5000 }
+
+            }
+        }
+
+    }
+
+    Gradient {
+        id: stationPressedGradient
+        GradientStop {
+            position: 0.0
+            SequentialAnimation on color {
+                loops: Animation.Infinite
+                ColorAnimation { from: "#a9e4f7"; to: "#0fb4e7"; duration: 5000 }
+                ColorAnimation { from: "#0fb4e7"; to: "#a9e4f7"; duration: 5000 }
 
             }
         }

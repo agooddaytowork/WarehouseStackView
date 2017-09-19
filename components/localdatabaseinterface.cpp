@@ -93,7 +93,7 @@ bool LocalDatabaseInterface::initializeStationModel()
             aStation.setThresHoldUpP(tmpQuery.value("thresholdUpP").toDouble());
             aStation.setThresholdDownI(tmpQuery.value("thresholdDownI").toDouble());
             aStation.setThresholdUpI(tmpQuery.value("thresholdUpI").toDouble());
-
+            aStation.setStationState(checkStationState(aStation));
             QSqlQuery secondQuery;
 
             secondQuery.prepare("SELECT*FROM frus WHERE RFID = ? LIMIT 1");
@@ -300,4 +300,16 @@ void LocalDatabaseInterface::updateStationPositions(const int &id)
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Querry failed: " << "UPDATE stations SET top = ?, left_style = ? WHERE id = ?"));
     }
+}
+
+
+QByteArray LocalDatabaseInterface::checkStationState(const StationObject &station)
+{
+        if(station.RFID() == "r0000")
+        {
+            return "EgunNotFound";
+        }
+
+        return "EgunGood";
+
 }
