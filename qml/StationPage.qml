@@ -39,7 +39,7 @@ Item {
         property int  initialY
         property int currentMaxX
         property int currentMinX
-        property int timeRangeChanged: false
+        property bool timeRangeChanged: false
 
 
         function toMsecsSinceEpoch(date) {
@@ -66,7 +66,7 @@ Item {
 
                 if(chartView.timeRangeChanged === true)
                 {
-                LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
+                    LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
 
                     chartView.timeRangeChanged = false
                 }

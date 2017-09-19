@@ -200,12 +200,17 @@ void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series, const QD
 
         if(tmpQuery.exec())
         {
+
+            anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeed: " << tmpQuery.executedQuery()));
             while(tmpQuery.next())
             {
                 lineSeries->append(tmpQuery.value("Time").toDateTime().toMSecsSinceEpoch(), tmpQuery.value("Pressure").toDouble());
             }
         }
-
+        else
+        {
+             anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed: " << tmpQuery.executedQuery()));
+        }
     }
 }
 
