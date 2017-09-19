@@ -44,7 +44,7 @@
     #include <windows.h>
     #define __anWINOS__
 #elif defined linux || defined _linux_ || defined __linux || defined __linux__\
-        || defined __gnu_linux__ || defined Q_OS_MACOS
+        || defined __gnu_linux__ || defined Q_OS_OSX  || defined Q_OS_MACOS || defined Q_OS_MAC || defined __APPLE__
     #define __anLINUXOS__
 #endif
 #ifdef QT_CORE_LIB
