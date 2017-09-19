@@ -186,9 +186,27 @@ void LocalDatabaseInterface::initializeDataToGraph(QAbstractSeries *series, QAbs
     return;
 }
 
-void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series)
+void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series, const QDateTime &firstTimePoint, const QDateTime &lastTimePoint, const QByteArray &RFID)
 {
+    if(series)
+    {
+        QLineSeries *lineSeries = static_cast<QLineSeries*> (series);
+        QSqlQuery tmpQuery;
 
+        tmpQuery.prepare("SELECT * FROM ? WHERE Time BETWEEN ? and ?");
+        tmpQuery.addBindValue(RFID);
+        tmpQuery.addBindValue(firstTimePoint);
+        tmpQuery.addBindValue(lastTimePoint);
+
+        if(tmpQuery.exec())
+        {
+            while(tmpQuery.next())
+            {
+                lineSeries->append(tmpQuery.value("Time").toDateTime().toMSecsSinceEpoch(), tmpQuery.value("Pressure").toDouble());
+            }
+        }
+
+    }
 }
 
 void LocalDatabaseInterface::setHVON(const int &globalId, const bool &command)

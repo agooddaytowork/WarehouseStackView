@@ -23,7 +23,7 @@ public:
     StationObjectModel m_stationModel;
 public slots:
     Q_INVOKABLE void initializeDataToGraph(QAbstractSeries *series, QAbstractAxis *axis,const QString &mRFID);
-    Q_INVOKABLE void updateDataToGraph(QAbstractSeries *series);
+    Q_INVOKABLE void updateDataToGraph(QAbstractSeries *series, const QDateTime &firstTimePoint, const QDateTime &lastTimePoint, const QByteArray &RFID);
     Q_INVOKABLE void setHVON(const int & globalId, const bool &command);
     Q_INVOKABLE void setValveON(const int & globalId, const bool &command);
     Q_INVOKABLE void setProtectON(const int &globalId, const bool &command);

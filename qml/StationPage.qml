@@ -32,53 +32,78 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: 1200
-        theme: ChartView.ChartThemeDark
+        theme: ChartView.ChartThemeBlueNcs
+        animationOptions:  ChartView.SeriesAnimations
         antialiasing: true
         property  int initialX
         property int  initialY
+        property int currentMaxX
+        property int currentMinX
+        property int timeRangeChanged: false
 
 
-       PinchArea{
-           width: parent.width
-           height: parent.height
+        function toMsecsSinceEpoch(date) {
+            var msecs = date.getTime();
+            return msecs;
+        }
+        PinchArea{
+            width: parent.width
+            height: parent.height
 
-           onPinchUpdated: {
-               chartView.scrollLeft(pinch.center.x - pinch.previousCenter.x)
-               chartView.scrollUp(pinch.center.y - pinch.previousCenter.y)
+            onPinchUpdated: {
+                chartView.scrollLeft(pinch.center.x - pinch.previousCenter.x)
+                chartView.scrollUp(pinch.center.y - pinch.previousCenter.y)
+                if(chartView.toMsecsSinceEpoch(axisX1.min) < chartView.currentMinX)
+                {
+                    chartView.currentMinX = chartView.toMsecsSinceEpoch(axisX1.min)
+                    chartView.timeRangeChanged = true
+                }
+                if(chartView.toMsecsSinceEpoch(axisX1.max) > chartView.currentMaxX)
+                {
+                    chartView.currentMaxX = chartView.toMsecsSinceEpoch(axisX1.max)
+                    chartView.timeRangeChanged = true
+                }
 
-           }
-       }
+                if(chartView.timeRangeChanged === true)
+                {
+                LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
+
+                    chartView.timeRangeChanged = false
+                }
+
+            }
+        }
 
 
-       LogValueAxis{
-           id: axisY1
-           base: 10
-           max: 1e-7
-           min: 1e-12
-           labelFormat: "%.2e"
+        LogValueAxis{
+            id: axisY1
+            base: 10
+            max: 1e-7
+            min: 1e-12
+            labelFormat: "%.2e"
 
-       }
+        }
 
-       DateTimeAxis{
-           id: axisX1
-           tickCount: 6
-           min: new Date(new Date() - 100000)
-           max: new Date()
-           format: "MMM\dd hh:mm"
+        DateTimeAxis{
+            id: axisX1
+            tickCount: 6
+            min: new Date(new Date() - 100000)
+            max: new Date()
+            format: "MMM\dd hh:mm"
 
-       }
+        }
 
-       LineSeries{
-           id: pressureSerie
-           name: "Pressure"
-           axisX: axisX1
-           axisY: axisY1
-           useOpenGL: true
+        LineSeries{
+            id: pressureSerie
+            name: "Pressure"
+            axisX: axisX1
+            axisY: axisY1
+            useOpenGL: true
             width: 4
             color: "red"
             style: Qt.DotLine
 
-       }
+        }
 
         Timer
         {
@@ -89,6 +114,9 @@ Item {
             onTriggered:
             {
                 LocalDb.initializeDataToGraph(pressureSerie,axisX1, sRFID)
+                chartView.currentMaxX = chartView.toMsecsSinceEpoch(axisX1.max)
+                chartView.currentMinX = chartView.toMsecsSinceEpoch(axisX1.min)
+
             }
         }
     }
@@ -107,7 +135,7 @@ Item {
 
 
         ColumnLayout {
-        anchors.fill: parent
+            anchors.fill: parent
             spacing: 8
             Layout.fillHeight: true
 
@@ -194,260 +222,260 @@ Item {
             }
 
 
-                Switch{
-                    id: hvONSwitch
-                    text:"HV ON"
-                    checked: sHVON
+            Switch{
+                id: hvONSwitch
+                text:"HV ON"
+                checked: sHVON
 
-                }
-                Switch{
-                    id: protectOnSwitch
-                    text:"Protect ON"
-                    checked: sProtectON
+            }
+            Switch{
+                id: protectOnSwitch
+                text:"Protect ON"
+                checked: sProtectON
 
-                }
+            }
 
 
-                Switch
-                {
-                    id: valveONSwitch
-                    text: "Valve ON"
-                    checked: sValveON
+            Switch
+            {
+                id: valveONSwitch
+                text: "Valve ON"
+                checked: sValveON
 
-                }
+            }
 
-                Button
-                {
-                    id: shipButton
-                    text: "Ship"
-                    Layout.fillWidth: true
+            Button
+            {
+                id: shipButton
+                text: "Ship"
+                Layout.fillWidth: true
 
-                }
+            }
 
         }
 
     }
 
 
-        Flickable{
-            id: flickable
+    Flickable{
+        id: flickable
 
+        anchors.fill: parent
+        anchors.topMargin: 50
+        anchors.bottomMargin: keyboardRect.visible ? keyboardRect.height : 100
+        anchors.leftMargin: 1400
+        visible: true
+        flickableDirection: Flickable.VerticalFlick
+
+        Rectangle{
             anchors.fill: parent
-            anchors.topMargin: 50
-            anchors.bottomMargin: keyboardRect.visible ? keyboardRect.height : 100
-            anchors.leftMargin: 1400
-            visible: true
-            flickableDirection: Flickable.VerticalFlick
+            color: "grey"
+        }
 
-            Rectangle{
-                anchors.fill: parent
-                color: "grey"
+        ColumnLayout{
+            id: column
+            width: parent.width
+            height: parent.height
+            spacing: 10
+
+
+            Label{
+                width: parent.width
+                wrapMode: Label.Wrap
+                verticalAlignment: Qt.AlignVCenter
+                text:"E-source Information"
+                font.pixelSize: 30
             }
 
-            ColumnLayout{
-                id: column
+            FrusTextField{
+                id: rfid
                 width: parent.width
-                height: parent.height
-                spacing: 10
+                labelText: "RFID: "
+                myText: sRFID
 
-
-                Label{
-                    width: parent.width
-                    wrapMode: Label.Wrap
-                    verticalAlignment: Qt.AlignVCenter
-                    text:"E-source Information"
-                    font.pixelSize: 30
-                }
-
-                FrusTextField{
-                    id: rfid
-                    width: parent.width
-                    labelText: "RFID: "
-                    myText: sRFID
-
-                    onTextfieldchanged:
+                onTextfieldchanged:
                 {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-                }
-
-                }
-
-                FrusTextField{
-                    id: ktpn
-
-                    labelText: "KT PN: "
-                    myText: sKTPN
-
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: ktserialpn
-
-                    labelText: "KT Serial PN: "
-                    myText: sKTSERIALPN
-
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: lpn
-
-                    labelText: "LPN: "
-                    myText: sLPN
-
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: supplierTestDate
-
-                    labelText: "Supplier Test Date: "
-                    myText: sSUPPLIERTESTDATE
-
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: mfgPressureoff
-
-                    labelText:"MFG Gun off GV Closed: "
-                    myText: sMFGGUNOFFPRESSURE
-
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: purchaseOrder
-
-                    labelText: "PO: "
-                    myText:sPONumber
-
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: dateReceive
-
-                    labelText: "Date Received: "
-                    myText:sDATERECEIVED
-                    onTextfieldchanged: {
-                        if(activeFocus)
-                        {
-                            keyboardRect.visible = activeFocus
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
-                    }
-                }
-                FrusTextField{
-                    id: dateShipped
-
-                    labelText: "Date Shipped: "
-                    myText: sDATESHIPPED
-
-                    onTextfieldchanged: {
-
-                        if(activeFocus)
-                        {
-
-                            keyboardRect.visible = activeFocus;
-                            var posWithinFlickable = mapToItem(column, 0, height / 2);
-                            flickable.contentY = posWithinFlickable.y - flickable.height / 2;
-                        }
-
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
                     }
                 }
 
-                Button
-                {
-                    id: updateDatebutton
-                    text: "Update"
-                    background: Rectangle{
-                        radius: 10
-                        implicitWidth: 300
-                        implicitHeight: 30
-                        border.color: "#333"
-                        border.width: 1
+            }
+
+            FrusTextField{
+                id: ktpn
+
+                labelText: "KT PN: "
+                myText: sKTPN
+
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
                     }
 
-                    onClicked: {
+                }
+            }
+            FrusTextField{
+                id: ktserialpn
+
+                labelText: "KT Serial PN: "
+                myText: sKTSERIALPN
+
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+            FrusTextField{
+                id: lpn
+
+                labelText: "LPN: "
+                myText: sLPN
+
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+            FrusTextField{
+                id: supplierTestDate
+
+                labelText: "Supplier Test Date: "
+                myText: sSUPPLIERTESTDATE
+
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+            FrusTextField{
+                id: mfgPressureoff
+
+                labelText:"MFG Gun off GV Closed: "
+                myText: sMFGGUNOFFPRESSURE
+
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+            FrusTextField{
+                id: purchaseOrder
+
+                labelText: "PO: "
+                myText:sPONumber
+
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+            FrusTextField{
+                id: dateReceive
+
+                labelText: "Date Received: "
+                myText:sDATERECEIVED
+                onTextfieldchanged: {
+                    if(activeFocus)
+                    {
+                        keyboardRect.visible = activeFocus
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+            FrusTextField{
+                id: dateShipped
+
+                labelText: "Date Shipped: "
+                myText: sDATESHIPPED
+
+                onTextfieldchanged: {
+
+                    if(activeFocus)
+                    {
+
+                        keyboardRect.visible = activeFocus;
+                        var posWithinFlickable = mapToItem(column, 0, height / 2);
+                        flickable.contentY = posWithinFlickable.y - flickable.height / 2;
+                    }
+
+                }
+            }
+
+            Button
+            {
+                id: updateDatebutton
+                text: "Update"
+                background: Rectangle{
+                    radius: 10
+                    implicitWidth: 300
+                    implicitHeight: 30
+                    border.color: "#333"
+                    border.width: 1
+                }
+
+                onClicked: {
 
                     LocalDb.updateStationFruInfo(sGlobalId, ktpn.myText, ktserialpn.myText, lpn.myText, mfgPressureoff.myText, purchaseOrder.myText, supplierTestDate.myText, dateReceive.myText, dateShipped.myText)
 
-                    }
-
                 }
-
 
             }
 
 
         }
 
-        Rectangle {
-                id: keyboardRect
-                width: parent.width
-                height: parent.height * 0.4
-                anchors.bottom: parent.bottom
-                color: "transparent"
-                visible: false
-            }
 
-        InputPanel {
-                id: inputPanel
-                y: Qt.inputMethod.visible ? (parent.height - inputPanel.height + 100 ) : parent.height
-                anchors.left: parent.left
-                anchors.right: parent.right
-                scale: 0.7
+    }
 
-            }
+    Rectangle {
+        id: keyboardRect
+        width: parent.width
+        height: parent.height * 0.4
+        anchors.bottom: parent.bottom
+        color: "transparent"
+        visible: false
+    }
+
+    InputPanel {
+        id: inputPanel
+        y: Qt.inputMethod.visible ? (parent.height - inputPanel.height + 100 ) : parent.height
+        anchors.left: parent.left
+        anchors.right: parent.right
+        scale: 0.7
+
+    }
 }
