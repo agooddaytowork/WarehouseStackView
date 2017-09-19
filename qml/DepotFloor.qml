@@ -7,7 +7,7 @@ import QtQuick.Dialogs 1.1
 Item {
     id: mainPage
 
-    property bool  depotEditEnable: false
+    property bool  depotEditEnable: true
 
     Rectangle
     {
@@ -64,57 +64,107 @@ Item {
             visible: true
 
             property bool isPressed: false
+            state: "selectStations"
 
+            states:[
+                State{
+                    name:"selectStations"
+                },
+                State{
+                    name:"moveStations"
+                }
 
+            ]
 
             onPressed:
             {
 
-                selectRect.x = multipleSelectMouseArea.mouseX
-                selectRect.y  = multipleSelectMouseArea.mouseY
-                selectRect.initX = multipleSelectMouseArea.mouseX
-                selectRect.initY = multipleSelectMouseArea.mouseY
-                multipleSelectMouseArea.isPressed = true
-                console.log("isPressed")
+               if(multipleSelectMouseArea.state ==="selectStations")
+               {
+                   selectRect.x = multipleSelectMouseArea.mouseX
+                   selectRect.y  = multipleSelectMouseArea.mouseY
+                   selectRect.initX = multipleSelectMouseArea.mouseX
+                   selectRect.initY = multipleSelectMouseArea.mouseY
+                   multipleSelectMouseArea.isPressed = true
+
+                   // temporarily reset the Cellselected paramter here
+
+                   for(var i =0; i < stationMap.count; i++)
+                   {
+                       stationMap.itemAt(i).cellSelected = false
+                   }
+               }
+
             }
             onPositionChanged: {
 
-                if(multipleSelectMouseArea.isPressed)
+                if(multipleSelectMouseArea.state ==="selectStations")
                 {
+                    if(multipleSelectMouseArea.isPressed)
+                    {
 
-                    if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY > 0)
-                    {
-                        selectRect.x = mouseX
-                        selectRect.y = selectRect.initY
+                        if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY > 0)
+                        {
+                            selectRect.x = mouseX
+                            selectRect.y = selectRect.initY
 
+                        }
+                        //-x,-y
+                        else if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY < 0)
+                        {
+                            selectRect.x = mouseX
+                            selectRect.y = mouseY
+                        }
+                        //+x,-y
+                        else if(mouseX - selectRect.initX > 0 && mouseY - selectRect.initY < 0)
+                        {
+                            selectRect.x = selectRect.initX
+                            selectRect.y = mouseY
+                        }
+                        //+x,+y
+                        else
+                        {
+                            //do nothing
+                        }
+                        selectRect.width = Math.abs(mouseX - selectRect.initX)
+                        selectRect.height = Math.abs(mouseY - selectRect.initY)
                     }
-                    //-x,-y
-                    else if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY < 0)
-                    {
-                        selectRect.x = mouseX
-                        selectRect.y = mouseY
-                    }
-                    //+x,-y
-                    else if(mouseX - selectRect.initX > 0 && mouseY - selectRect.initY < 0)
-                    {
-                        selectRect.x = selectRect.initX
-                        selectRect.y = mouseY
-                    }
-                    //+x,+y
-                    else
-                    {
-                        //do nothing
-                    }
-                    selectRect.width = Math.abs(mouseX - selectRect.initX)
-                    selectRect.height = Math.abs(mouseY - selectRect.initY)
                 }
+
+
 
             }
             onReleased: {
-                selectRect.x = 0
-                selectRect.y = 0
-                selectRect.width = 0
-                selectRect.height = 0
+
+                if(multipleSelectMouseArea.state ==="selectStations")
+                {
+                    for(var i = 0; i < stationMap.count; i++)
+                    {
+                        //                    var width = 0.5* (myDragcell.width + outerw)
+                        //                    var height = 0.5* (myDragcell.height + outerh)
+
+                        //                    var dx = (myDragcell.x +50) - (outerx + 60)
+                        //                    var dy = (myDragcell.y + 50) - (outery + 60)
+
+                        var width = 0.5*(stationMap.itemAt(i).width + selectRect.width)
+                        var height=0.5*(stationMap.itemAt(i).height + selectRect.height)
+
+                        var dx =(stationMap.itemAt(i).x+50) -(selectRect.x + selectRect.width/2)
+                        var dy = (stationMap.itemAt(i).y+50) -(selectRect.y + selectRect.height/2)
+
+                        if(Math.abs(dx) <= width && Math.abs(dy) <= height)
+                        {
+                            stationMap.itemAt(i).cellSelected = true
+                            multipleSelectMouseArea.state = "moveStations"
+                        }
+
+                    }
+                    selectRect.x = 0
+                    selectRect.y = 0
+                    selectRect.width = 0
+                    selectRect.height = 0
+                }
+
             }
 
         }
@@ -137,11 +187,12 @@ Item {
                 height: 100
                 x:m_left
                 y:m_top
-                color: "transparent"
+                color: cellSelected ?"#222":"transparent"
                 property bool currentStation: false
                 property int counter: 0
                 property int previousX
                 property int previousY
+                property bool cellSelected: false
 
                 state: stationState
 
