@@ -42,10 +42,7 @@ Item {
 
         Repeater
         {
-            id: warehouseMap
-
-            width: 1200
-            height: 800
+            id: stationMap
 
             model: myStationModel
 
@@ -143,9 +140,9 @@ Item {
                     drag.target: myDragcell
                     drag.axis: Drag.XAndYAxis
                     drag.minimumY: 0
-                    drag.maximumY: warehouseMap.height - 100
+                    drag.maximumY: stationMap.height - 100
                     drag.minimumX: 0
-                    drag.maximumX: warehouseMap.width - 100
+                    drag.maximumX: stationMap.width - 100
                     visible: depotEditEnable
                     z: 2 // higher z
 
@@ -154,15 +151,15 @@ Item {
                     {
                         myDragcell.currentStation = true
 
-                        for(var i=0; i < warehouseMap.count; i++)
+                        for(var i=0; i < stationMap.count; i++)
                         {
-                            if(!(warehouseMap.itemAt(i).currentStation))
+                            if(!(stationMap.itemAt(i).currentStation))
                             {
-                                var outerw = warehouseMap.itemAt(i).width +20;
-                                var outerh = warehouseMap.itemAt(i).height + 20;
+                                var outerw = stationMap.itemAt(i).width +20;
+                                var outerh = stationMap.itemAt(i).height + 20;
 
-                                var outerx = warehouseMap.itemAt(i).x - 10
-                                var outery = warehouseMap.itemAt(i).y - 10
+                                var outerx = stationMap.itemAt(i).x - 10
+                                var outery = stationMap.itemAt(i).y - 10
 
                                 var width = 0.5* (myDragcell.width + outerw)
                                 var height = 0.5* (myDragcell.height + outerh)
@@ -180,12 +177,12 @@ Item {
                                         if( wy >= -hx)
                                         {
                                             //snap inter bottom
-                                            myDragcell.y = warehouseMap.itemAt(i).y + myDragcell.height
+                                            myDragcell.y = stationMap.itemAt(i).y + myDragcell.height
                                             console.log("collision with the outer box bottom")
 
-                                            if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 10)
+                                            if(Math.abs(myDragcell.x - stationMap.itemAt(i).x) <= 10)
                                             {
-                                                myDragcell.x = warehouseMap.itemAt(i).x
+                                                myDragcell.x = stationMap.itemAt(i).x
                                             }
 
 
@@ -193,11 +190,11 @@ Item {
                                         else
                                         {
                                             // snap inter left
-                                            myDragcell.x = warehouseMap.itemAt(i).x - myDragcell.width
+                                            myDragcell.x = stationMap.itemAt(i).x - myDragcell.width
                                             console.log("collision with the outer box left")
-                                            if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 10)
+                                            if(Math.abs(myDragcell.y - stationMap.itemAt(i).y) <= 10)
                                             {
-                                                myDragcell.y = warehouseMap.itemAt(i).y
+                                                myDragcell.y = stationMap.itemAt(i).y
                                             }
                                         }
                                     }
@@ -206,22 +203,22 @@ Item {
                                         if(wy >= -hx)
                                         {
                                             // snap inter right
-                                            myDragcell.x = warehouseMap.itemAt(i).x + myDragcell.width
+                                            myDragcell.x = stationMap.itemAt(i).x + myDragcell.width
                                             console.log("collision with the outer box right")
-                                            if(Math.abs(myDragcell.y - warehouseMap.itemAt(i).y) <= 10)
+                                            if(Math.abs(myDragcell.y - stationMap.itemAt(i).y) <= 10)
                                             {
-                                                myDragcell.y = warehouseMap.itemAt(i).y
+                                                myDragcell.y = stationMap.itemAt(i).y
                                             }
                                         }
                                         else
                                         {
                                             // snap inter top
-                                            myDragcell.y = warehouseMap.itemAt(i).y - myDragcell.height
+                                            myDragcell.y = stationMap.itemAt(i).y - myDragcell.height
                                             console.log("collision with the outer box top")
 
-                                            if(Math.abs(myDragcell.x - warehouseMap.itemAt(i).x) <= 10)
+                                            if(Math.abs(myDragcell.x - stationMap.itemAt(i).x) <= 10)
                                             {
-                                                myDragcell.x = warehouseMap.itemAt(i).x
+                                                myDragcell.x = stationMap.itemAt(i).x
                                             }
                                         }
                                     }
