@@ -9,7 +9,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     components/localdatabaseinterface.cpp \
     components/stationobject.cpp \
-    components/stationobjectmodel.cpp
+    components/stationobjectmodel.cpp \
+    components/gaugeobject.cpp
 
 RESOURCES += qml.qrc
 
@@ -41,4 +42,5 @@ HEADERS += \
     components/localdatabaseinterface.h \
     components/stationobject.h \
     components/stationobjectmodel.h \
-    components/anlogger.h
+    components/anlogger.h \
+    components/gaugeobject.h

@@ -2,28 +2,12 @@
 #define STATIONOBJECT_H
 
 
-
-#include <QtWidgets/QApplication>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QList>
 #include "anlogger.h"
-#include <QAbstractListModel>
-#include <QDateTime>
-
 class StationObject
 {
 
 
 public:
-
-
-//    enum pumpType{
-//        UHV2,
-//        UHV4
-//    };
-
     StationObject();
 
      explicit StationObject(const int &id, const QString &name, const double &top, const double &left, const QByteArray &RFID);

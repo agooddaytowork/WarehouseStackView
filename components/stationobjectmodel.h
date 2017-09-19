@@ -1,11 +1,6 @@
 #ifndef STATIONOBJECTMODEL_H
 #define STATIONOBJECTMODEL_H
 
-#include <QtWidgets/QApplication>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QList>
 #include "anlogger.h"
 #include <QAbstractListModel>
 #include "stationobject.h"
