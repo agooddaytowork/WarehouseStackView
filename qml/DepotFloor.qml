@@ -41,6 +41,91 @@ Item {
 
         radius: 10
 
+        Rectangle{
+            id: selectRect
+            x:0
+            y:0
+            width: 0
+            height: 0
+            //            visible: multipleSelectMouseArea.pressed? true: false
+            //            color: multipleSelectMouseArea.pressed? "#cecece":"transparent"
+            //            opacity:  multipleSelectMouseArea.pressed? 0.5: 0
+            color: "black"
+            property int initX
+            property int initY
+
+        }
+        MouseArea
+        {
+            id: multipleSelectMouseArea
+            anchors.fill: parent
+            visible: true
+
+            property bool isPressed: false
+
+
+
+            onPressed:
+            {
+
+                selectRect.x = multipleSelectMouseArea.mouseX
+                selectRect.y  = multipleSelectMouseArea.mouseY
+                selectRect.initX = multipleSelectMouseArea.mouseX
+                selectRect.initY = multipleSelectMouseArea.mouseY
+                multipleSelectMouseArea.isPressed = true
+                console.log("isPressed")
+            }
+            onPositionChanged: {
+
+                if(multipleSelectMouseArea.isPressed)
+                {
+                    console.log("onPositionChanged")
+                    //-x,+y
+                    if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY > 0)
+                    {
+                        selectRect.x = mouseX
+                        selectRect.y = selectRect.initY
+
+
+                    }
+                    //-x,-y
+                    else if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY < 0)
+                    {
+                        selectRect.x = mouseX
+                        selectRect.y = mouseY
+                    }
+                    //+x,-y
+                    else if(mouseX - selectRect.initX > 0 && mouseY - selectRect.initY < 0)
+                    {
+                        selectRect.x = selectRect.initX
+                        selectRect.y = mouseY
+                    }
+                    //+x,+y
+                    else
+                    {
+                        //do nothing
+
+
+                    }
+                    selectRect.width = Math.abs(mouseX - selectRect.initX)
+                    selectRect.height = Math.abs(mouseY - selectRect.initY)
+
+
+
+                }
+
+            }
+
+            onReleased: {
+                selectRect.x = 0
+                selectRect.y = 0
+                selectRect.width = 0
+                selectRect.height = 0
+            }
+
+        }
+
+
         //Repeater for stations
         Repeater
         {
@@ -49,6 +134,7 @@ Item {
             height: 800
 
             model: myStationModel
+
 
             Rectangle
             {
