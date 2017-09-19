@@ -51,6 +51,8 @@ Item {
             //            color: multipleSelectMouseArea.pressed? "#cecece":"transparent"
             //            opacity:  multipleSelectMouseArea.pressed? 0.5: 0
             color: "black"
+            z:3
+            opacity: 0.5
             property int initX
             property int initY
 
@@ -79,13 +81,11 @@ Item {
 
                 if(multipleSelectMouseArea.isPressed)
                 {
-                    console.log("onPositionChanged")
-                    //-x,+y
+
                     if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY > 0)
                     {
                         selectRect.x = mouseX
                         selectRect.y = selectRect.initY
-
 
                     }
                     //-x,-y
@@ -104,18 +104,12 @@ Item {
                     else
                     {
                         //do nothing
-
-
                     }
                     selectRect.width = Math.abs(mouseX - selectRect.initX)
                     selectRect.height = Math.abs(mouseY - selectRect.initY)
-
-
-
                 }
 
             }
-
             onReleased: {
                 selectRect.x = 0
                 selectRect.y = 0
