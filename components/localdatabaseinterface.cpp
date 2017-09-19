@@ -192,13 +192,12 @@ void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series, const QD
     {
         QLineSeries *lineSeries = static_cast<QLineSeries*> (series);
         QSqlQuery tmpQuery;
+        QString tmpQueryString;
 
-        tmpQuery.prepare("SELECT * FROM ? WHERE Time BETWEEN ? and ?");
-        tmpQuery.addBindValue(RFID);
-        tmpQuery.addBindValue(firstTimePoint);
-        tmpQuery.addBindValue(lastTimePoint);
+        tmpQueryString +="SELECT * FROM " + RFID + " WHERE Time BETWEEN '" + firstTimePoint.toString("yyyy-MM-ddThh:mm:ss") + "' and '" + lastTimePoint.toString("yyyy-MM-ddThh:mm:ss") +"'";
 
-        if(tmpQuery.exec())
+        lineSeries->clear();
+        if(tmpQuery.exec(tmpQueryString))
         {
 
             anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeed: " << tmpQuery.executedQuery()));
@@ -209,7 +208,7 @@ void LocalDatabaseInterface::updateDataToGraph(QAbstractSeries *series, const QD
         }
         else
         {
-             anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed: " << tmpQuery.executedQuery()));
+             anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Query failed: " << tmpQueryString));
         }
     }
 }

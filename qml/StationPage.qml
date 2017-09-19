@@ -37,9 +37,7 @@ Item {
         antialiasing: true
         property  int initialX
         property int  initialY
-        property int currentMaxX
-        property int currentMinX
-        property bool timeRangeChanged: false
+        property double currentScale
 
 
         function toMsecsSinceEpoch(date) {
@@ -50,27 +48,64 @@ Item {
             width: parent.width
             height: parent.height
 
+            onPinchStarted: {
+                chartView.currentScale = pinch.scale
+                chartView.initialX = pinch.center.x
+            }
+
             onPinchUpdated: {
                 chartView.scrollLeft(pinch.center.x - pinch.previousCenter.x)
                 chartView.scrollUp(pinch.center.y - pinch.previousCenter.y)
-                if(chartView.toMsecsSinceEpoch(axisX1.min) < chartView.currentMinX)
-                {
-                    chartView.currentMinX = chartView.toMsecsSinceEpoch(axisX1.min)
-                    chartView.timeRangeChanged = true
-                }
-                if(chartView.toMsecsSinceEpoch(axisX1.max) > chartView.currentMaxX)
-                {
-                    chartView.currentMaxX = chartView.toMsecsSinceEpoch(axisX1.max)
-                    chartView.timeRangeChanged = true
-                }
 
-                if(chartView.timeRangeChanged === true)
+                if(Math.abs(pinch.center.x - chartView.initialX) >= 100)
                 {
                     LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
 
-                    chartView.timeRangeChanged = false
+                    chartView.initialX = pinch.center.x
                 }
+                console.log("currentScale: " + chartView.currentScale)
+                if(Math.abs(pinch.scale - chartView.currentScale) >= 0.3)
+                {
+                    console.log("Enter scale function")
+                    chartView.currentScale = pinch.scale
 
+                    if (pinch.scale < 1)
+                    {
+
+                        if(Math.abs(chartView.toMsecsSinceEpoch(axisX1.min) - chartView.toMsecsSinceEpoch(axisX1.max)) <(24*60*60*1000))
+                        {
+                            axisX1.min = new Date(axisX1.min - 1000000*(1/pinch.scale))
+                            axisX1.max = new Date(axisX1.max + 1000000*(1/pinch.scale))
+                        }
+                        else
+                        {
+                            axisX1.min = new Date(axisX1.max - (24*60*60*1000))
+                        }
+                    }
+                    else
+                    {
+                        if(Math.abs(chartView.toMsecsSinceEpoch(axisX1.min) - chartView.toMsecsSinceEpoch(axisX1.max)) > (20*60*1000))
+                        {
+                            axisX1.min = new Date(axisX1.min + 1000000*pinch.scale)
+                            axisX1.max = new Date(axisX1.max - 1000000*pinch.scale)
+                        }
+                        else
+                        {
+                            axisX1.min = new Date(axisX1.max - (20*60*1000))
+                        }
+
+                    }
+
+                    LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
+
+                }
+                console.log("pinch scale: " + pinch.scale)
+
+            }
+
+            onPinchFinished:
+            {
+                LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
             }
         }
 
