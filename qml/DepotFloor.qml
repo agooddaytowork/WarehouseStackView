@@ -8,6 +8,7 @@ Item {
     id: mainPage
 
     property bool  depotEditEnable: false
+
     Rectangle
     {
         width: 300
@@ -40,9 +41,12 @@ Item {
 
         radius: 10
 
+        //Repeater for stations
         Repeater
         {
             id: stationMap
+            width: 1200
+            height: 800
 
             model: myStationModel
 
@@ -78,7 +82,6 @@ Item {
                             target: individualStation
                             disableClick: true
                         }
-
 
                     },
                     State{
@@ -146,6 +149,9 @@ Item {
                     visible: depotEditEnable
                     z: 2 // higher z
 
+                    onClicked: {
+
+                    }
 
                     onMouseXChanged:
                     {
@@ -304,6 +310,189 @@ Item {
                     }
 
                 }
+            }
+        }
+
+
+        //Repeater for gauge
+
+        Repeater
+        {
+            id: gaugeMap
+            model: myGaugeModel
+            width: 1200
+            height: 800
+
+            Rectangle{
+
+                id: myGaugeDragCell
+                width: 100
+                height: 100
+                x: m_left
+                y: m_top
+                color: "transparent"
+                property bool currentStation: false
+                property int counter: 0
+                property int previousX
+                property int previousY
+                MouseArea
+                {
+                    id: mouse1
+                    anchors.fill: parent
+                    drag.target: myGaugeDragCell
+                    drag.axis: Drag.XAndYAxis
+                    drag.minimumY: 0
+                    drag.maximumY: gaugeMap.height - 100
+                    drag.minimumX: 0
+                    drag.maximumX: gaugeMap.width - 100
+                    visible: depotEditEnable
+                    z: 2 // higher z
+
+
+                    onMouseXChanged:
+                    {
+                        myGaugeDragCell.currentStation = true
+
+                        for(var i=0; i < gaugeMap.count; i++)
+                        {
+                            if(!(gaugeMap.itemAt(i).currentStation))
+                            {
+                                var outerw = gaugeMap.itemAt(i).width +20;
+                                var outerh = gaugeMap.itemAt(i).height + 20;
+
+                                var outerx = gaugeMap.itemAt(i).x - 10
+                                var outery = gaugeMap.itemAt(i).y - 10
+
+                                var width = 0.5* (myGaugeDragCell.width + outerw)
+                                var height = 0.5* (myGaugeDragCell.height + outerh)
+
+                                var dx = (myGaugeDragCell.x +50) - (outerx + 60)
+                                var dy = (myGaugeDragCell.y + 50) - (outery + 60)
+                                if(Math.abs(dx) <= width && Math.abs(dy) <= height)
+                                {
+
+                                    var wy = width * dy;
+                                    var hx = height * dx;
+
+                                    if(wy >= hx)
+                                    {
+                                        if( wy >= -hx)
+                                        {
+                                            //snap inter bottom
+                                            myGaugeDragCell.y = gaugeMap.itemAt(i).y + myGaugeDragCell.height
+                                            console.log("collision with the outer box bottom")
+
+                                            if(Math.abs(myGaugeDragCell.x - gaugeMap.itemAt(i).x) <= 10)
+                                            {
+                                                myGaugeDragCell.x = gaugeMap.itemAt(i).x
+                                            }
+
+
+                                        }
+                                        else
+                                        {
+                                            // snap inter left
+                                            myGaugeDragCell.x = gaugeMap.itemAt(i).x - myGaugeDragCell.width
+                                            console.log("collision with the outer box left")
+                                            if(Math.abs(myGaugeDragCell.y - gaugeMap.itemAt(i).y) <= 10)
+                                            {
+                                                myGaugeDragCell.y = gaugeMap.itemAt(i).y
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(wy >= -hx)
+                                        {
+                                            // snap inter right
+                                            myGaugeDragCell.x = gaugeMap.itemAt(i).x + myGaugeDragCell.width
+                                            console.log("collision with the outer box right")
+                                            if(Math.abs(myGaugeDragCell.y - gaugeMap.itemAt(i).y) <= 10)
+                                            {
+                                                myGaugeDragCell.y = gaugeMap.itemAt(i).y
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // snap inter top
+                                            myGaugeDragCell.y = gaugeMap.itemAt(i).y - myGaugeDragCell.height
+                                            console.log("collision with the outer box top")
+
+                                            if(Math.abs(myGaugeDragCell.x - gaugeMap.itemAt(i).x) <= 10)
+                                            {
+                                                myGaugeDragCell.x = gaugeMap.itemAt(i).x
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                        myGaugeDragCell.currentStation = false
+                    }
+                }
+
+                Label{
+                    width: 70
+                    height: 20
+                    z:1
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    text: "gauge"
+                    font.pixelSize: 12
+                    font.bold: true
+                    color: "black"
+                    verticalAlignment:  Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    background: Rectangle
+                    {
+                        color: "transparent"
+                    }
+
+                }
+
+                Button
+                {
+                    id: individualGauge
+                    height: 65
+                    width: 70
+                    text: GlobalId
+                    z:1
+                    property bool disableClick: false
+                    contentItem: Text
+                    {
+                        id: individualGaugeTextContent
+                        text: individualGauge.text
+                        font.pixelSize: 20
+                        font.bold: true
+
+                        color: "white"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+
+                    }
+
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 20
+                    background: Rectangle
+                    {
+                        id:gaugeStatus
+                        radius:5
+                        gradient: individualGauge.pressed? stationPressedGradient : egunGoodGradient
+                    }
+
+                    onClicked:
+                    {
+                        if(!disableClick)
+                        {
+
+                        }
+
+                    }
+
+                }
+
             }
         }
     }
