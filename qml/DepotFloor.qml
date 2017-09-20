@@ -7,7 +7,7 @@ import QtQuick.Dialogs 1.1
 Item {
     id: mainPage
 
-    property bool  depotEditEnable: true
+    property bool  depotEditEnable: false
 
     Rectangle
     {
@@ -61,7 +61,7 @@ Item {
         {
             id: multipleSelectMouseArea
             anchors.fill: parent
-            visible: true
+            visible: depotEditEnable
 
             property bool isPressed: false
             state: "selectStations"

@@ -58,15 +58,13 @@ Item {
                 if(Math.abs(pinch.center.x - chartView.initialX) >= 100)
                 {
                     LocalDb.updateDataToGraph(pressureSerie, axisX1.min, axisX1.max, sRFID)
-
                     chartView.initialX = pinch.center.x
                 }
-                console.log("currentScale: " + chartView.currentScale)
+
                 if(Math.abs(pinch.scale - chartView.currentScale) >= 0.3)
                 {
-                    console.log("Enter scale function")
-                    chartView.currentScale = pinch.scale
 
+                    chartView.currentScale = pinch.scale
                     if (pinch.scale < 1)
                     {
 
