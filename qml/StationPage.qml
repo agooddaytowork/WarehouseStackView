@@ -23,19 +23,36 @@ Item {
     property bool sProtectON
     property bool sValveON
 
+    Rectangle
+    {
+        width: 200
+        height: 80
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.rightMargin: 100
+
+        Image {
+            id: logoImage
+            source: "../images/Kla-logo-purplepng.png"
+            scale: 0.5
+        }
+    }
+
     ChartView{
         id: chartView
         anchors.topMargin: 50
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: 1200
-        theme: ChartView.ChartThemeBlueNcs
+        width: 1350
+        theme: ChartView.ChartThemeDark
         animationOptions:  ChartView.SeriesAnimations
         antialiasing: true
         property  int initialX
         property int  initialY
         property double currentScale
+
+
 
 
         function toMsecsSinceEpoch(date) {
@@ -155,13 +172,13 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.topMargin: 50
+        anchors.topMargin: 60
         anchors.rightMargin: 100
         width: 400
         color: "transparent"
         visible: false
 
-
+        border.color: "black"
 
         ColumnLayout {
             anchors.fill: parent
@@ -290,15 +307,18 @@ Item {
         id: flickable
 
         anchors.fill: parent
-        anchors.topMargin: 50
+        anchors.topMargin: 60
         anchors.bottomMargin: keyboardRect.visible ? keyboardRect.height : 100
         anchors.leftMargin: 1400
+        anchors.rightMargin: 50
         visible: true
         flickableDirection: Flickable.VerticalFlick
 
+
         Rectangle{
             anchors.fill: parent
-            color: "grey"
+            color: "transparent"
+
         }
 
         ColumnLayout{
@@ -468,10 +488,11 @@ Item {
             {
                 id: updateDatebutton
                 text: "Update"
+                anchors.horizontalCenter: parent.horizontalCenter
                 background: Rectangle{
                     radius: 10
                     implicitWidth: 300
-                    implicitHeight: 30
+                    implicitHeight: 50
                     border.color: "#333"
                     border.width: 1
                 }
