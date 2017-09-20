@@ -79,21 +79,21 @@ Item {
             onPressed:
             {
 
-               if(multipleSelectMouseArea.state ==="selectStations")
-               {
-                   selectRect.x = multipleSelectMouseArea.mouseX
-                   selectRect.y  = multipleSelectMouseArea.mouseY
-                   selectRect.initX = multipleSelectMouseArea.mouseX
-                   selectRect.initY = multipleSelectMouseArea.mouseY
-                   multipleSelectMouseArea.isPressed = true
+                if(multipleSelectMouseArea.state ==="selectStations")
+                {
+                    selectRect.x = multipleSelectMouseArea.mouseX
+                    selectRect.y  = multipleSelectMouseArea.mouseY
+                    selectRect.initX = multipleSelectMouseArea.mouseX
+                    selectRect.initY = multipleSelectMouseArea.mouseY
+                    multipleSelectMouseArea.isPressed = true
 
-                   // temporarily reset the Cellselected paramter here
+                    // temporarily reset the Cellselected paramter here
 
-                   for(var i =0; i < stationMap.count; i++)
-                   {
-                       stationMap.itemAt(i).cellSelected = false
-                   }
-               }
+                    for(var i =0; i < stationMap.count; i++)
+                    {
+                        stationMap.itemAt(i).cellSelected = false
+                    }
+                }
 
             }
             onPositionChanged: {
@@ -102,7 +102,7 @@ Item {
                 {
                     if(multipleSelectMouseArea.isPressed)
                     {
-
+                        //-x,+y
                         if(mouseX - selectRect.initX < 0 && mouseY - selectRect.initY > 0)
                         {
                             selectRect.x = mouseX
@@ -155,7 +155,7 @@ Item {
                         if(Math.abs(dx) <= width && Math.abs(dy) <= height)
                         {
                             stationMap.itemAt(i).cellSelected = true
-                            multipleSelectMouseArea.state = "moveStations"
+                            //                            multipleSelectMouseArea.state = "moveStations"
                         }
 
                     }
@@ -190,8 +190,8 @@ Item {
                 color: cellSelected ?"#222":"transparent"
                 property bool currentStation: false
                 property int counter: 0
-                property int previousX
-                property int previousY
+                property int initX
+                property int initY
                 property bool cellSelected: false
 
                 state: stationState
@@ -280,86 +280,111 @@ Item {
                     visible: depotEditEnable
                     z: 2 // higher z
 
-                    onClicked: {
+
+
+                    onPressed: {
+
+                         for (var i =0; i < stationMap.count; i++)
+                         {
+                             stationMap.itemAt(i).initX = stationMap.itemAt(i).x
+                             stationMap.itemAt(i).initY = stationMap.itemAt(i).y
+                         }
 
                     }
 
                     onMouseXChanged:
                     {
                         myDragcell.currentStation = true
-
-                        for(var i=0; i < stationMap.count; i++)
+                        if(myDragcell.cellSelected)
                         {
-                            if(!(stationMap.itemAt(i).currentStation))
+
+                            for (var i =0; i < stationMap.count; i++)
                             {
-                                var outerw = stationMap.itemAt(i).width +20;
-                                var outerh = stationMap.itemAt(i).height + 20;
 
-                                var outerx = stationMap.itemAt(i).x - 10
-                                var outery = stationMap.itemAt(i).y - 10
-
-                                var width = 0.5* (myDragcell.width + outerw)
-                                var height = 0.5* (myDragcell.height + outerh)
-
-                                var dx = (myDragcell.x +50) - (outerx + 60)
-                                var dy = (myDragcell.y + 50) - (outery + 60)
-                                if(Math.abs(dx) <= width && Math.abs(dy) <= height)
+                                if(stationMap.itemAt(i).cellSelected)
                                 {
+                                    stationMap.itemAt(i).x = stationMap.itemAt(i).initX +(myDragcell.x - myDragcell.initX)
+                                    stationMap.itemAt(i).y = stationMap.itemAt(i).initY +(myDragcell.y - myDragcell.initY)
+                                }
+                            }
 
-                                    var wy = width * dy;
-                                    var hx = height * dx;
+                        }
+                        else
+                        {
 
-                                    if(wy >= hx)
+                            for(var i=0; i < stationMap.count; i++)
+                            {
+                                if(!(stationMap.itemAt(i).currentStation))
+                                {
+                                    var outerw = stationMap.itemAt(i).width +20;
+                                    var outerh = stationMap.itemAt(i).height + 20;
+
+                                    var outerx = stationMap.itemAt(i).x - 10
+                                    var outery = stationMap.itemAt(i).y - 10
+
+                                    var width = 0.5* (myDragcell.width + outerw)
+                                    var height = 0.5* (myDragcell.height + outerh)
+
+                                    var dx = (myDragcell.x +50) - (outerx + 60)
+                                    var dy = (myDragcell.y + 50) - (outery + 60)
+                                    if(Math.abs(dx) <= width && Math.abs(dy) <= height)
                                     {
-                                        if( wy >= -hx)
+
+                                        var wy = width * dy;
+                                        var hx = height * dx;
+
+                                        if(wy >= hx)
                                         {
-                                            //snap inter bottom
-                                            myDragcell.y = stationMap.itemAt(i).y + myDragcell.height
-                                            console.log("collision with the outer box bottom")
-
-                                            if(Math.abs(myDragcell.x - stationMap.itemAt(i).x) <= 10)
+                                            if( wy >= -hx)
                                             {
-                                                myDragcell.x = stationMap.itemAt(i).x
+                                                //snap inter bottom
+                                                myDragcell.y = stationMap.itemAt(i).y + myDragcell.height
+                                                console.log("collision with the outer box bottom")
+
+                                                if(Math.abs(myDragcell.x - stationMap.itemAt(i).x) <= 10)
+                                                {
+                                                    myDragcell.x = stationMap.itemAt(i).x
+                                                }
+
+
                                             }
-
-
+                                            else
+                                            {
+                                                // snap inter left
+                                                myDragcell.x = stationMap.itemAt(i).x - myDragcell.width
+                                                console.log("collision with the outer box left")
+                                                if(Math.abs(myDragcell.y - stationMap.itemAt(i).y) <= 10)
+                                                {
+                                                    myDragcell.y = stationMap.itemAt(i).y
+                                                }
+                                            }
                                         }
                                         else
                                         {
-                                            // snap inter left
-                                            myDragcell.x = stationMap.itemAt(i).x - myDragcell.width
-                                            console.log("collision with the outer box left")
-                                            if(Math.abs(myDragcell.y - stationMap.itemAt(i).y) <= 10)
+                                            if(wy >= -hx)
                                             {
-                                                myDragcell.y = stationMap.itemAt(i).y
+                                                // snap inter right
+                                                myDragcell.x = stationMap.itemAt(i).x + myDragcell.width
+                                                console.log("collision with the outer box right")
+                                                if(Math.abs(myDragcell.y - stationMap.itemAt(i).y) <= 10)
+                                                {
+                                                    myDragcell.y = stationMap.itemAt(i).y
+                                                }
                                             }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if(wy >= -hx)
-                                        {
-                                            // snap inter right
-                                            myDragcell.x = stationMap.itemAt(i).x + myDragcell.width
-                                            console.log("collision with the outer box right")
-                                            if(Math.abs(myDragcell.y - stationMap.itemAt(i).y) <= 10)
+                                            else
                                             {
-                                                myDragcell.y = stationMap.itemAt(i).y
-                                            }
-                                        }
-                                        else
-                                        {
-                                            // snap inter top
-                                            myDragcell.y = stationMap.itemAt(i).y - myDragcell.height
-                                            console.log("collision with the outer box top")
+                                                // snap inter top
+                                                myDragcell.y = stationMap.itemAt(i).y - myDragcell.height
+                                                console.log("collision with the outer box top")
 
-                                            if(Math.abs(myDragcell.x - stationMap.itemAt(i).x) <= 10)
-                                            {
-                                                myDragcell.x = stationMap.itemAt(i).x
+                                                if(Math.abs(myDragcell.x - stationMap.itemAt(i).x) <= 10)
+                                                {
+                                                    myDragcell.x = stationMap.itemAt(i).x
+                                                }
                                             }
                                         }
+                                        //                                                                                                 myDragcell.state="InterBoundary"
                                     }
-                                    //                                                                                                 myDragcell.state="InterBoundary"
                                 }
                             }
                         }
