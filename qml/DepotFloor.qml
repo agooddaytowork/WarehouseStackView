@@ -9,6 +9,80 @@ Item {
 
     property bool  depotEditEnable: false
 
+    Label
+    {
+        text: "UDC"
+        font.bold: true
+        font.pixelSize: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 5
+
+    }
+
+    Rectangle
+    {
+        id: gaugeArea
+        color: "#cecece"
+        width: 250
+        height: 800
+        radius: 10
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: 150
+        anchors.leftMargin: 50
+
+        ColumnLayout{
+            anchors.fill: parent
+            Layout.fillHeight: true
+
+            anchors.leftMargin: 25
+
+
+            Rectangle{
+                            id: gaugeIcon
+                            width: 200
+                            height: 200
+                            radius: 10
+                            color: "black"
+                        }
+
+            Rectangle{
+                            id: gaugeIcon1
+                            width: 200
+                            height: 200
+                            radius: 10
+                            color: "black"
+                        }
+
+            Rectangle{
+                            id: gaugeIcon2
+                            width: 200
+                            height: 200
+                            radius: 10
+                            color: "black"
+                        }
+
+        }
+
+
+
+
+    }
+    Rectangle
+    {
+        id: statisticArea
+        color: "#cecece"
+        width: 250
+        height: 800
+        radius: 10
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: 150
+        anchors.rightMargin: 50
+        z:2
+    }
+
     Rectangle
     {
         width: 300
@@ -36,7 +110,7 @@ Item {
         color: "#cecece"
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.topMargin: 200
+        anchors.topMargin: 150
         anchors.leftMargin: (1920-(depotFloor.width))/2
 
         radius: 10

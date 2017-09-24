@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     components/stationobject.cpp \
     components/stationobjectmodel.cpp \
     components/gaugeobject.cpp \
-    components/gaugeobjectmodel.cpp
+    components/gaugeobjectmodel.cpp \
+    components/radialbar.cpp
 
 RESOURCES += qml.qrc
 
@@ -48,4 +49,5 @@ HEADERS += \
     components/stationobjectmodel.h \
     components/anlogger.h \
     components/gaugeobject.h \
-    components/gaugeobjectmodel.h
+    components/gaugeobjectmodel.h \
+    components/radialbar.h

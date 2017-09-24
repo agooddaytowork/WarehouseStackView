@@ -68,7 +68,6 @@ Item {
 
             }
 
-
             ScrollIndicator.vertical: ScrollIndicator{}
 
         }
