@@ -1,3 +1,6 @@
+
+
+
 QT += charts qml quick core sql
 
 static

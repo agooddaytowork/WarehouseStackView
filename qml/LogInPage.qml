@@ -27,54 +27,110 @@ Item {
         }
 
 
-
-
-        TextField
+        RowLayout
         {
-            id: passwordField
-            width: 250
-            height: 50
+            id: passwordFieldRow
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            echoMode: TextInput.Password
-            horizontalAlignment: TextInput.AlignHCenter
-            inputMethodHints:  Qt.ImhDigitsOnly
-            text: ""
-            background: Rectangle
+
+
+            TextField
             {
-
-                radius: 10
-                border.color: "#051c42"
-                border.width: 2
-            }
-
-
-
-            onTextChanged:
-            {
-                if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
+                id: passwordField
+                implicitWidth: 250
+                implicitHeight: 50
+                echoMode: TextInput.Password
+                horizontalAlignment: TextInput.AlignHCenter
+                inputMethodHints:  Qt.ImhDigitsOnly
+                text: ""
+                background: Rectangle
                 {
-                    passwordField.text = ""
-                    passwordField.focus = false
-                    if(mainStackView.depth <=1)
+                    id: passwordFieldBackGround
+
+                    radius: 10
+                    border.color: "#051c42"
+                    border.width: 2
+                }
+
+                SequentialAnimation{
+                    id: shakeWhenWrongPassWord
+                    running: false
+
+                    loops: 2
+                    onStopped: {
+                        wrongPasswordText.visible = true
+                    }
+
+                    NumberAnimation {
+                        target: passwordField
+                        property: "x"
+                        duration: 100
+                        from: passwordFieldBackGround.x
+                        to: passwordFieldBackGround.x + 30
+                        easing.type: Easing.InOutQuad
+                    }
+                    NumberAnimation {
+                        target: passwordField
+                        property: "x"
+                        duration: 50
+                        from: passwordFieldBackGround.x + 30
+                        to: passwordFieldBackGround.x
+                        easing.type: Easing.InOutQuad
+                    }
+
+
+                }
+
+
+                onTextChanged:
+                {
+                    if(passwordField.text.length >= 1)
                     {
-                        mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+                        passwordFieldBackGround.border.color = "black"
+                        wrongPasswordText.visible = false
+                    }
+
+                    if(passwordField.text == setting.screenPassword && passwordField.text.length <= setting.screenPassword.length  )
+                    {
+                        passwordField.text = ""
+                        passwordField.focus = false
+                        if(mainStackView.depth <=1)
+                        {
+                            mainStackView.push(Qt.resolvedUrl("DepotFloor.qml"))
+                        }
+                        else
+                        {
+                            mainStackView.pop()
+                        }
+
                     }
                     else
                     {
-                        mainStackView.pop()
+                        if( passwordField.text.length === setting.screenPassword.length )
+                        {
+                            shakeWhenWrongPassWord.running = true
+                            passwordField.text = ""
+                            passwordFieldBackGround.border.color = "red"
+                        }
+
+                        // add some thing here to indicate wrong password
+
                     }
-
-
-
-
-                }
-                else
-                {
-                    // add some thing here to indicate wrong password
                 }
             }
+
+
+            Label
+            {
+                id: wrongPasswordText
+                text: "Wrong password!"
+                color: "red"
+                font.pixelSize: 20
+                anchors.rightMargin: 10
+                visible: false
+            }
         }
+
 
         //            Button
         //            {

@@ -26,5 +26,8 @@
         <file>images/home.png</file>
         <file>images/menu.png</file>
         <file>qml/GaugeSettingsPage.qml</file>
+        <file>images/Kla-logo-purplepng.jpg</file>
+        <file>images/Kla-logo-white.png</file>
+        <file>images/wrongPassword.png</file>
     </qresource>
 </RCC>
