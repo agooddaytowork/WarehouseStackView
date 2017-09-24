@@ -203,6 +203,7 @@ ApplicationWindow {
 
             model: ListModel {
                 ListElement { title: "Stations Settings"; source: "qrc:/qml/StationSettingsPage.qml" }
+                ListElement{ title:"Gauge Settings"; source: "qrc:/qml/GaugeSettingsPage.qml:" }
             }
 
             ScrollIndicator.vertical: ScrollIndicator { }

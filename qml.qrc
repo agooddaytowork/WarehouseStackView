@@ -25,5 +25,6 @@
         <file>images/setting.png</file>
         <file>images/home.png</file>
         <file>images/menu.png</file>
+        <file>qml/GaugeSettingsPage.qml</file>
     </qresource>
 </RCC>
