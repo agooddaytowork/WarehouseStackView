@@ -1,12 +1,12 @@
 #include "gaugeobject.h"
 
 GaugeObject::GaugeObject(const int &id, const double &top, const double &left, const int &sdcsAddr):
-    m_id(id), m_top(top), m_left(left), m_SDCSAddr(sdcsAddr), m_thresholdDownP(0), m_thresholdUpP(0)
+    m_id(id), m_top(top), m_left(left), m_SDCSAddr(sdcsAddr), m_thresholdDownP(0), m_thresholdUpP(0), m_currentValue(0)
 {
 }
 
 GaugeObject::GaugeObject(const int &id, const double &top, const double &left, const int &sdcsAddr, const double &thresholdDownP, const double &thresholdUpP):
-       m_id(id), m_top(top), m_left(left), m_SDCSAddr(sdcsAddr), m_thresholdDownP(thresholdDownP), m_thresholdUpP(thresholdUpP)
+       m_id(id), m_top(top), m_left(left), m_SDCSAddr(sdcsAddr), m_thresholdDownP(thresholdDownP), m_thresholdUpP(thresholdUpP), m_currentValue(0.05)
 {
 
 }
@@ -69,4 +69,14 @@ int GaugeObject::SDCSAddr() const
 void GaugeObject::setSDCSAddr(const int &addr)
 {
     m_SDCSAddr = addr;
+}
+
+double GaugeObject::currentValue() const
+{
+    return m_currentValue;
+}
+
+void GaugeObject::setCurrentValue(const double &value)
+{
+    m_currentValue = value;
 }

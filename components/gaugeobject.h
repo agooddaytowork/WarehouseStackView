@@ -28,6 +28,9 @@ public:
     int SDCSAddr() const;
     void setSDCSAddr(const int &addr);
 
+    double currentValue() const;
+    void setCurrentValue(const double &value);
+
  private:
     int m_id;
     double m_top;
@@ -35,6 +38,8 @@ public:
 
     double m_thresholdDownP;
     double m_thresholdUpP;
+
+    double m_currentValue;
 
     int m_SDCSAddr;
 };

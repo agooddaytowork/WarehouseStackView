@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtCharts 2.1
 import QtQuick.Dialogs 1.1
+import CustomControls 1.0
 
 Item {
     id: mainPage
@@ -23,47 +24,70 @@ Item {
     Rectangle
     {
         id: gaugeArea
-        color: "#cecece"
+        color: "transparent"
         width: 250
-        height: 800
+        height: 600
         radius: 10
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.topMargin: 150
+        anchors.topMargin: 300
         anchors.leftMargin: 50
 
-        ColumnLayout{
+
+        ListView{
+            id: gaugeListView
             anchors.fill: parent
-            Layout.fillHeight: true
-
+            model: myGaugeModel
             anchors.leftMargin: 25
+            spacing: 10
 
+            delegate: Rectangle{
+                Layout.alignment: Layout.Center
+                width: 200
+                height: 200
+                color: "#1d1d35"
+                border.color: "#000000"
+                border.width: 3
+                radius: 10
 
-            Rectangle{
-                            id: gaugeIcon
-                            width: 200
-                            height: 200
-                            radius: 10
-                            color: "black"
-                        }
+                Text {
+                    id: name
+                    anchors.left: parent.left
+                    anchors.top: parent.top
 
-            Rectangle{
-                            id: gaugeIcon1
-                            width: 200
-                            height: 200
-                            radius: 10
-                            color: "black"
-                        }
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                    font.pointSize: 13
+                    color: "#FAFAFA"
+                    text: qsTr("Gauge: G") + GlobalId
+                }
 
-            Rectangle{
-                            id: gaugeIcon2
-                            width: 200
-                            height: 200
-                            radius: 10
-                            color: "black"
-                        }
+                RadialBar{
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    width: parent.width / 1.4
+                    height: width
+                    penStyle: Qt.RoundCap
+                    progressColor: "#00ffc1"
+                    foregroundColor: "#191a2f"
+                    dialWidth: 12
+                    minValue: 0.001
+                    maxValue: 1
+                    value: gaugeCurrentValue
+                    suffixText: "Torr"
+                    textFont {
+                        family: "Halvetica"
+                        italic: false
+                        pointSize: 18
+                    }
+                    textColor: "#00ffc1"
+                }
+
+            }
 
         }
+
+
 
 
 
@@ -358,11 +382,11 @@ Item {
 
                     onPressed: {
 
-                         for (var i =0; i < stationMap.count; i++)
-                         {
-                             stationMap.itemAt(i).initX = stationMap.itemAt(i).x
-                             stationMap.itemAt(i).initY = stationMap.itemAt(i).y
-                         }
+                        for (var i =0; i < stationMap.count; i++)
+                        {
+                            stationMap.itemAt(i).initX = stationMap.itemAt(i).x
+                            stationMap.itemAt(i).initY = stationMap.itemAt(i).y
+                        }
 
                     }
 

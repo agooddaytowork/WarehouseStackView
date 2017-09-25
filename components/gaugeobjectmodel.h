@@ -18,7 +18,8 @@ public:
         left,
         SDCSAddr,
         thresholdDownP,
-        thresholdUpP
+        thresholdUpP,
+        currentValue
     };
     GaugeObjectModel(QObject *parent =0);
     void addGauge(const GaugeObject &gauge);

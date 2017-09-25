@@ -33,6 +33,8 @@ QVariant GaugeObjectModel::data(const QModelIndex &index, int role) const
     else if(role == SDCSAddr) return gauge.SDCSAddr();
     else if(role == thresholdDownP) return gauge.thresholdDownP();
     else if(role == thresholdUpP) return gauge.thresholdUpP();
+    else if(role == currentValue) return gauge.currentValue();
+
 
     return QVariant();
 }
@@ -50,7 +52,7 @@ bool GaugeObjectModel::setData(const QModelIndex &index, const QVariant &value, 
     else if(role == SDCSAddr)  gauge.setSDCSAddr(value.toInt());
     else if(role == thresholdDownP)  gauge.setThresholdDownP(value.toDouble());
     else if(role == thresholdUpP)  gauge.setThresholdUpP(value.toDouble());
-
+    else if(role == currentValue) gauge.setCurrentValue(value.toDouble());
     m_GaugeObjectMap.insert(gauge.id(), gauge);
     dataChanged(index, index, QVector<int>() << role);
 
@@ -67,6 +69,7 @@ QHash<int, QByteArray> GaugeObjectModel::roleNames()const
     roles[SDCSAddr] = "SDCSAddr";
     roles[thresholdDownP] = "thresholdDownP";
     roles[thresholdUpP] = "thresholdUpP";
+    roles[currentValue] = "gaugeCurrentValue";
 
     return roles;
 }
