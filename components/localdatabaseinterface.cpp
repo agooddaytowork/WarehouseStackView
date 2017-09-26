@@ -318,7 +318,6 @@ void LocalDatabaseInterface::updateStationPositions(const int &id, const double 
 
         tmpStation.setTop(top);
         tmpStation.setLeft(left);
-        m_stationModel.addStation(tmpStation);
 
         tmpQuery.prepare("UPDATE stations SET top = ?, left_style = ? WHERE id = ?");
         tmpQuery.addBindValue(tmpStation.top());
@@ -345,7 +344,6 @@ void LocalDatabaseInterface::updateGaugePositions(const int &gid,  const double 
 
    tmpGauge.setTop(top);
    tmpGauge.setLeft(left);
-   m_gaugeModel.addGauge(tmpGauge);
 
        tmpQuery.prepare("UPDATE gauges SET top = ?, left_style = ? WHERE id = ?");
        tmpQuery.addBindValue(tmpGauge.top());
