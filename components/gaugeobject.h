@@ -1,3 +1,4 @@
+
 #ifndef GAUGEOBJECT_H
 #define GAUGEOBJECT_H
 

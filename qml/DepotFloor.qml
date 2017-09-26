@@ -9,6 +9,8 @@ Item {
     id: mainPage
 
     property bool  depotEditEnable: false
+
+    // MENU BUTTON
     Rectangle
     {
         id: menu2Button
@@ -19,9 +21,6 @@ Item {
         width: 50
         height: 50
         color: menu2Mouse.pressed? "#222" : "transparent"
-
-
-
         Image {
             id: menu2Icon
             source: "../images/menu2.png"
@@ -62,6 +61,7 @@ Item {
                         stationMap.itemAt(i).state = "StationEnteredEditMode"
                     }
 
+                    toolDrawer.visible = true
                 }
             }
 
@@ -85,6 +85,7 @@ Item {
                     {
                         stationMap.itemAt(i).state = stationMap.itemAt(i).currentStationState
                     }
+                    toolDrawer.visible = false
                 }
             }
 
@@ -119,6 +120,8 @@ Item {
         }
 
     }
+
+    // DEPOT NAME LABEL
     Label
     {
         text: "UDC"
@@ -126,10 +129,11 @@ Item {
         font.pixelSize: 40
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 5
+        anchors.topMargin: 6
 
     }
 
+    // GAUGE AREA
     Rectangle
     {
         id: gaugeArea
@@ -201,10 +205,13 @@ Item {
 
 
     }
+
+
+    // STATISTIC AREA
     Rectangle
     {
         id: statisticArea
-        color: "#cecece"
+        color: "transparent"
         width: 250
         height: 800
         radius: 10
@@ -215,6 +222,8 @@ Item {
         z:2
     }
 
+
+    //LOGO
     Rectangle
     {
         width: 300
@@ -234,6 +243,7 @@ Item {
 
     }
 
+    // DEPOT FLOOR
     Rectangle
     {
         id:depotFloor
@@ -295,6 +305,7 @@ Item {
                     for(var i =0; i < stationMap.count; i++)
                     {
                         stationMap.itemAt(i).cellSelected = false
+                        stationMap.selectedStations = 0
                     }
                 }
 
@@ -358,7 +369,7 @@ Item {
                         if(Math.abs(dx) <= width && Math.abs(dy) <= height)
                         {
                             stationMap.itemAt(i).cellSelected = true
-                            //                            multipleSelectMouseArea.state = "moveStations"
+                            stationMap.selectedStations = stationMap.selectedStations + 1
                         }
 
                     }
@@ -382,6 +393,7 @@ Item {
 
             model: myStationModel
 
+            property int selectedStations: 0
 
             Rectangle
             {
@@ -512,17 +524,17 @@ Item {
                             stationMap.itemAt(i).initY = stationMap.itemAt(i).y
                         }
 
+                        myDragcell.cellSelected = true
+
                     }
 
                     onMouseXChanged:
                     {
                         myDragcell.currentStation = true
-                        if(myDragcell.cellSelected)
+                        if(myDragcell.cellSelected && stationMap.selectedStations > 1)
                         {
-
                             for (var i =0; i < stationMap.count; i++)
                             {
-
                                 if(stationMap.itemAt(i).cellSelected)
                                 {
                                     stationMap.itemAt(i).x = stationMap.itemAt(i).initX +(myDragcell.x - myDragcell.initX)
@@ -874,6 +886,8 @@ Item {
         }
     }
 
+    // GRADIENTS FOR STATION AND GAUGE STATUS
+
     Gradient {
         id: egunNotFoundGradient
         GradientStop {
@@ -973,5 +987,144 @@ Item {
 
     }
 
+
+    // TOOL DRAWER FOR EDITING DEPOT LAYOUT, ADD AND REMOVE STATIONS/GAUGES
+    Rectangle{
+        id: toolDrawer
+        anchors.top: parent.top
+        anchors.topMargin: 180
+        anchors.right: parent.right
+        visible: false
+        width: 120
+        height: 600
+        border.color: "black"
+        border.width: 3
+        radius: 10
+
+        ColumnLayout{
+            anchors.fill: parent
+            spacing: 0
+            anchors.leftMargin: 10
+            Layout.fillHeight: false
+
+            Text {
+
+                text: qsTr("Stations")
+                font.pixelSize: 20
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Rectangle{
+                id: addStationButton
+                width: 50
+                height: 50
+                radius: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: addStationMouse.pressed? "#222" : "transparent"
+                Image {
+                    id: addStationIcon
+                    source: "../images/addStation.png"
+                }
+
+                MouseArea{
+                    id: addStationMouse
+                    anchors.fill: parent
+
+                }
+            }
+
+            Rectangle{
+                id: removeStationButton
+                width: 50
+                height: 50
+                radius: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: removeStationMouse.pressed? "#222" : "transparent"
+                Image {
+                    id: remoStationIcon
+                    source: "../images/removeStation.png"
+                }
+
+                MouseArea{
+                    id: removeStationMouse
+                    anchors.fill: parent
+
+                }
+            }
+
+            Text {
+
+                text: qsTr("Gauges")
+                font.pixelSize: 20
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Rectangle{
+                id: addGaugeButton
+                width: 50
+                height: 50
+                radius: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: addGaugeMouse.pressed? "#222" : "transparent"
+                Image {
+                    id: addGaugeIcon
+                    source: "../images/addStation.png"
+                }
+
+                MouseArea{
+                    id: addGaugeMouse
+                    anchors.fill: parent
+
+                }
+            }
+
+            Rectangle{
+                id: removeGaugeButton
+                width: 50
+                height: 50
+                radius: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: removeGaugeMouse.pressed? "#222" : "transparent"
+                Image {
+                    id: removeGaugeIcon
+                    source: "../images/removeStation.png"
+                }
+
+                MouseArea{
+                    id: removeGaugeMouse
+                    anchors.fill: parent
+
+                }
+            }
+
+            Rectangle
+            {
+                id: toolUpdateButton
+                radius: 10
+                color: toolUpdateButtonMouse.pressed? "#222" : "transparent"
+                width: 100
+                height: 40
+                border.color: "black"
+                border.width: 1
+
+                Text {
+
+                    text: qsTr("Update")
+                    font.pixelSize: 20
+                    font.bold: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+
+                }
+
+                MouseArea{
+                    id: toolUpdateButtonMouse
+                    anchors.fill: parent
+                }
+            }
+
+        }
+
+    }
 
 }

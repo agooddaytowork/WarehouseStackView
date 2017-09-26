@@ -26,5 +26,7 @@
         <file>images/Kla-logo-white.png</file>
         <file>images/wrongPassword.png</file>
         <file>images/menu2.png</file>
+        <file>images/addStation.png</file>
+        <file>images/removeStation.png</file>
     </qresource>
 </RCC>

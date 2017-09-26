@@ -33,7 +33,6 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
 
-
             TextField
             {
                 id: passwordField
