@@ -340,7 +340,7 @@ void LocalDatabaseInterface::updateGaugePositions(const int &gid)
        tmpQuery.prepare("UPDATE gauges SET top = ?, left_style = ? WHERE id = ?");
        tmpQuery.addBindValue(tmpGauge.top());
        tmpQuery.addBindValue(tmpGauge.left());
-       tmpQuery.addBindValue(id);
+       tmpQuery.addBindValue(gid);
 
 
    if(tmpQuery.exec())

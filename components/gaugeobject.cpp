@@ -1,5 +1,10 @@
 #include "gaugeobject.h"
 
+GaugeObject::GaugeObject()
+{
+
+}
+
 GaugeObject::GaugeObject(const int &id, const double &top, const double &left, const int &sdcsAddr):
     m_id(id), m_top(top), m_left(left), m_SDCSAddr(sdcsAddr), m_thresholdDownP(0), m_thresholdUpP(0), m_currentValue(0)
 {

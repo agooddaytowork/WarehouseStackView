@@ -8,7 +8,7 @@ class GaugeObject
 {
 
 public:
-
+    GaugeObject();
     explicit GaugeObject(const int &id, const double &top, const double &left, const int &sdcsAddr);
     explicit GaugeObject(const int &id, const double &top, const double &left, const int &sdcsAddr, const double &thresholdDownP, const double &thresholdUpP);
 
