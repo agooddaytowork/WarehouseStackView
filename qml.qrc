@@ -25,5 +25,7 @@
         <file>images/setting.png</file>
         <file>images/home.png</file>
         <file>images/menu.png</file>
+        <file>images/menu2.png</file>
+        <file>images/edit.png</file>
     </qresource>
 </RCC>

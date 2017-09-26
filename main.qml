@@ -49,32 +49,33 @@ ApplicationWindow {
                     onClicked: mainStackView.pop()
                 }
             }
-            Rectangle
-            {
-                id: lockscreenButton
-                anchors.right: parent.right
-                anchors.rightMargin: 20
-                width: 50
-                height: 50
-                color: lockmouse.pressed ? "#222" : "transparent"
+//            Rectangle
+//            {
+//                id: lockscreenButton
+//                anchors.right: parent.right
+//                anchors.rightMargin: 20
+//                width: 50
+//                height: 50
+//                color: lockmouse.pressed ? "#222" : "transparent"
 
-                Image {
-                    id: lockscreenIcon
-                    source: "images/lock.png"
-                }
+//                Image {
+//                    id: lockscreenIcon
+//                    source: "images/lock.png"
+//                    scale:0.7
+//                }
 
-                MouseArea {
-                    id: lockmouse
-                    anchors.fill: parent
-                    anchors.margins: -10
+//                MouseArea {
+//                    id: lockmouse
+//                    anchors.fill: parent
+//                    anchors.margins: -10
 
-                    onClicked:
-                    {
-                        mainStackView.push(Qt.resolvedUrl("qml/LogInPage.qml"))
-                    }
-                }
+//                    onClicked:
+//                    {
+//                        mainStackView.push(Qt.resolvedUrl("qml/LogInPage.qml"))
+//                    }
+//                }
 
-            }
+//            }
 
             Rectangle
             {
@@ -98,6 +99,64 @@ ApplicationWindow {
                     onClicked:
                     {
                         menuDrawer.open()
+                    }
+                }
+            }
+
+            Rectangle
+            {
+                id: menu2Button
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                width: 50
+                height: 50
+                radius: 10
+//                opacity: mainStackView.depth ==2? 1:0
+                color: menu2mouse.pressed ? "#222" : "transparent"
+                Image {
+                    id: menu2ButtonIcon
+                    source: "images/menu2.png"
+
+                }
+                MouseArea
+                {   id: menu2mouse
+                    anchors.fill: parent
+                    enabled:  mainStackView.depth ==2? true:false
+                    onClicked:
+                    {
+                        menu2Menu.open()
+                    }
+                }
+
+                Menu
+                {
+                    id: menu2Menu
+                    y:menu2Button.height + 10
+
+                    contentItem: MenuItem{
+                        contentItem: Text {
+
+                            text: parent.text
+                            font.pixelSize: 20
+                        }
+                    }
+
+                    MenuItem
+                    {
+                        text: "Edit Mode"
+                        contentItem: Text{
+                            text: parent.text
+                            font.pixelSize: 20
+                        }
+
+                    }
+                    MenuItem
+                    {
+                        text: "Lock"
+                    }
+                    MenuItem
+                    {
+                        text: "Exit"
                     }
                 }
             }
