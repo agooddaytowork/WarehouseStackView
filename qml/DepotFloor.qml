@@ -9,7 +9,116 @@ Item {
     id: mainPage
 
     property bool  depotEditEnable: false
+    Rectangle
+    {
+        id: menu2Button
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: 5
+        anchors.rightMargin: 20
+        width: 50
+        height: 50
+        color: menu2Mouse.pressed? "#222" : "transparent"
 
+
+
+        Image {
+            id: menu2Icon
+            source: "../images/menu2.png"
+        }
+
+        MouseArea{
+            id: menu2Mouse
+            anchors.fill: parent
+            onClicked:
+            {
+                menu2Menu.open()
+            }
+        }
+
+        Menu{
+            id: menu2Menu
+            y:menu2Button.height + 10
+
+
+            MenuItem
+            {
+                id: editModeMenuItem
+                text: "Edit Mode"
+                contentItem: Text{
+                    text: parent.text
+                    font.pixelSize: 20
+                }
+                onClicked: {
+                    mainPage.depotEditEnable = true
+                    operatingModeMenuItem.visible = true
+                    operatingModeMenuItem.height = 30
+                    editModeMenuItem.visible = false
+                    editModeMenuItem.height  = 0
+
+                    for(var i =0; i < stationMap.count; i++)
+                    {
+                        stationMap.itemAt(i).currentStationState = stationMap.itemAt(i).state
+                        stationMap.itemAt(i).state = "StationEnteredEditMode"
+                    }
+
+                }
+            }
+
+            MenuItem{
+                id: operatingModeMenuItem
+                text: "Operating Mode"
+                visible: false
+                height: 0
+                contentItem: Text{
+                    text: parent.text
+                    font.pixelSize: 20
+                }
+                onClicked: {
+                    mainPage.depotEditEnable = false
+                    operatingModeMenuItem.visible = false
+                    operatingModeMenuItem.height = 0
+                    editModeMenuItem.visible = true
+                    editModeMenuItem.height  = 30
+
+                    for(var i =0; i < stationMap.count; i++)
+                    {
+                        stationMap.itemAt(i).state = stationMap.itemAt(i).currentStationState
+                    }
+                }
+            }
+
+            MenuItem
+            {
+                text: "Lock"
+
+                onClicked:
+                {
+                    mainStackView.push(Qt.resolvedUrl("qml/LogInPage.qml"))
+                }
+                contentItem: Text{
+                    text: parent.text
+                    font.pixelSize: 20
+                }
+            }
+            MenuItem
+            {
+                text: "Exit"
+                contentItem: Text{
+                    text: parent.text
+                    font.pixelSize: 20
+
+                }
+
+                onClicked:
+                {
+                    Qt.quit()
+                }
+            }
+
+        }
+
+    }
     Label
     {
         text: "UDC"
@@ -144,9 +253,6 @@ Item {
             y:0
             width: 0
             height: 0
-            //            visible: multipleSelectMouseArea.pressed? true: false
-            //            color: multipleSelectMouseArea.pressed? "#cecece":"transparent"
-            //            opacity:  multipleSelectMouseArea.pressed? 0.5: 0
             color: "black"
             z:3
             opacity: 0.5
@@ -286,6 +392,7 @@ Item {
                 y:m_top
                 color: cellSelected ?"#222":"transparent"
                 property bool currentStation: false
+                property string currentStationState: ""
                 property int counter: 0
                 property int initX
                 property int initY
@@ -360,7 +467,25 @@ Item {
                             target: individualStation
                             disableClick: false
                         }
+                    },
+                    State {
+                        name: "StationEnteredEditMode"
+                        PropertyChanges {
+                            target: stationStatus
+                            gradient: individualStation.pressed?  stationPressedGradient :stationEnteredEditModeGradient
+                        }
+                        PropertyChanges {
+                            target: individualStationTextContent
+                            color: "black"
+                        }
+
+                        PropertyChanges {
+                            target: individualStation
+                            disableClick: true
+                        }
                     }
+
+
 
                 ]
 
@@ -404,7 +529,6 @@ Item {
                                     stationMap.itemAt(i).y = stationMap.itemAt(i).initY +(myDragcell.y - myDragcell.initY)
                                 }
                             }
-
                         }
                         else
                         {
@@ -829,6 +953,20 @@ Item {
                 loops: Animation.Infinite
                 ColorAnimation { from: "#a9e4f7"; to: "#0fb4e7"; duration: 5000 }
                 ColorAnimation { from: "#0fb4e7"; to: "#a9e4f7"; duration: 5000 }
+
+            }
+        }
+
+    }
+
+    Gradient {
+        id: stationEnteredEditModeGradient
+        GradientStop {
+            position: 0.0
+            SequentialAnimation on color {
+                loops: Animation.Infinite
+                ColorAnimation { from: "#ee0979"; to: "#ff6a00"; duration: 5000 }
+                ColorAnimation { from: "#ff6a00"; to: "#ee0979"; duration: 5000 }
 
             }
         }

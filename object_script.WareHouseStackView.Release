@@ -5,8 +5,10 @@ INPUT(
 ./release\stationobjectmodel.o
 ./release\gaugeobject.o
 ./release\gaugeobjectmodel.o
+./release\radialbar.o
 ./release\qrc_qml.o
 ./release\moc_localdatabaseinterface.o
 ./release\moc_stationobjectmodel.o
 ./release\moc_gaugeobjectmodel.o
+./release\moc_radialbar.o
 );
