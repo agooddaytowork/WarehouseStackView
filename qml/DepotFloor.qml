@@ -33,7 +33,6 @@ Item {
         anchors.topMargin: 300
         anchors.leftMargin: 50
 
-
         ListView{
             id: gaugeListView
             anchors.fill: parent
