@@ -380,9 +380,7 @@ Item {
                 }
 
             }
-
         }
-
 
         //Repeater for stations
         Repeater
@@ -517,7 +515,6 @@ Item {
                     z: 2 // higher z
 
 
-
                     onPressed: {
 
                         for (var i =0; i < stationMap.count; i++)
@@ -527,6 +524,7 @@ Item {
                         }
 
                         myDragcell.cellSelected = true
+                        stationMap.selectedStations = stationMap.selectedStations + 1
 
                     }
 
@@ -1126,24 +1124,22 @@ Item {
                     anchors.fill: parent
 
                     onPressed: {
-                         // update Stations positions
+                        // update Stations positions
                         for(var i = 0; i < stationMap.count; i++)
                         {
-                            LocalDb.updateStationPositions(stationMap.itemAt(i).stationId)
+                            LocalDb.updateStationPositions(stationMap.itemAt(i).stationId, stationMap.itemAt(i).x, stationMap.itemAt(i).y)
                         }
 
+                         // update Gauge positions
                         for(var i1 = 0; i1 < gaugeMap.count; i1++)
                         {
-                            LocalDb.updateGaugePositions(gaugeMap.itemAt(i1).gaugeId)
+                            LocalDb.updateGaugePositions(gaugeMap.itemAt(i1).gaugeId, gaugeMap.itemAt(i1).x, gaugeMap.itemAt(i1).y)
                         }
 
-                        // update Gauge positions
+
                     }
                 }
             }
-
         }
-
     }
-
 }

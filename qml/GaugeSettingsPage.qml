@@ -38,7 +38,6 @@ Item {
                 highlighted: ListView.isCurrentItem
                 onClicked: {
 
-
                 }
             }
         }

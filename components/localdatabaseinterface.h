@@ -40,8 +40,8 @@ public slots:
                                             ,const int &SDCSAddr, const int &SDCSCh);
 
 
-    Q_INVOKABLE void updateStationPositions(const int &id);
-    Q_INVOKABLE void updateGaugePositions(const int &gid);
+    Q_INVOKABLE void updateStationPositions(const int &id, const double &left, const double &top);
+    Q_INVOKABLE void updateGaugePositions(const int &gid,  const double &left, const double &top);
     bool initializeStationModel();
     bool initializeGaugeModel();
     void updateStationSettingToDatabaseSlot(const int &id);

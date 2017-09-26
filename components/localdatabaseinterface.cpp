@@ -310,10 +310,15 @@ void LocalDatabaseInterface::updateStationSettingToDatabaseSlot(const int &id)
 }
 
 
-void LocalDatabaseInterface::updateStationPositions(const int &id)
+void LocalDatabaseInterface::updateStationPositions(const int &id, const double &left, const double &top)
 {
     StationObject tmpStation(m_stationModel.getStation(id));
+
     QSqlQuery tmpQuery;
+
+        tmpStation.setTop(top);
+        tmpStation.setLeft(left);
+        m_stationModel.addStation(tmpStation);
 
         tmpQuery.prepare("UPDATE stations SET top = ?, left_style = ? WHERE id = ?");
         tmpQuery.addBindValue(tmpStation.top());
@@ -329,13 +334,18 @@ void LocalDatabaseInterface::updateStationPositions(const int &id)
     {
         anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Querry failed: " << "UPDATE stations SET top = ?, left_style = ? WHERE id = ?"));
     }
+
 }
 
-void LocalDatabaseInterface::updateGaugePositions(const int &gid)
+void LocalDatabaseInterface::updateGaugePositions(const int &gid,  const double &left, const double &top)
 {
    GaugeObject tmpGauge(m_gaugeModel.getGauge(gid));
 
    QSqlQuery tmpQuery;
+
+   tmpGauge.setTop(top);
+   tmpGauge.setLeft(left);
+   m_gaugeModel.addGauge(tmpGauge);
 
        tmpQuery.prepare("UPDATE gauges SET top = ?, left_style = ? WHERE id = ?");
        tmpQuery.addBindValue(tmpGauge.top());

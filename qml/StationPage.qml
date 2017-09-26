@@ -150,7 +150,6 @@ Item {
             width: 4
             color: "red"
             style: Qt.DotLine
-
         }
 
         Timer
@@ -167,6 +166,8 @@ Item {
         }
     }
 
+
+    //FRU CONTROL PANEL
     Rectangle{
         id: stationControlPanel
         anchors.top: parent.top
@@ -303,6 +304,8 @@ Item {
     }
 
 
+
+    // FRU INFO EDIT PANEL
     Flickable{
         id: flickable
 
@@ -313,7 +316,6 @@ Item {
         anchors.rightMargin: 50
         visible: true
         flickableDirection: Flickable.VerticalFlick
-
 
         Rectangle{
             anchors.fill: parent
@@ -500,17 +502,12 @@ Item {
                 onClicked: {
 
                     LocalDb.updateStationFruInfo(sGlobalId, ktpn.myText, ktserialpn.myText, lpn.myText, mfgPressureoff.myText, purchaseOrder.myText, supplierTestDate.myText, dateReceive.myText, dateShipped.myText)
-
                 }
-
             }
-
-
         }
-
-
     }
 
+    // KEYBOARD SECTIONS
     Rectangle {
         id: keyboardRect
         width: parent.width
