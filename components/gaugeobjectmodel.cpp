@@ -74,3 +74,8 @@ QHash<int, QByteArray> GaugeObjectModel::roleNames()const
     return roles;
 }
 
+
+GaugeObject GaugeObjectModel::getGauge(const int &gid)
+{
+    return m_GaugeObjectMap.value(gid);
+}

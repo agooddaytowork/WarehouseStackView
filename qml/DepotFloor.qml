@@ -95,7 +95,7 @@ Item {
 
                 onClicked:
                 {
-                    mainStackView.push(Qt.resolvedUrl("qml/LogInPage.qml"))
+                    mainStackView.push(Qt.resolvedUrl("LogInPage.qml"))
                 }
                 contentItem: Text{
                     text: parent.text
@@ -409,7 +409,9 @@ Item {
                 property int initX
                 property int initY
                 property bool cellSelected: false
+                property int stationId
 
+                stationId: GlobalId
                 state: stationState
 
                 states:[
@@ -579,7 +581,6 @@ Item {
                                                     myDragcell.x = stationMap.itemAt(i).x
                                                 }
 
-
                                             }
                                             else
                                             {
@@ -724,6 +725,9 @@ Item {
                 property int counter: 0
                 property int previousX
                 property int previousY
+                property int gaugeId
+
+                gaugeId: GlobalId
                 MouseArea
                 {
                     id: mouse1
@@ -1120,6 +1124,21 @@ Item {
                 MouseArea{
                     id: toolUpdateButtonMouse
                     anchors.fill: parent
+
+                    onPressed: {
+                         // update Stations positions
+                        for(var i = 0; i < stationMap.count; i++)
+                        {
+                            LocalDb.updateStationPositions(stationMap.itemAt(i).stationId)
+                        }
+
+                        for(var i1 = 0; i1 < gaugeMap.count; i1++)
+                        {
+                            LocalDb.updateGaugePositions(gaugeMap.itemAt(i1).gaugeId)
+                        }
+
+                        // update Gauge positions
+                    }
                 }
             }
 

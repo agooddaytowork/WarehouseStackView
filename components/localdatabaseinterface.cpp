@@ -331,6 +331,28 @@ void LocalDatabaseInterface::updateStationPositions(const int &id)
     }
 }
 
+void LocalDatabaseInterface::updateGaugePositions(const int &gid)
+{
+   GaugeObject tmpGauge(m_gaugeModel.getGauge(gid));
+
+   QSqlQuery tmpQuery;
+
+       tmpQuery.prepare("UPDATE gauges SET top = ?, left_style = ? WHERE id = ?");
+       tmpQuery.addBindValue(tmpGauge.top());
+       tmpQuery.addBindValue(tmpGauge.left());
+       tmpQuery.addBindValue(id);
+
+
+   if(tmpQuery.exec())
+   {
+        anIf(LocalDatabaseInterfaceDebuggerEnabled, anAck("Query succeed: " << tmpQuery.executedQuery()));
+   }
+   else
+   {
+       anIf(LocalDatabaseInterfaceDebuggerEnabled, anError("Querry failed: " << "UPDATE gauges SET top = ?, left_style = ? WHERE id = ?"));
+   }
+}
+
 
 QByteArray LocalDatabaseInterface::checkStationState(const StationObject &station)
 {
