@@ -49,29 +49,71 @@ ApplicationWindow {
                     onClicked: mainStackView.pop()
                 }
             }
+
             Rectangle
             {
-                id: lockscreenButton
+                id: menu2Button
                 anchors.right: parent.right
                 anchors.rightMargin: 20
                 width: 50
                 height: 50
-                color: lockmouse.pressed ? "#222" : "transparent"
-
+                color: menu2Mouse.pressed? "#222" : "transparent"
                 Image {
-                    id: lockscreenIcon
-                    source: "images/lock.png"
+                    id: menu2Icon
+                    source: "images/menu2.png"
                 }
 
-                MouseArea {
-                    id: lockmouse
+                MouseArea{
+                    id: menu2Mouse
                     anchors.fill: parent
-                    anchors.margins: -10
-
                     onClicked:
                     {
-                        mainStackView.push(Qt.resolvedUrl("qml/LogInPage.qml"))
+                        menu2Menu.open()
                     }
+                }
+
+                Menu{
+                    id: menu2Menu
+                    y:menu2Button.height + 10
+
+
+                    MenuItem
+                    {
+                        text: "Edit Mode"
+                        contentItem: Text{
+                            text: parent.text
+                            font.pixelSize: 20
+                        }
+
+                    }
+                    MenuItem
+                    {
+                        text: "Lock"
+
+                        onClicked:
+                        {
+                            mainStackView.push(Qt.resolvedUrl("qml/LogInPage.qml"))
+                        }
+                        contentItem: Text{
+                            text: parent.text
+                            font.pixelSize: 20
+                        }
+                    }
+                    MenuItem
+                    {
+                        text: "Exit"
+                        contentItem: Text{
+                            text: parent.text
+                            font.pixelSize: 20
+
+                        }
+
+                        onClicked:
+                        {
+                            Qt.quit()
+                        }
+                    }
+
                 }
 
             }
@@ -102,33 +144,6 @@ ApplicationWindow {
                 }
             }
 
-            //            Rectangle
-            //            {
-            //                id: homeButton
-            //                width: 50
-            //                height: 50
-            //                radius: 10
-            //                anchors.right: parent.right
-            //                anchors.rightMargin:90
-            //                opacity: mainStackView.depth >2? 1:0
-            //                color: homemouse.pressed ? "#222" : "transparent"
-            //                Image {
-            //                    id: homeButtonIcon
-            //                    source: "images/home.png"
-
-            //                }
-            //                MouseArea
-            //                {   id: homemouse
-            //                    anchors.fill: parent
-            //                    onClicked:
-            //                    {
-            //                        mainStackView.clear()
-            //                        mainStackView.push(Qt.resolvedUrl("qml/DepotFloor.qml"))
-            //                    }
-            //                }
-            //            }
-
-
         }
     }
 
@@ -142,16 +157,14 @@ ApplicationWindow {
             id: mainPage
         }
 
-
-
         pushEnter: Transition {
             OpacityAnimator {
-                   target: mainStackView;
-                   from: 0.8;
-                   to: 1;
-                   duration: 500
-                   running: true
-               }
+                target: mainStackView;
+                from: 0.8;
+                to: 1;
+                duration: 500
+                running: true
+            }
         }
         pushExit: Transition {
 
@@ -161,18 +174,17 @@ ApplicationWindow {
 
         popEnter: Transition {
             OpacityAnimator {
-                   target: mainStackView;
-                   from: 0.8;
-                   to: 1;
-                   duration: 500
-                   running: true
-               }
+                target: mainStackView;
+                from: 0.8;
+                to: 1;
+                duration: 500
+                running: true
+            }
         }
 
         popExit: Transition {
 
-            }
-
+        }
     }
 
     Drawer{
@@ -181,7 +193,7 @@ ApplicationWindow {
         topMargin: 60
         width: Math.min(parent.width, parent.height) / 3 * 2
         height: parent.height
-//        interactive: mainStackView.depth === 1
+        //        interactive: mainStackView.depth === 1
 
         ListView {
             id: listView
